@@ -3,6 +3,7 @@ package at.technikum.master_project.productinformation;
 import at.technikum.master_project.productinformation.model.Product;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,8 @@ public class ProductInformationController {
   }
 
   @GetMapping
-  public List<Product> getAllProducts() {
-    return productInformationService.retrieveAllProducts();
+  public List<Product> getAllProducts(Pageable pageable) {
+    return productInformationService.retrieveAllProductsWithPagination(pageable);
   }
 
   @GetMapping(value = "/{id}")

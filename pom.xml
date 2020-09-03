@@ -14,6 +14,7 @@
   <artifactId>masterproject</artifactId>
   <version>1.0-SNAPSHOT</version>
   <description>Master Project on using GraphQL as Integration Layer</description>
+  <url>https://github.com/kocmana/tw_master/tree/master/product_service</url>
 
   <packaging>pom</packaging>
 

@@ -1,6 +1,6 @@
 package at.technikum.masterproject.productinformation;
 
-import at.technikum.masterproject.aspect.DelayedEndpointFixed;
+import at.technikum.masterproject.aspect.FixedEndpointDelay;
 import at.technikum.masterproject.productinformation.model.Product;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class ProductInformationController {
   }
 
   @GetMapping(value = "/{id}")
-  @DelayedEndpointFixed(delayInMs = 10000)
+  @FixedEndpointDelay(delayInMs = 10000)
   public Product getProductById(@PathVariable int id) {
     return productInformationService.retrieveProductById(id);
   }

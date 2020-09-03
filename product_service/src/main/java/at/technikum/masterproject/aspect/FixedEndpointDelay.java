@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface DelayedEndpointFixed {
+public @interface FixedEndpointDelay {
 
   int delayInMs() default 0;
 

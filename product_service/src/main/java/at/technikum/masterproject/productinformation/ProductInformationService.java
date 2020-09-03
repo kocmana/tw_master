@@ -10,24 +10,24 @@ import org.springframework.stereotype.Service;
 @Service
 class ProductInformationService {
 
-  private final ProductInformationsRepository productInformationsRepository;
+  private final ProductInformationRepository productInformationRepository;
 
   @Autowired
   public ProductInformationService(
-      ProductInformationsRepository productInformationsRepository) {
-    this.productInformationsRepository = productInformationsRepository;
+      ProductInformationRepository productInformationRepository) {
+    this.productInformationRepository = productInformationRepository;
   }
 
   List<Product> retrieveAllProducts() {
-    return productInformationsRepository.findAll();
+    return productInformationRepository.findAll();
   }
 
   List<Product> retrieveAllProductsWithPagination(Pageable pageable) {
-    return productInformationsRepository.findAll(pageable).toList();
+    return productInformationRepository.findAll(pageable).toList();
   }
 
   Product retrieveProductById(int productId) {
-    return productInformationsRepository.findById(productId)
+    return productInformationRepository.findById(productId)
         .orElseThrow(() -> generateNotFoundException(productId));
   }
 

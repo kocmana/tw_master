@@ -1,6 +1,7 @@
 package at.technikum.masterproject.productinformation;
 
-import at.technikum.masterproject.aspect.FixedEndpointDelay;
+import at.technikum.masterproject.aspect.NormallyDistributedEndpointDelay;
+import at.technikum.masterproject.aspect.ProbabilisticEndpointDelay;
 import at.technikum.masterproject.productinformation.model.Product;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,13 @@ public class ProductInformationController {
   }
 
   @GetMapping
+  @NormallyDistributedEndpointDelay(mean = 1000, standardDeviation = 500)
   public List<Product> getAllProducts(Pageable pageable) {
     return productInformationService.retrieveAllProductsWithPagination(pageable);
   }
 
   @GetMapping(value = "/{id}")
-  @FixedEndpointDelay(delayInMs = 10000)
+  @ProbabilisticEndpointDelay(probability = 0.5f, duration = 3000)
   public Product getProductById(@PathVariable int id) {
     return productInformationService.retrieveProductById(id);
   }

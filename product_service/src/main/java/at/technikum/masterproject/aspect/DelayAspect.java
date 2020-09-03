@@ -1,5 +1,6 @@
 package at.technikum.masterproject.aspect;
 
+import at.technikum.masterproject.model.delay.NormallyDistributedDelay;
 import at.technikum.masterproject.model.delay.ProbabilisticDelay;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -28,23 +29,14 @@ public class DelayAspect {
     return joinPoint.proceed();
   }
 
-  //TODO
-//  @Around("@annotation(at.technikum.masterproject.aspect.NormallyDistributedEndpointDelay)")
-//  public Object delayExecutionWithNormallyDistributedDuration(ProceedingJoinPoint joinPoint) throws Throwable {
-//    NormallyDistributedEndpointDelay annotation = extractAnnotation(joinPoint, NormallyDistributedEndpointDelay.class);
-//    int mean = annotation.mean();
-//    int standardDeviation = annotation.standardDeviation();
-//
-//    log.info("Sleeping for {}ms...", delayInMs);
-//
-//    Thread.sleep(delayInMs);
-//    return joinPoint.proceed();
-//  }
+  @Around("@annotation(at.technikum.masterproject.aspect.NormallyDistributedEndpointDelay)")
+  public Object delayExecutionWithNormallyDistributedDuration(ProceedingJoinPoint joinPoint)
+      throws Throwable {
+    NormallyDistributedEndpointDelay annotation = extractAnnotation(joinPoint,
+        NormallyDistributedEndpointDelay.class);
 
-  @Around("@annotation(at.technikum.masterproject.aspect.ProbabilisticEndpointDelay)")
-  public Object delayExecutionWithProbability(ProceedingJoinPoint joinPoint) throws Throwable {
-    ProbabilisticEndpointDelay annotation = extractAnnotation(joinPoint, ProbabilisticEndpointDelay.class);
-    int delayInMs = new ProbabilisticDelay(annotation.probability(), annotation.duration()).getDelayInMs();
+    int delayInMs = new NormallyDistributedDelay(annotation.mean(), annotation.standardDeviation())
+        .getDelayInMs();
 
     log.info("Sleeping for {}ms...", delayInMs);
 
@@ -52,7 +44,21 @@ public class DelayAspect {
     return joinPoint.proceed();
   }
 
-  private <T extends Annotation> T extractAnnotation(ProceedingJoinPoint joinPoint, Class<T> annotationType) {
+  @Around("@annotation(at.technikum.masterproject.aspect.ProbabilisticEndpointDelay)")
+  public Object delayExecutionWithProbability(ProceedingJoinPoint joinPoint) throws Throwable {
+    ProbabilisticEndpointDelay annotation = extractAnnotation(joinPoint,
+        ProbabilisticEndpointDelay.class);
+    int delayInMs = new ProbabilisticDelay(annotation.probability(), annotation.duration())
+        .getDelayInMs();
+
+    log.info("Sleeping for {}ms...", delayInMs);
+
+    Thread.sleep(delayInMs);
+    return joinPoint.proceed();
+  }
+
+  private <T extends Annotation> T extractAnnotation(ProceedingJoinPoint joinPoint,
+      Class<T> annotationType) {
     MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
     Method method = methodSignature.getMethod();
 

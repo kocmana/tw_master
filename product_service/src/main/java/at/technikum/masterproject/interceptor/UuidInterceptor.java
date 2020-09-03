@@ -1,4 +1,4 @@
-package at.technikum.master_project.interceptor;
+package at.technikum.masterproject.interceptor;
 
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;

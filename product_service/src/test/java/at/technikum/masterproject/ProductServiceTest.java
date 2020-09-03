@@ -1,4 +1,4 @@
-package at.technikum.master_project;
+package at.technikum.masterproject;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

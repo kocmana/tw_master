@@ -1,9 +1,9 @@
-package at.technikum.master_project.productinformation;
+package at.technikum.masterproject.productinformation;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import at.technikum.master_project.model.ErrorResponse;
-import at.technikum.master_project.productinformation.model.ProductInformationNotFoundException;
+import at.technikum.masterproject.model.ErrorResponse;
+import at.technikum.masterproject.productinformation.model.ProductInformationNotFoundException;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

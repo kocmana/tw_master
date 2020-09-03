@@ -4,11 +4,11 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>at.technikum</groupId>
-    <artifactId>master_project</artifactId>
+    <artifactId>masterproject</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>at.technikum.master_project</groupId>
+  <groupId>at.technikum.masterproject</groupId>
   <artifactId>product_service</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>product_service</name>

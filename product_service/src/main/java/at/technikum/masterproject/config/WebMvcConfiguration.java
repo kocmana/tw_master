@@ -1,7 +1,7 @@
-package at.technikum.master_project.config;
+package at.technikum.masterproject.config;
 
-import at.technikum.master_project.interceptor.RequestLoggingInterceptor;
-import at.technikum.master_project.interceptor.UuidInterceptor;
+import at.technikum.masterproject.interceptor.RequestLoggingInterceptor;
+import at.technikum.masterproject.interceptor.UuidInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

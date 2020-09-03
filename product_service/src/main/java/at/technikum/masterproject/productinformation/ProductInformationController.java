@@ -1,7 +1,7 @@
-package at.technikum.master_project.productinformation;
+package at.technikum.masterproject.productinformation;
 
-import at.technikum.master_project.aspect.DelayedEndpointFixed;
-import at.technikum.master_project.productinformation.model.Product;
+import at.technikum.masterproject.aspect.DelayedEndpointFixed;
+import at.technikum.masterproject.productinformation.model.Product;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

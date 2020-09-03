@@ -1,4 +1,4 @@
-package at.technikum.master_project.aspect;
+package at.technikum.masterproject.aspect;
 
 import java.lang.reflect.Method;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class DelayAspect {
 
-  @Around("@annotation(at.technikum.master_project.aspect.DelayedEndpointFixed)")
+  @Around("@annotation(at.technikum.masterproject.aspect.DelayedEndpointFixed)")
   public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
     DelayedEndpointFixed annotation = extractAnnotation(joinPoint);
     int delayInMs = annotation.delayInMs();

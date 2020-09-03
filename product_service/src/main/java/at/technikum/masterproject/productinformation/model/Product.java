@@ -1,4 +1,4 @@
-package at.technikum.master_project.productinformation.model;
+package at.technikum.masterproject.productinformation.model;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;

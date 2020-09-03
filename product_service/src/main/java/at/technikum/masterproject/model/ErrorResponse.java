@@ -1,4 +1,4 @@
-package at.technikum.master_project.model;
+package at.technikum.masterproject.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

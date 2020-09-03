@@ -1,4 +1,4 @@
-package at.technikum.master_project.config;
+package at.technikum.masterproject.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package at.technikum.master_project.aspect;
+package at.technikum.masterproject.aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

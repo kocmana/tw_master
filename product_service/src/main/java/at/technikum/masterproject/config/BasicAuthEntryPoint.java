@@ -1,4 +1,4 @@
-package at.technikum.master_project.config;
+package at.technikum.masterproject.config;
 
 import java.io.IOException;
 import java.io.PrintWriter;

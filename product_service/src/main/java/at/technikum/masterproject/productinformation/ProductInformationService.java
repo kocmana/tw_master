@@ -1,7 +1,7 @@
-package at.technikum.master_project.productinformation;
+package at.technikum.masterproject.productinformation;
 
-import at.technikum.master_project.productinformation.model.Product;
-import at.technikum.master_project.productinformation.model.ProductInformationNotFoundException;
+import at.technikum.masterproject.productinformation.model.Product;
+import at.technikum.masterproject.productinformation.model.ProductInformationNotFoundException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +26,7 @@ class ProductInformationService {
     return productInformationsRepository.findAll(pageable).toList();
   }
 
-  Product retrieveProductById(int productId){
+  Product retrieveProductById(int productId) {
     return productInformationsRepository.findById(productId)
         .orElseThrow(() -> generateNotFoundException(productId));
   }

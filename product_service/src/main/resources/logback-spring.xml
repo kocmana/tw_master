@@ -13,7 +13,7 @@
   </appender>
 
   <springProfile name="local, test">
-    <logger name="at.technikum.master_project" level="info" additivity="false">
+    <logger name="at.technikum.masterproject" level="info" additivity="false">
       <appender-ref ref="CONSOLE"/>
     </logger>
     <root level="${rootLogLevel:-info}">

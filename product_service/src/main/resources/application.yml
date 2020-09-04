@@ -4,3 +4,5 @@ server:
 spring:
   jpa:
     open-in-view: true
+    hibernate:
+      ddl-auto: none

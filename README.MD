@@ -38,7 +38,7 @@ Results should focus around these three core aspects:
 
 | Service | Interface | Authentication | Request Logging | Latency | Other Challenges |
 |---------|-----------|----------------|-----------------|---------|------------------|
-| User Service | REST | OAuth 2 | UUID Based | constant, low | none |
-| Product Service | REST | Basic Auth | No Request ID | normally distributed, medium to high, dependent on endpoint | Pagination in API response |
+| Customer Service | REST | API Key | No request ID | constant, low | none |
+| Product Service | REST | Basic Auth | UUID Based | normally distributed, medium to high, dependent on endpoint | Pagination in API response |
 | Employee Service | REST | API Key | ? | Spikes of unpredictable high latency (i.e. service warm up behavior) | none |
 | OAuth 2 Authentication Server | REST | OAuth 2 | ? | ? | none |

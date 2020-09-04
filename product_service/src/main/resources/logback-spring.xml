@@ -16,7 +16,7 @@
     <logger name="at.technikum.masterproject" level="info" additivity="false">
       <appender-ref ref="CONSOLE"/>
     </logger>
-    <root level="${rootLogLevel:-info}">
+    <root level="${rootLogLevel:-debug}">
       <appender-ref ref="CONSOLE"/>
     </root>
   </springProfile>

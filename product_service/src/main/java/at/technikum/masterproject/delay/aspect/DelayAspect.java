@@ -1,8 +1,8 @@
 package at.technikum.masterproject.delay.aspect;
 
+import static at.technikum.masterproject.delay.DelayFactory.createDelayFromAnnotation;
 import static org.springframework.core.annotation.AnnotationUtils.findAnnotation;
 
-import at.technikum.masterproject.delay.DelayFactory;
 import at.technikum.masterproject.delay.annotation.FixedEndpointDelay;
 import at.technikum.masterproject.delay.annotation.NormallyDistributedEndpointDelay;
 import at.technikum.masterproject.delay.annotation.ProbabilisticEndpointDelay;
@@ -14,7 +14,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -22,17 +21,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class DelayAspect {
 
-  DelayFactory delayFactory;
-
-  @Autowired
-  public DelayAspect(DelayFactory delayFactory) {
-    this.delayFactory = delayFactory;
-  }
-
   @Around("@annotation(at.technikum.masterproject.delay.annotation.FixedEndpointDelay)")
   public Object delayExecutionWithFixedDuration(ProceedingJoinPoint joinPoint) throws Throwable {
     FixedEndpointDelay annotation = extractAnnotation(joinPoint, FixedEndpointDelay.class);
-    Delay delay = delayFactory.createDelayFromAnnotation(annotation);
+    Delay delay = createDelayFromAnnotation(annotation);
 
     delayResponse(delay);
 
@@ -43,7 +35,7 @@ public class DelayAspect {
   public Object delayExecutionWithNormallyDistributedDuration(ProceedingJoinPoint joinPoint)
       throws Throwable {
     NormallyDistributedEndpointDelay annotation = extractAnnotation(joinPoint, NormallyDistributedEndpointDelay.class);
-    Delay delay = delayFactory.createDelayFromAnnotation(annotation);
+    Delay delay = createDelayFromAnnotation(annotation);
 
     delayResponse(delay);
 
@@ -53,7 +45,7 @@ public class DelayAspect {
   @Around("@annotation(at.technikum.masterproject.delay.annotation.ProbabilisticEndpointDelay)")
   public Object delayExecutionWithProbability(ProceedingJoinPoint joinPoint) throws Throwable {
     ProbabilisticEndpointDelay annotation = extractAnnotation(joinPoint, ProbabilisticEndpointDelay.class);
-    Delay delay = delayFactory.createDelayFromAnnotation(annotation);
+    Delay delay = createDelayFromAnnotation(annotation);
 
     delayResponse(delay);
 

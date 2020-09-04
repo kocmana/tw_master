@@ -1,4 +1,4 @@
-package at.technikum.masterproject.model.dto;
+package at.technikum.masterproject.model.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

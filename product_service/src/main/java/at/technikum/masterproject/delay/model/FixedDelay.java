@@ -1,14 +1,15 @@
-package at.technikum.masterproject.model.delay;
+package at.technikum.masterproject.delay.model;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class FixedDelay implements Delay {
 
-  private int delayInMs;
+  private final int delayInMs;
 
   @Override
   public int getDelayInMs() {
     return delayInMs;
   }
+
 }

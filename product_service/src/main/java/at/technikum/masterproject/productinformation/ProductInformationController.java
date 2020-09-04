@@ -1,7 +1,7 @@
 package at.technikum.masterproject.productinformation;
 
-import at.technikum.masterproject.aspect.NormallyDistributedEndpointDelay;
-import at.technikum.masterproject.aspect.ProbabilisticEndpointDelay;
+import at.technikum.masterproject.delay.annotation.NormallyDistributedEndpointDelay;
+import at.technikum.masterproject.delay.annotation.ProbabilisticEndpointDelay;
 import at.technikum.masterproject.productinformation.model.Product;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

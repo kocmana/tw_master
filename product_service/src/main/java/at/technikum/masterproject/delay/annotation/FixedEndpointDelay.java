@@ -1,4 +1,4 @@
-package at.technikum.masterproject.aspect;
+package at.technikum.masterproject.delay.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,9 +7,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface ProbabilisticEndpointDelay {
+public @interface FixedEndpointDelay {
 
-  float probability() default 0;
-  int duration() default 0;
+  int delayInMs() default 0;
 
 }

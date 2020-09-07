@@ -5,3 +5,4 @@
 * create service overview in readme.md and more in detail as separate document
 * create aspect for delaying responses
 * extract cross cutting concerns in library module
+* add product service uuid to header by default (via uuid interceptor)

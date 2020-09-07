@@ -11,12 +11,14 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class UuidInterceptor extends HandlerInterceptorAdapter {
 
   private static final String UUID_KEY = "uuid";
+  private static final String HEADER_NAME = "X-Request-ID";
 
   @Override
   public boolean preHandle(HttpServletRequest request, final HttpServletResponse response, final Object handler) {
     UUID requestUuid = UUID.randomUUID();
     setUuidInMdcContext(requestUuid);
     setUuidAsRequestAttribute(request, requestUuid);
+    setUuidAsResponseHeader(response, requestUuid);
     return true;
   }
 
@@ -32,6 +34,10 @@ public class UuidInterceptor extends HandlerInterceptorAdapter {
 
   private void setUuidAsRequestAttribute(HttpServletRequest request, final UUID requestUuid) {
     request.setAttribute(UUID_KEY, requestUuid.toString());
+  }
+
+  private void setUuidAsResponseHeader(HttpServletResponse response, UUID requestUuid) {
+    response.addHeader(HEADER_NAME, requestUuid.toString());
   }
 
 }

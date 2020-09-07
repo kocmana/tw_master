@@ -27,7 +27,8 @@
     <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <!-- Checkstyle Integration -->
+    <!-- Development and Documentation -->
+    <springfox.version>3.0.0</springfox.version>
     <maven-checkstyle-plugin.version>3.1.0</maven-checkstyle-plugin.version>
     <checkstyle.version>8.19</checkstyle.version>
   </properties>
@@ -51,7 +52,7 @@
       <artifactId>spring-boot-starter-aop</artifactId>
     </dependency>
 
-    <!-- Development -->
+    <!-- Development and Documentation -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -60,6 +61,11 @@
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-boot-starter</artifactId>
+      <version>${springfox.version}</version>
     </dependency>
 
     <!-- Testing -->

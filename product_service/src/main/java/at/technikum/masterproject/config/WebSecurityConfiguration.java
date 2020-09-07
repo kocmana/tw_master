@@ -12,12 +12,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class BasicAuthSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private final BasicAuthEntryPoint authenticationEntryPoint;
 
   @Autowired
-  public BasicAuthSecurityConfigurerAdapter(BasicAuthEntryPoint authenticationEntryPoint) {
+  public WebSecurityConfiguration(BasicAuthEntryPoint authenticationEntryPoint) {
     this.authenticationEntryPoint = authenticationEntryPoint;
   }
 
@@ -32,11 +32,20 @@ public class BasicAuthSecurityConfigurerAdapter extends WebSecurityConfigurerAda
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable()
         .authorizeRequests()
-        .antMatchers("/").permitAll()
-        .anyRequest().authenticated()
+        .antMatchers(generateWhitelist())
+        .permitAll()
+        .anyRequest()
+        .authenticated()
         .and()
         .httpBasic()
         .authenticationEntryPoint(authenticationEntryPoint);
+  }
+
+  private String[] generateWhitelist() {
+    return new String[]{
+        "/swagger",
+        "/actuator/**"
+    };
   }
 
   @Bean

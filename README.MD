@@ -31,8 +31,9 @@ Results should focus around these three core aspects:
 * Maven 
 
 ### Additional Technologies/Frameworks/Libraries
-* Lombok
-* Springfox
+* Lombok to reduce boilerplate code
+* Springfox for endpoint documentation
+* Mapstruct for DTO mappings
 
 ## Mock Service Overview
 

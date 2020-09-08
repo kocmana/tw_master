@@ -1,8 +1,10 @@
 package at.technikum.masterproject.productreview;
 
 import at.technikum.masterproject.productreview.model.ProductReview;
+import at.technikum.masterproject.productreview.model.ProductReviewNotFoundException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +17,15 @@ class ProductReviewService {
     this.productReviewRepository = productReviewRepository;
   }
 
+  List<ProductReview> getAllReviews(Pageable pageable){
+    return productReviewRepository.findAll(pageable).getContent();
+  }
+
+  ProductReview getReviewById(int reviewId){
+    return productReviewRepository.findById(reviewId)
+        .orElseThrow(()->generateReviewNotFoundException(reviewId));
+  }
+
   List<ProductReview> getReviewsForProduct(int productId) {
     return productReviewRepository.findByProductId(productId);
   }
@@ -23,8 +34,20 @@ class ProductReviewService {
     return productReviewRepository.findByCustomerId(customerId);
   }
 
-  ProductReview saveReview(ProductReview productReview) {
-    return productReviewRepository.save(productReview);
+  int saveReview(ProductReview productReview) {
+    ProductReview savedReview = productReviewRepository.save(productReview);
+    return savedReview.getId();
+  }
+
+  void updateReview(ProductReview productReview) {
+    ProductReview oldProductReview = getReviewById(productReview.getId());
+    productReview.setProduct(oldProductReview.getProduct());
+    productReviewRepository.save(productReview);
+  }
+
+  private ProductReviewNotFoundException generateReviewNotFoundException(int reviewId){
+    String message = String.format("No product review with ID %d found.", reviewId);
+    return new ProductReviewNotFoundException(message);
   }
 
 }

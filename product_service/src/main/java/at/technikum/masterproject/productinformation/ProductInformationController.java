@@ -3,8 +3,8 @@ package at.technikum.masterproject.productinformation;
 import at.technikum.masterproject.delay.annotation.FixedEndpointDelay;
 import at.technikum.masterproject.delay.annotation.NormallyDistributedEndpointDelay;
 import at.technikum.masterproject.delay.annotation.ProbabilisticEndpointDelay;
+import at.technikum.masterproject.model.ElementCreationResponse;
 import at.technikum.masterproject.productinformation.model.Product;
-import at.technikum.masterproject.productinformation.model.dto.ProductCreationResponse;
 import at.technikum.masterproject.productinformation.model.dto.ProductDto;
 import at.technikum.masterproject.productinformation.model.mapper.ProductMapper;
 import java.util.List;
@@ -55,10 +55,10 @@ public class ProductInformationController {
 
   @PostMapping
   @FixedEndpointDelay(delayInMs = 100)
-  public ResponseEntity<ProductCreationResponse> saveProduct(@RequestBody @Valid ProductDto productDto) {
+  public ResponseEntity<ElementCreationResponse> saveProduct(@RequestBody @Valid ProductDto productDto) {
     Product productToSave = productMapper.productDtoToProduct(productDto);
     int idOfNewProduct = productInformationService.saveNewProduct(productToSave);
-    return ResponseEntity.ok(new ProductCreationResponse(idOfNewProduct));
+    return ResponseEntity.ok(new ElementCreationResponse(idOfNewProduct));
   }
 
   @PatchMapping

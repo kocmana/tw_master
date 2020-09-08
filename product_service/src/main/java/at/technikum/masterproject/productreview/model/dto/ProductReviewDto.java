@@ -16,6 +16,7 @@ public class ProductReviewDto {
   private int id;
   @NotNull
   private int customerId;
+  private int productId;
   @Min(value = 0) @Max(value = 5)
   private int stars;
   @Length(max = 500)

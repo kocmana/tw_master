@@ -3,7 +3,6 @@ package at.technikum.masterproject.productinformation;
 import at.technikum.masterproject.productinformation.model.Product;
 import at.technikum.masterproject.productinformation.model.ProductInformationNotFoundException;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -38,10 +37,7 @@ public class ProductInformationService {
   }
 
   void updateProduct(Product product) {
-    Optional<Product> productToBeUpdated = productInformationRepository.findById(product.getId());
-    if (productToBeUpdated.isEmpty()){
-      throw generateNotFoundException(product.getId());
-    }
+    retrieveProductById(product.getId());
     productInformationRepository.save(product);
   }
 

@@ -9,6 +9,7 @@ import at.technikum.masterproject.productinformation.model.dto.ProductDto;
 import at.technikum.masterproject.productinformation.model.mapper.ProductMapper;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ public class ProductInformationController {
 
   @PostMapping
   @FixedEndpointDelay(delayInMs = 100)
-  public ResponseEntity<ProductCreationResponse> saveProduct(@RequestBody ProductDto productDto) {
+  public ResponseEntity<ProductCreationResponse> saveProduct(@RequestBody @Valid ProductDto productDto) {
     Product productToSave = productMapper.productDtoToProduct(productDto);
     int idOfNewProduct = productInformationService.saveNewProduct(productToSave);
     return ResponseEntity.ok(new ProductCreationResponse(idOfNewProduct));
@@ -62,7 +63,7 @@ public class ProductInformationController {
 
   @PatchMapping
   @FixedEndpointDelay(delayInMs = 100)
-  public void updateProductInformation(@RequestBody ProductDto productDto) {
+  public void updateProductInformation(@RequestBody @Valid ProductDto productDto) {
     productInformationService.updateProduct(productMapper.productDtoToProduct(productDto));
   }
 }

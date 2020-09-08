@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-class ProductInformationService {
+public class ProductInformationService {
 
   private final ProductInformationRepository productInformationRepository;
 
@@ -27,7 +27,7 @@ class ProductInformationService {
     return productInformationRepository.findAll(pageable).toList();
   }
 
-  Product retrieveProductById(int productId) {
+  public Product retrieveProductById(int productId) {
     return productInformationRepository.findById(productId)
         .orElseThrow(() -> generateNotFoundException(productId));
   }

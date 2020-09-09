@@ -1,6 +1,6 @@
-package at.technikum.masterproject.customer;
+package at.technikum.masterproject.customerinformation;
 
-import at.technikum.masterproject.customer.model.Customer;
+import at.technikum.masterproject.customerinformation.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -25,7 +25,7 @@ public class UuidInterceptor extends HandlerInterceptorAdapter {
   @Override
   public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response,
       final Object handler, final Exception ex) {
-    request.removeAttribute("uuid");
+    request.removeAttribute(UUID_KEY);
   }
 
   private void setUuidInMdcContext(final UUID requestUuid) {

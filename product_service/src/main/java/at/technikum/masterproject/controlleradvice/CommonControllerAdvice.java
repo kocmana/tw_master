@@ -1,6 +1,7 @@
 package at.technikum.masterproject.controlleradvice;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import at.technikum.masterproject.model.error.ErrorResponse;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class CommonControllerAdvice {
 
   private static final String UUID_ATTRIBUTE = "uuid";
+  private static final String GENERIC_ERROR_MESSAGE = "An error has occured.";
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(final MethodArgumentNotValidException ex,
@@ -59,6 +61,16 @@ public class CommonControllerAdvice {
     return ResponseEntity
         .status(NOT_FOUND)
         .body(new ErrorResponse(retrieveRequestUuid(request), ex.getMessage()));
+  }
+
+  @ExceptionHandler(Exception.class)
+  ResponseEntity<ErrorResponse> handleGenericException(final Exception ex,
+      final HttpServletRequest request) {
+    log.warn("Uncaught exception has occurred: {}", ex.getMessage());
+
+    return ResponseEntity
+        .status(INTERNAL_SERVER_ERROR)
+        .body(new ErrorResponse(retrieveRequestUuid(request), GENERIC_ERROR_MESSAGE));
   }
 
   private String retrieveRequestUuid(final HttpServletRequest request) {

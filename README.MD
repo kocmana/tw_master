@@ -19,7 +19,7 @@ The main research topics should be:
 
 ##  Expected Results
 Results should focus around these three core aspects:
-* A prove of concept of implementing GraphQL in a heterogenous distributed architecture
+* A proof of concept of implementing GraphQL in a heterogeneous distributed architecture
 * Insights into potential issues and shortcomings of GraphQL when used as integration layer as well as potential solutions to those issues
 * Recommendations for use cases where GraphQL should and should not be applied as integration layer
 
@@ -36,10 +36,9 @@ Results should focus around these three core aspects:
 * Mapstruct for DTO mappings
 
 ## Mock Service Overview
-
 | Service | Interface | Authentication | Request Logging | Latency | Other Challenges |
 |---------|-----------|----------------|-----------------|---------|------------------|
 | Customer Service | REST | API Key | No request ID | constant, low | none |
 | Product Service | REST | Basic Auth | UUID Based | normally distributed, medium to high, dependent on endpoint | Pagination in API response |
-| Employee Service | REST | API Key | ? | Spikes of unpredictable high latency (i.e. service warm up behavior) | none |
+| ECommerce Service | REST | API Key | ? | Spikes of unpredictable high latency (i.e. service warm up behavior) | none |
 | OAuth 2 Authentication Server | REST | OAuth 2 | ? | ? | none |

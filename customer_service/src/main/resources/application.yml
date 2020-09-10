@@ -1,2 +1,16 @@
 server:
   port: 8082
+
+spring:
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: none
+  resources:
+    add-mappings: true
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: swagger

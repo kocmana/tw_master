@@ -2,7 +2,7 @@ package at.technikum.masterproject.customerinformation.model.dto;
 
 import at.technikum.masterproject.customerinformation.model.Gender;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,18 +14,18 @@ public class CustomerDto {
 
   private Integer customerId;
   private Gender gender;
-  @NotNull
+  @NotBlank
   private String firstName;
-  @NotNull
+  @NotBlank
   private String lastName;
   private String street;
-  private String door;
+  private String houseNumber;
   private String top;
   private String postalCode;
-  @NotNull
+  @NotBlank
   private String country;
   private String telephoneNumber;
-  @NotNull
+  @NotBlank
   @Email
   private String emailAddress;
 }

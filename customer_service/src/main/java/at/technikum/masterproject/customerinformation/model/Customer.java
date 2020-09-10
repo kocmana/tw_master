@@ -1,5 +1,6 @@
 package at.technikum.masterproject.customerinformation.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,17 +21,21 @@ public class Customer {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "customer_id")
   private Integer customerId;
   @Enumerated(EnumType.STRING)
   private Gender gender;
+  @Column(name = "first_name")
   private String firstName;
+  @Column(name = "last_name")
   private String lastName;
   private String street;
-  private String door;
+  private String houseNumber;
   private String top;
+  @Column(name = "postal_code")
   private String postalCode;
   private String country;
   private String telephoneNumber;
+  @Column(name = "email_address")
   private String emailAddress;
-
 }

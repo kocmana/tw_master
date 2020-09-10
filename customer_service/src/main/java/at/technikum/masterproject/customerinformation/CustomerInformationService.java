@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-class CustomerInformationService {
+public class CustomerInformationService {
 
-  CustomerInformationRepository customerInformationRepository;
+  private final CustomerInformationRepository customerInformationRepository;
 
   @Autowired
   CustomerInformationService(CustomerInformationRepository customerInformationRepository) {
@@ -20,7 +20,11 @@ class CustomerInformationService {
     return customerInformationRepository.findAll();
   }
 
-  Customer retrieveCustomerById(int customerId){
+  public List<Customer> retrieveCustomersByIds(List<Integer> customerIds){
+    return customerInformationRepository.findAllById(customerIds);
+  }
+
+  public Customer retrieveCustomerById(int customerId){
     return customerInformationRepository.findById(customerId).orElseThrow(
         ()->generateCustomerNotFoundException(customerId));
   }

@@ -30,11 +30,13 @@ public class Customer {
   @Column(name = "last_name")
   private String lastName;
   private String street;
+  @Column(name = "house_number")
   private String houseNumber;
   private String top;
   @Column(name = "postal_code")
   private String postalCode;
   private String country;
+  @Column(name = "telephone_number")
   private String telephoneNumber;
   @Column(name = "email_address")
   private String emailAddress;

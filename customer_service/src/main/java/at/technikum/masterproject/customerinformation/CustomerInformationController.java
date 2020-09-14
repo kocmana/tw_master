@@ -5,6 +5,7 @@ import at.technikum.masterproject.customerinformation.model.dto.CustomerDto;
 import at.technikum.masterproject.customerinformation.model.mapper.CustomerMapper;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +46,7 @@ class CustomerInformationController {
   }
 
   @PostMapping
-  public ResponseEntity<CustomerDto> saveCustomer(@RequestBody CustomerDto customerDto) {
+  public ResponseEntity<CustomerDto> saveCustomer(@RequestBody @Valid CustomerDto customerDto) {
     customerDto.setCustomerId(null);
     Customer customer = customerMapper.customerDtoToCustomer(customerDto);
     Customer savedCustomer = customerInformationService.saveCustomer(customer);

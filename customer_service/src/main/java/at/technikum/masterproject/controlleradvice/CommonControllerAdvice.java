@@ -7,6 +7,7 @@ import at.technikum.masterproject.customerinformation.model.CustomerNotFoundExce
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -24,6 +25,16 @@ public class CommonControllerAdvice {
     return ResponseEntity
         .status(NOT_FOUND)
         .body("Customer not found");
+  }
+
+  @ExceptionHandler(BadCredentialsException.class)
+  public ResponseEntity<String> handleBadCredentialsException(BadCredentialsException ex,
+      HttpServletRequest request) {
+    log.warn("Invalid Credentials were used.");
+
+    return ResponseEntity
+        .status(NOT_FOUND)
+        .body("Invalid Credentials.");
   }
 
   @ExceptionHandler(Exception.class)

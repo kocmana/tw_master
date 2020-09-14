@@ -1,56 +1,56 @@
 package at.technikum.masterproject.config;
 
+import at.technikum.masterproject.interceptor.ApiKeyAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  private final BasicAuthEntryPoint authenticationEntryPoint;
+  private final AuthenticationManager authenticationManager;
+  private final ApiKeyProperties apiKeyProperties;
 
   @Autowired
-  public WebSecurityConfiguration(BasicAuthEntryPoint authenticationEntryPoint) {
-    this.authenticationEntryPoint = authenticationEntryPoint;
-  }
-
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    auth.inMemoryAuthentication()
-        .withUser("admin").password(passwordEncoder().encode("adminPassword"))
-        .authorities("ROLE_USER");
+  public WebSecurityConfiguration(AuthenticationManager authenticationManager,
+      ApiKeyProperties apiKeyProperties) {
+    this.authenticationManager = authenticationManager;
+    this.apiKeyProperties = apiKeyProperties;
   }
 
   @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.csrf().disable()
-        .authorizeRequests()
-        .antMatchers(generateWhitelist())
-        .permitAll()
-        .anyRequest()
-        .authenticated()
-        .and()
-        .httpBasic()
-        .authenticationEntryPoint(authenticationEntryPoint);
-  }
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+    ApiKeyAuthenticationFilter filter = new ApiKeyAuthenticationFilter(apiKeyProperties.getHeader());
+    filter.setAuthenticationManager(authenticationManager);
 
-  private String[] generateWhitelist() {
-    return new String[]{
-        "/swagger",
-        "/actuator/**"
-    };
+    httpSecurity.
+        antMatcher("/**").
+        csrf().disable().
+        sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
+        and().addFilter(filter)
+        .authorizeRequests()
+        .anyRequest().authenticated();
   }
 
   @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
+  AuthenticationManager generateAuthenticationManager(){
+    return authentication -> {
+      String principal = (String) authentication.getPrincipal();
+      if (!apiKeyProperties.getValues().contains(principal))
+      {
+        throw new BadCredentialsException("Invalid Credentials.");
+      }
+      authentication.setAuthenticated(true);
+      return authentication;
+    };
   }
+
 
 }

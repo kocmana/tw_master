@@ -14,3 +14,11 @@ springfox:
     swagger:
       v2:
         path: swagger
+
+customerservice:
+  api-key:
+    header: x-api-key
+    values:
+      - supersecret
+      - megasecret
+      - toptoptopsecret

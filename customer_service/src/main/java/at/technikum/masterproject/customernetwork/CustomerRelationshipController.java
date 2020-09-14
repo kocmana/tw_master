@@ -5,6 +5,7 @@ import at.technikum.masterproject.customernetwork.model.CustomerRelationship;
 import at.technikum.masterproject.customernetwork.model.dto.CustomerRelationshipDto;
 import at.technikum.masterproject.customernetwork.model.mapper.CustomerRelationshipMapper;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,7 @@ public class CustomerRelationshipController {
 
   @PostMapping
   public ResponseEntity<CustomerRelationshipDto> postNewCustomerRelationship(
-      @RequestBody CustomerRelationshipDto relationshipDto) {
+      @RequestBody @Valid CustomerRelationshipDto relationshipDto) {
     CustomerRelationship relationship = customerRelationshipMapper
         .customerRelationshipDtoToCustomerRelationship(relationshipDto);
     relationship = customerRelationshipService.saveCustomerRelationship(relationship);

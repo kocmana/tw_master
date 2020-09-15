@@ -39,8 +39,8 @@ class CustomerRelationshipService {
         .findByIdSourceCustomerId(customerId);
     List<Integer> targetCustomerIds = extractTargetCustomerIds(network);
     Map<Integer, Customer> targetCustomers = retrieveCustomerInformationForTargetCustomers(targetCustomerIds);
-    Map<RelationshipType, List<CustomerRelationshipId>> customersPerRelationshipType = groupCustomersPerRelationshipType(
-        network);
+    Map<RelationshipType, List<CustomerRelationshipId>> customersPerRelationshipType =
+        groupCustomersPerRelationshipType(network);
 
     return transformToCustomerNetworks(customersPerRelationshipType, targetCustomers);
   }

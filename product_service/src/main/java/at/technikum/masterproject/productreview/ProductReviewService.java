@@ -17,13 +17,13 @@ class ProductReviewService {
     this.productReviewRepository = productReviewRepository;
   }
 
-  List<ProductReview> getAllReviews(Pageable pageable){
+  List<ProductReview> getAllReviews(Pageable pageable) {
     return productReviewRepository.findAll(pageable).getContent();
   }
 
-  ProductReview getReviewById(int reviewId){
+  ProductReview getReviewById(int reviewId) {
     return productReviewRepository.findById(reviewId)
-        .orElseThrow(()->generateReviewNotFoundException(reviewId));
+        .orElseThrow(() -> generateReviewNotFoundException(reviewId));
   }
 
   List<ProductReview> getReviewsForProduct(int productId) {
@@ -45,7 +45,7 @@ class ProductReviewService {
     productReviewRepository.save(productReview);
   }
 
-  private ProductReviewNotFoundException generateReviewNotFoundException(int reviewId){
+  private ProductReviewNotFoundException generateReviewNotFoundException(int reviewId) {
     String message = String.format("No product review with ID %d found.", reviewId);
     return new ProductReviewNotFoundException(message);
   }

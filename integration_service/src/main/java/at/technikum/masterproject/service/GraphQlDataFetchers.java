@@ -4,7 +4,7 @@ import graphql.schema.DataFetcher;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GraphQLDataFetchers {
+public class GraphQlDataFetchers {
 
   public DataFetcher getProductInformationByIdDataFetcher() {
     return dataFetchingEnvironment -> {

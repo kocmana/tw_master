@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ProductReviewMapper {
 
-  @Mapping(source="product.id", target = "productId" )
+  @Mapping(source = "product.id", target = "productId")
   ProductReviewDto productReviewToProductReviewDto(ProductReview productReview);
 
   ProductReview productReviewDtoToProductReview(ProductReviewDto productReviewDto);

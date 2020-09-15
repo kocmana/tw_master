@@ -28,11 +28,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     ApiKeyAuthenticationFilter filter = new ApiKeyAuthenticationFilter(apiKeyProperties.getHeader());
     filter.setAuthenticationManager(authenticationManager);
 
-    httpSecurity.
-        antMatcher("/**").
-        csrf().disable().
-        sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-        and().addFilter(filter)
+    httpSecurity
+        .antMatcher("/**")
+        .csrf()
+        .disable()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and().addFilter(filter)
         .authorizeRequests()
         .anyRequest().authenticated();
   }

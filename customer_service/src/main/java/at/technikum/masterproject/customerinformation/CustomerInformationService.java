@@ -16,24 +16,24 @@ public class CustomerInformationService {
     this.customerInformationRepository = customerInformationRepository;
   }
 
-  List<Customer> retrieveAllCustomers(){
+  List<Customer> retrieveAllCustomers() {
     return customerInformationRepository.findAll();
   }
 
-  public List<Customer> retrieveCustomersByIds(List<Integer> customerIds){
+  public List<Customer> retrieveCustomersByIds(List<Integer> customerIds) {
     return customerInformationRepository.findAllById(customerIds);
   }
 
-  public Customer retrieveCustomerById(int customerId){
+  public Customer retrieveCustomerById(int customerId) {
     return customerInformationRepository.findById(customerId).orElseThrow(
-        ()->generateCustomerNotFoundException(customerId));
+        () -> generateCustomerNotFoundException(customerId));
   }
 
-  Customer saveCustomer(Customer customer){
+  Customer saveCustomer(Customer customer) {
     return customerInformationRepository.save(customer);
   }
 
-  Customer updateCustomer(Customer customer){
+  Customer updateCustomer(Customer customer) {
     retrieveCustomerById(customer.getCustomerId());
     return customerInformationRepository.save(customer);
   }

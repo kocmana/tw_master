@@ -1,4 +1,4 @@
-package at.technikum.masterproject.client.product_service;
+package at.technikum.masterproject.client.productservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;

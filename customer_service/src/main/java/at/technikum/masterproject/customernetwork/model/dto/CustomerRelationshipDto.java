@@ -1,16 +1,16 @@
 package at.technikum.masterproject.customernetwork.model.dto;
 
 import at.technikum.masterproject.customernetwork.model.RelationshipType;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class CustomerRelationshipDto {
 
-  @NotBlank
+  @NotNull
   private Integer sourceCustomerId;
-  @NotBlank
+  @NotNull
   private RelationshipType relationshipType;
-  @NotBlank
+  @NotNull
   private Integer targetCustomerId;
 }

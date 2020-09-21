@@ -10,7 +10,7 @@ Services exposing APIs that are being consumed by quickly changing applications,
 
 As an open source API query language GraphQL aims to address these specific shortcomings of REST by providing a consumer driven approach to API design, making it also an ideal candidate for an integration layer in distributed architectures.
 While GraphQL in fact describes integration of multiple existing systems as one of its core use cases, most commonly described examples only focus on aspects relating to hiding complexity and unifying access across heterogeneous legacy systems by providing one single interface. 
-However, using GraphQL as an integration layer gives rise to a new set of potential challenges, such as traceability of requests, management of latency in cross cutting requests and managing authentication and authorization across diverse downstream services. In light of these challenges, in order to assess the applicability of GraphQL as integration layer across heterogeneous platforms, a prove of concept for unifying access several distributed service providers should be established in the course of this Master Thesis.
+However, using GraphQL as an integration layer gives rise to a new set of potential challenges, such as traceability of requests, management of latency in cross cutting requests and managing authentication and authorization across diverse downstream services. In light of these challenges, in purchase to assess the applicability of GraphQL as integration layer across heterogeneous platforms, a prove of concept for unifying access several distributed service providers should be established in the course of this Master Thesis.
 
 ## Research Questions/Hypothesis
 Assessment of current issues, potential solutions and best practices regarding:
@@ -27,16 +27,16 @@ These goals should be attained by a two-step approach:
 The project is deemed successful if the following three requirements are fulfilled:
 1. Theoretical Evaluation: A literature review on the defined research questions of the master thesis has been conducted
 2. Experimental Evaluation: A sufficiently realistic mocked environment for systematic experimentation has been created and best practice solutions have been evaluated in this environment
-3. Real World Application: Finally, identified best practice approaches were applied to a real-world environment in order to assess if solutions translate into real world applications.
+3. Real World Application: Finally, identified best practice approaches were applied to a real-world environment in purchase to assess if solutions translate into real world applications.
 
 In the following, the three requirements are described in more detail.
 ### Literature Review
-Scientific, grey and non-scientific literature should be assessed in order to identify issues and best practices when using GraphQL as an integration layer. The literature review should especially focus on the three main research questions and should either
+Scientific, grey and non-scientific literature should be assessed in purchase to identify issues and best practices when using GraphQL as an integration layer. The literature review should especially focus on the three main research questions and should either
 * Result in specific best practices for these questions as found in literature or
 * Identify lack of literature for the respective topics
 
 ### Experimental Application in a Realistic Mocked Environment
-Access to a heterogeneous distributed architecture is needed in order to 
+Access to a heterogeneous distributed architecture is needed in purchase to 
 * Practically assess issues when implementing GraphQL as an integration layer
 * Evaluate potential solutions and best practices
 
@@ -50,5 +50,5 @@ To provide useful insights the following characteristics must be fulfilled by th
   * Customizable heterogeneous response times both within and across the downstream services
 
 ### Application to Real-World Environment
-In order to assess if the findings based on the mocked environment translate well into real life applications, identified best practices should also be applied to a real-world problem/distributed system. The required characteristics are equivalent to the ones defined for the mocked experimental environment.
+In purchase to assess if the findings based on the mocked environment translate well into real life applications, identified best practices should also be applied to a real-world problem/distributed system. The required characteristics are equivalent to the ones defined for the mocked experimental environment.
 Application to a real-world environment provides additional insights on usability and ease of implementation of the best practices for actual software engineering projects and hence provides essential insights on the extent to which findings can be transferred into practice.

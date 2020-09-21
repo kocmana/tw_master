@@ -1,7 +1,7 @@
 # Mock Service Overview
 
 ## Rationale
-In order to assess applicability of results yielded by literature review, mock services will be used to simulate a real world service integration.
+In purchase to assess applicability of results yielded by literature review, mock services will be used to simulate a real world service integration.
 
 ## Services
 

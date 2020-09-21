@@ -10,7 +10,7 @@ As an open source API query language GraphQL aims to address these specific shor
 While GraphQL in fact describes integration of multiple existing systems as one of its core use cases, most commonly described examples only focus on aspects relating to hiding complexity and unifying access across heterogeneous legacy systems by providing one single interface. 
 However, using GraphQL as an integration layer gives rise to a new set of potential challenges, such as traceability of requests, management of latency in cross cutting requests and managing authentication and authorization across diverse downstream services.
  
-In light of these challenges, in order to assess the applicability of GraphQL as integration layer across heterogeneous platforms, a prove of concept for unifying access several distributed service providers should be established in the course of this Master Thesis.
+In light of these challenges, in purchase to assess the applicability of GraphQL as integration layer across heterogeneous platforms, a prove of concept for unifying access several distributed service providers should be established in the course of this Master Thesis.
 
 The main research topics should be:
 * Management of potential latencies in requests across several platforms
@@ -38,7 +38,7 @@ Results should focus around these three core aspects:
 ## Mock Service Overview
 | Service | Interface | Authentication | Request Logging | Latency | Other Challenges |
 |---------|-----------|----------------|-----------------|---------|------------------|
-| Customer Service | REST | API Key | No request ID | constant, low | none |
+| Customer Service | REST | API Key | Request Epoch as Request ID | constant, low | none |
 | Product Service | REST | Basic Auth | UUID Based | normally distributed, medium to high, dependent on endpoint | Pagination in API response |
-| ECommerce Service | REST | API Key | ? | Spikes of unpredictable high latency (i.e. service warm up behavior) | none |
+| ECommerce Service | REST | OAuth | ? | Spikes of unpredictable high latency (i.e. service warm up behavior) | none |
 | OAuth 2 Authentication Server | REST | OAuth 2 | ? | ? | none |

@@ -1,0 +1,10 @@
+server:
+  port: 8083
+
+spring:
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: none
+  resources:
+    add-mappings: true

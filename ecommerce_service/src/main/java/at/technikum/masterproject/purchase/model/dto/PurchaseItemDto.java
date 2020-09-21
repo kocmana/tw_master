@@ -1,6 +1,6 @@
-package at.technikum.masterproject.order.model.dto;
+package at.technikum.masterproject.purchase.model.dto;
 
-import at.technikum.masterproject.order.model.Order;
+import at.technikum.masterproject.purchase.model.Purchase;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,9 +8,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OrderItemDto {
+public class PurchaseItemDto {
 
-  private Order order;
+  private Purchase purchase;
   private Integer productId;
   private Integer amount;
   private Integer pricePerUnit;

@@ -1,8 +1,10 @@
-package at.technikum.masterproject.order.model;
+package at.technikum.masterproject.purchase.model;
 
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,9 +13,9 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "order")
+@Table(name = "purchase")
 @Data
-public class Order {
+public class Purchase {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +23,8 @@ public class Order {
   @Column(name = "customer_id")
   private Integer customerId;
   @OneToMany
-  private List<OrderItem> items;
+  private List<PurchaseItem> items;
   @Column(name = "payment_type")
+  @Enumerated(value = EnumType.STRING)
   private PaymentType paymentType;
 }

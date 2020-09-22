@@ -1,11 +1,12 @@
 package at.technikum.masterproject.ecommerce.price;
 
+import static java.util.stream.Collectors.toUnmodifiableList;
+
 import at.technikum.masterproject.ecommerce.price.model.Price;
 import at.technikum.masterproject.ecommerce.price.model.dto.PriceDto;
 import at.technikum.masterproject.ecommerce.price.model.mapper.PriceMapper;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +33,25 @@ public class PriceController {
   }
 
   @GetMapping("/product/{productId}")
-  public ResponseEntity<PriceDto> getCurrentPriceForProduct(@PathVariable @Valid @NotNull Integer productId) {
+  public ResponseEntity<PriceDto> getCurrentPriceForProduct(
+      @PathVariable @Valid @NotNull Integer productId) {
     Price price = priceService.getCurrentPriceForProduct(productId);
-    return ResponseEntity.ok(priceMapper.priceToPriceDto(price));
+    PriceDto priceDto = priceMapper.priceToPriceDto(price);
+    return ResponseEntity.ok(priceDto);
   }
 
   @GetMapping("/product/{productId}/all")
-  public ResponseEntity<List<PriceDto>> getAllPricesForProduct(@PathVariable @Valid @NotNull Integer productId) {
+  public ResponseEntity<List<PriceDto>> getAllPricesForProduct(
+      @PathVariable @Valid @NotNull Integer productId) {
     List<Price> prices = priceService.getAllPricesForProduct(productId);
     return ResponseEntity.ok(toDtos(prices));
   }
 
   @GetMapping(value = "/product/{productId}", params = {"from", "to"})
-  public ResponseEntity<List<PriceDto>> getPricesForProductAndTimeframe(@PathVariable @Valid @NotNull Integer productId,
-      @RequestParam @Valid @NotNull LocalDateTime from, @RequestParam @Valid @NotNull LocalDateTime to) {
+  public ResponseEntity<List<PriceDto>> getPricesForProductAndTimeframe(
+      @PathVariable @Valid @NotNull Integer productId,
+      @RequestParam @Valid @NotNull LocalDateTime from,
+      @RequestParam @Valid @NotNull LocalDateTime to) {
     List<Price> prices = priceService.getPricesForProductAndTimeframe(productId, from, to);
 
     return ResponseEntity.ok(toDtos(prices));
@@ -62,7 +68,7 @@ public class PriceController {
   private List<PriceDto> toDtos(List<Price> prices) {
     return prices.stream()
         .map(priceMapper::priceToPriceDto)
-        .collect(Collectors.toUnmodifiableList());
+        .collect(toUnmodifiableList());
   }
 
 }

@@ -2,6 +2,7 @@ package at.technikum.masterproject.ecommerce.controlleradvice;
 
 import at.technikum.masterproject.ecommerce.model.ErrorResponse;
 import at.technikum.masterproject.ecommerce.price.model.PriceNotFoundException;
+import at.technikum.masterproject.ecommerce.purchase.model.PurchaseNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,8 @@ public class CommonControllerAdvice {
 
   private static final String GENERIC_ERROR_MESSAGE = "An error has occurred.";
 
-  @ExceptionHandler(PriceNotFoundException.class)
-  ResponseEntity<ErrorResponse> handlePriceNotFoundException(PriceNotFoundException exception) {
+  @ExceptionHandler({PurchaseNotFoundException.class, PriceNotFoundException.class})
+  ResponseEntity<ErrorResponse> handlePriceNotFoundException(Exception exception) {
     log.warn(exception.getMessage());
 
     return ResponseEntity
@@ -35,7 +36,7 @@ public class CommonControllerAdvice {
 
   @ExceptionHandler(Exception.class)
   ResponseEntity<ErrorResponse> handleGenericException(Exception exception) {
-    log.error("Caught unknown exception: {}", exception.getMessage());
+    log.error("Caught unknown exception: {}, {}", exception.getMessage(), exception.getStackTrace());
 
     return ResponseEntity
         .status(HttpStatus.INTERNAL_SERVER_ERROR)

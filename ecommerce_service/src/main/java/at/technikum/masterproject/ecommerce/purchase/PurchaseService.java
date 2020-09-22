@@ -16,11 +16,11 @@ public class PurchaseService {
     this.purchaseRepository = purchaseRepository;
   }
 
-  public List<Purchase> getPurchasesForCustomer(Integer customerId) {
+  public List<Purchase> getPurchasesForCustomer(int customerId) {
     return purchaseRepository.findPurchasesByCustomerId(customerId);
   }
 
-  public Purchase getPurchaseById(Long purchaseId) {
+  public Purchase getPurchaseById(long purchaseId) {
     return purchaseRepository.findById(purchaseId)
         .orElseThrow(() -> generatePurchaseNotFoundException(purchaseId));
   }
@@ -30,8 +30,7 @@ public class PurchaseService {
     return savedPurchase.getId();
   }
 
-  private PurchaseNotFoundException generatePurchaseNotFoundException(Long purchaseId) {
-    String message = String.format("Purchase with ID %d not found", purchaseId);
-    return new PurchaseNotFoundException(message);
+  private PurchaseNotFoundException generatePurchaseNotFoundException(long purchaseId) {
+    return new PurchaseNotFoundException(purchaseId);
   }
 }

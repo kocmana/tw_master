@@ -1,5 +1,6 @@
 package at.technikum.masterproject.ecommerce.purchase.model;
 
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import lombok.Data;
 @Table(name = "purchase_item")
 @Data
 @IdClass(PurchaseItemId.class)
-public class PurchaseItem {
+public class PurchaseItem implements Serializable {
 
   @Id
   @ManyToOne(cascade = CascadeType.ALL)

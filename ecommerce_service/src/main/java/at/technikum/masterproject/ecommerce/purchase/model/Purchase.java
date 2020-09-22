@@ -1,5 +1,6 @@
 package at.technikum.masterproject.ecommerce.purchase.model;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import lombok.Data;
 @Entity
 @Table(name = "purchase")
 @Data
-public class Purchase {
+public class Purchase implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

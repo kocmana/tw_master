@@ -31,7 +31,7 @@ public class PurchaseController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<PurchaseDto> retrievePurchaseById(@PathVariable @Valid @NotNull Long id) {
+  public ResponseEntity<PurchaseDto> retrievePurchaseById(@PathVariable @Valid @NotNull long id) {
     Purchase purchase = purchaseService.getPurchaseById(id);
     return ResponseEntity.ok(purchaseMapper.purchaseToPurchaseDto(purchase));
   }

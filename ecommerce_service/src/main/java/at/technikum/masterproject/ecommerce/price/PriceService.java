@@ -8,21 +8,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PriceService {
+class PriceService {
 
   private final PriceRepository priceRepository;
 
   @Autowired
-  public PriceService(PriceRepository priceRepository) {
+  PriceService(PriceRepository priceRepository) {
     this.priceRepository = priceRepository;
   }
 
-  public Price getCurrentPriceForProduct(Integer productId) {
+  Price getCurrentPriceForProduct(Integer productId) {
     return priceRepository.findPriceByProductIdThatIsValidAtDateTime(productId, LocalDateTime.now())
         .orElseThrow(() -> generatePriceNotFoundException(productId));
   }
 
-  public List<Price> getPricesForProductAndTimeframe(Integer productId, LocalDateTime from, LocalDateTime to) {
+  private PriceNotFoundException generatePriceNotFoundException(Integer productId) {
+    return new PriceNotFoundException(productId);
+  }
+
+  List<Price> getPricesForProductAndTimeframe(Integer productId, LocalDateTime from, LocalDateTime to) {
     checkIfDateArgumentsAreValid(from, to);
     return priceRepository.getPricesByProductIdValidInTimeframe(productId, from, to);
   }
@@ -33,7 +37,7 @@ public class PriceService {
     }
   }
 
-  public Price savePriceForProduct(Price price) {
+  Price savePriceForProduct(Price price) {
     checkIfDateArgumentsAreValid(price.getValidFrom(), price.getValidTo());
     checkIfParallelPricingExists(price);
 
@@ -50,11 +54,7 @@ public class PriceService {
     }
   }
 
-  private PriceNotFoundException generatePriceNotFoundException(Integer productId) {
-    return new PriceNotFoundException(productId);
-  }
-
-  public List<Price> getAllPricesForProduct(Integer productId) {
+  List<Price> getAllPricesForProduct(Integer productId) {
     return priceRepository.findAllByProductIdOrderByValidFrom(productId);
   }
 }

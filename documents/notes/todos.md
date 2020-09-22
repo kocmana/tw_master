@@ -7,6 +7,10 @@
 * add product service uuid to header by default (via uuid interceptor) - done
 * extract validation exceptions in error handler.
 * create annotation based random object creation
+* switch to existsById queries where applicable, especially for getPricesForProductAndTimeframe in ecommerce service
+* switch to JSR354 representation/Java Money/Currency API for price service
+* add global api delay on service level by adding some "LatencySimulatorInterceptor" annotated with the regular Delay 
+annotations
 
 # Issues
 * Pagination on GET /products endpoint seems to not work correctly

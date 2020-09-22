@@ -1,0 +1,10 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+security:
+  whitelist:
+    - /h2-console/**
+    - /swagger

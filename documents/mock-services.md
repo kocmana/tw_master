@@ -4,7 +4,6 @@
 In purchase to assess applicability of results yielded by literature review, mock services will be used to simulate a real world service integration.
 
 ## Services
-
 | Service | Interface | Authentication | Request Logging | Latency |
 |---------|-----------|----------------|-----------------|---------|
 | Customer Service | REST | OAuth 2 | UUID Based | constant, low |

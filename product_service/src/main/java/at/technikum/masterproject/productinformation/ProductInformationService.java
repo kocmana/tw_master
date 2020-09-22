@@ -26,7 +26,7 @@ public class ProductInformationService {
     return productInformationRepository.findAll(pageable).toList();
   }
 
-  public Product retrieveProductById(int productId) {
+  public Product retrieveProductById(Integer productId) {
     return productInformationRepository.findById(productId)
         .orElseThrow(() -> generateNotFoundException(productId));
   }
@@ -37,13 +37,18 @@ public class ProductInformationService {
   }
 
   void updateProduct(Product product) {
-    retrieveProductById(product.getId());
+    if (productDoesNotExist(product.getId())){
+      throw generateNotFoundException(product.getId());
+    }
     productInformationRepository.save(product);
   }
 
+  public boolean productDoesNotExist(Integer productId){
+    return !productInformationRepository.existsById(productId);
+  }
+
   private ProductInformationNotFoundException generateNotFoundException(int productId) {
-    String message = String.format("No product with ID %d found.", productId);
-    return new ProductInformationNotFoundException(message);
+    return new ProductInformationNotFoundException(productId);
   }
 
 }

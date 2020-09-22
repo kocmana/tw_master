@@ -1,14 +1,17 @@
 package at.technikum.masterproject.productreview;
 
+import static java.util.stream.Collectors.toUnmodifiableList;
+
 import at.technikum.masterproject.model.ElementCreationResponse;
 import at.technikum.masterproject.productinformation.ProductInformationService;
 import at.technikum.masterproject.productinformation.model.Product;
+import at.technikum.masterproject.productinformation.model.ProductInformationNotFoundException;
 import at.technikum.masterproject.productreview.model.ProductReview;
 import at.technikum.masterproject.productreview.model.dto.ProductReviewDto;
 import at.technikum.masterproject.productreview.model.mapper.ProductReviewMapper;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -44,23 +47,29 @@ public class ProductReviewController {
   }
 
   @GetMapping("/product/{productId}")
-  public ResponseEntity<List<ProductReviewDto>> getReviewsForProduct(@PathVariable Integer productId) {
-    //implicitly checks if the productId exists.
+  public ResponseEntity<List<ProductReviewDto>> getReviewsForProduct(
+      @PathVariable @Valid @NotNull int productId) {
+    if (productInformationService.productDoesNotExist(productId)) {
+      throw new ProductInformationNotFoundException(productId);
+    }
     productInformationService.retrieveProductById(productId);
     List<ProductReview> productReviews = productReviewService.getReviewsForProduct(productId);
     return toProductReviewResponse(productReviews);
   }
 
   @GetMapping("/customer/{customerId}")
-  public ResponseEntity<List<ProductReviewDto>> getReviewsForCustomer(@PathVariable Integer customerId) {
+  public ResponseEntity<List<ProductReviewDto>> getReviewsForCustomer(
+      @PathVariable @Valid @NotNull int customerId) {
     List<ProductReview> productReviews = productReviewService.getReviewsForCustomer(customerId);
     return toProductReviewResponse(productReviews);
   }
 
   @PostMapping("/product/{productId}")
-  public ResponseEntity<ElementCreationResponse> postReview(@PathVariable Integer productId,
+  public ResponseEntity<ElementCreationResponse> postReview(
+      @PathVariable @Valid @NotNull Integer productId,
       @RequestBody @Valid ProductReviewDto productReviewDto) {
-    ProductReview productReview = productReviewMapper.productReviewDtoToProductReview(productReviewDto);
+    ProductReview productReview = productReviewMapper
+        .productReviewDtoToProductReview(productReviewDto);
     Product reviewedProduct = productInformationService.retrieveProductById(productId);
     productReview.setProduct(reviewedProduct);
     int reviewId = productReviewService.saveReview(productReview);
@@ -69,14 +78,16 @@ public class ProductReviewController {
 
   @PatchMapping()
   public void updateReview(@RequestBody @Valid ProductReviewDto productReviewDto) {
-    ProductReview productReview = productReviewMapper.productReviewDtoToProductReview(productReviewDto);
+    ProductReview productReview = productReviewMapper
+        .productReviewDtoToProductReview(productReviewDto);
     productReviewService.updateReview(productReview);
   }
 
-  private ResponseEntity<List<ProductReviewDto>> toProductReviewResponse(List<ProductReview> productReviews) {
+  private ResponseEntity<List<ProductReviewDto>> toProductReviewResponse(
+      List<ProductReview> productReviews) {
     List<ProductReviewDto> productReviewDtos = productReviews.stream()
         .map(productReviewMapper::productReviewToProductReviewDto)
-        .collect(Collectors.toUnmodifiableList());
+        .collect(toUnmodifiableList());
     return ResponseEntity.ok(productReviewDtos);
   }
 

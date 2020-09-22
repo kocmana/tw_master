@@ -46,8 +46,7 @@ class ProductReviewService {
   }
 
   private ProductReviewNotFoundException generateReviewNotFoundException(int reviewId) {
-    String message = String.format("No product review with ID %d found.", reviewId);
-    return new ProductReviewNotFoundException(message);
+    return new ProductReviewNotFoundException(reviewId);
   }
 
 }

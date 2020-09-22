@@ -1,0 +1,764 @@
+{
+	"info": {
+		"_postman_id": "62a02356-ac34-4b4b-b894-938550af0420",
+		"name": "Master Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Product Service",
+			"item": [
+				{
+					"name": "Product Information",
+					"item": [
+						{
+							"name": "Get all Products",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8081/product",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Product by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8081/product/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"product",
+										"1"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save Product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Hammer\",\n    \"descripion\": \"If you have a hammer, everything looks like a thumb\",\n    \"weight\": 1.82,\n    \"dimension\": {\n        \"width\": 20,\n        \"height\": 40,\n        \"depth\": 10\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/product",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"product"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Product",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 60,\n    \"name\": \"Hammer\",\n    \"descripion\": \"If you have a thumb, everything looks like a hammer\",\n    \"weight\": 1.82,\n    \"dimension\": {\n        \"width\": 20,\n        \"height\": 40,\n        \"depth\": 10\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/product",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"product"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Product Review",
+					"item": [
+						{
+							"name": "Get all Product Reviews",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8081/review",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"review"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all Product Reviews by Product ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8081/review/product/:productId",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"review",
+										"product",
+										":productId"
+									],
+									"variable": [
+										{
+											"key": "productId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all Product Reviews by Customer ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8081/review/customer/:customerId",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"review",
+										"customer",
+										":customerId"
+									],
+									"variable": [
+										{
+											"key": "customerId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save Product Review",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customerId\": 1,\n    \"stars\": 5,\n    \"review\": \"Amazing\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8081/review/product/:productId",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"review",
+										"product",
+										":productId"
+									],
+									"variable": [
+										{
+											"key": "productId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Get Swagger Documentation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8081/swagger",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"swagger"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{productService.password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{productService.username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "022d1204-3a26-49a1-9107-bd5731e6bfa2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c64d28ed-de7b-46e6-a7d4-99b52a86396f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Customer Service",
+			"item": [
+				{
+					"name": "Customer Information",
+					"item": [
+						{
+							"name": "Get all Customers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8082/customer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"customer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Customer by Customer ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8082/customer/:customerId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"customer",
+										":customerId"
+									],
+									"variable": [
+										{
+											"key": "customerId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save Customer",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"gender\": \"MALE\",\n    \"firstName\": \"Maria\",\n    \"lastName\": \"Musterfrau\",\n    \"street\": \"Ottakringer Straße\",\n    \"houseNumber\": \"27/3\",\n    \"top\": \"3a\",\n    \"postalCode\": \"1160\",\n    \"country\": \"Österreich\",\n    \"telephoneNumber\": \"01/987 654 321\",\n    \"emailAddress\": \"maria.musterfrau@mail.da\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/customer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"customer"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Customer",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customerId\": 1,\n    \"gender\": \"FEMALE\",\n    \"firstName\": \"Maria\",\n    \"lastName\": \"Musterfrau\",\n    \"street\": \"Ottakringer Straße\",\n    \"houseNumber\": \"27/3\",\n    \"top\": \"3a\",\n    \"postalCode\": \"1160\",\n    \"country\": \"Österreich\",\n    \"telephoneNumber\": \"01/987 654 321\",\n    \"emailAddress\": \"maria.musterfrau@mail.da\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/customer",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"customer"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0f6501ef-a6bf-4749-8fa8-ca4c63baf031",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "c454e3c0-4342-436b-9cce-883634a93b9d",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Customer Relationships",
+					"item": [
+						{
+							"name": "Get Customer Networks",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"sourceCustomerId\": 1,\n    \"targetCustomerId\": 3,\n    \"relationshipType\": \"RECRUITED\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/network/:customerId",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"network",
+										":customerId"
+									],
+									"variable": [
+										{
+											"key": "customerId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Relationship",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"sourceCustomerId\": 1,\n    \"targetCustomerId\": 2,\n    \"interactionType\": \"GAVE_PRESENT\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/network/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"network",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Get Swagger Documentation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8082/swagger",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"swagger"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{customerService.apiKey}}",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "x-api-key",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "5b8bda64-9120-4029-9090-ec8720c8b546",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a6873429-bb3a-4348-97c8-d423e524a17f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ECommerce Service",
+			"item": [
+				{
+					"name": "Purchase Information",
+					"item": [
+						{
+							"name": "Get all Product Reviews",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8083/purchase/:purchaseId",
+									"host": [
+										"localhost"
+									],
+									"port": "8083",
+									"path": [
+										"purchase",
+										":purchaseId"
+									],
+									"variable": [
+										{
+											"key": "purchaseId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save Purchase",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customerId\": 1,\n    \"items\": [\n        {\n            \"purchaseId\": 1,\n            \"productId\": 1,\n            \"amount\": 5\n        }\n    ],\n    \"paymentType\": \"CASH\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8083/purchase/",
+									"host": [
+										"localhost"
+									],
+									"port": "8083",
+									"path": [
+										"purchase",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Price Information",
+					"item": [
+						{
+							"name": "Get current Price for Product",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8083/price/product/:productId",
+									"host": [
+										"localhost"
+									],
+									"port": "8083",
+									"path": [
+										"price",
+										"product",
+										":productId"
+									],
+									"variable": [
+										{
+											"key": "productId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all Prices for Product",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8083/price/product/:productId/all",
+									"host": [
+										"localhost"
+									],
+									"port": "8083",
+									"path": [
+										"price",
+										"product",
+										":productId",
+										"all"
+									],
+									"variable": [
+										{
+											"key": "productId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save Price",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productId\": 1,\n    \"value\": 23.99,\n    \"currency\": \"EURO\",\n    \"validFrom\": \"2021-01-01T00:01\",\n    \"validTo\": \"2022-01-01T00:00\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8083/price/",
+									"host": [
+										"localhost"
+									],
+									"port": "8083",
+									"path": [
+										"price",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Get Swagger Documentation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8083/swagger",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"swagger"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{ecommerceService.password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{ecommerceService.username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7f27b4ca-74c9-4959-9a8b-6ad60f61555e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "70f64070-4e10-40a5-b563-0203fb1b075c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

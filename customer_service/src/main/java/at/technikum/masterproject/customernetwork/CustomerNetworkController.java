@@ -1,8 +1,8 @@
 package at.technikum.masterproject.customernetwork;
 
+import at.technikum.masterproject.customernetwork.model.CustomerInteraction;
 import at.technikum.masterproject.customernetwork.model.CustomerNetwork;
-import at.technikum.masterproject.customernetwork.model.CustomerRelationship;
-import at.technikum.masterproject.customernetwork.model.dto.CustomerRelationshipDto;
+import at.technikum.masterproject.customernetwork.model.dto.CustomerInteractionDto;
 import at.technikum.masterproject.customernetwork.model.mapper.CustomerRelationshipMapper;
 import java.util.List;
 import javax.validation.Valid;
@@ -16,32 +16,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/relationships")
-public class CustomerRelationshipController {
+@RequestMapping("/network")
+public class CustomerNetworkController {
 
-  private final CustomerRelationshipService customerRelationshipService;
+  private final CustomerNetworkService customerNetworkService;
   private final CustomerRelationshipMapper customerRelationshipMapper;
 
   @Autowired
-  public CustomerRelationshipController(
-      CustomerRelationshipService customerRelationshipService,
+  public CustomerNetworkController(
+      CustomerNetworkService customerNetworkService,
       CustomerRelationshipMapper customerRelationshipMapper) {
-    this.customerRelationshipService = customerRelationshipService;
+    this.customerNetworkService = customerNetworkService;
     this.customerRelationshipMapper = customerRelationshipMapper;
   }
 
   @GetMapping("/{customerId}")
-  public ResponseEntity<List<CustomerNetwork>> getCustomerNetworkForCustomer(@PathVariable Integer customerId) {
-    List<CustomerNetwork> customerNetworks = customerRelationshipService.getCustomerNetworksForCustomer(customerId);
+  public ResponseEntity<List<CustomerNetwork>> getCustomerNetworkForCustomer(@PathVariable int customerId) {
+    List<CustomerNetwork> customerNetworks = customerNetworkService.getCustomerNetworksForCustomer(customerId);
     return ResponseEntity.ok(customerNetworks);
   }
 
   @PostMapping
-  public ResponseEntity<CustomerRelationshipDto> postNewCustomerRelationship(
-      @RequestBody @Valid CustomerRelationshipDto relationshipDto) {
-    CustomerRelationship relationship = customerRelationshipMapper
+  public ResponseEntity<CustomerInteractionDto> postNewCustomerRelationship(
+      @RequestBody @Valid CustomerInteractionDto relationshipDto) {
+    CustomerInteraction relationship = customerRelationshipMapper
         .customerRelationshipDtoToCustomerRelationship(relationshipDto);
-    relationship = customerRelationshipService.saveCustomerRelationship(relationship);
+    relationship = customerNetworkService.saveCustomerRelationship(relationship);
     relationshipDto = customerRelationshipMapper
         .customerRelationshipToCustomerRelationshipDto(relationship);
     return ResponseEntity.ok(relationshipDto);

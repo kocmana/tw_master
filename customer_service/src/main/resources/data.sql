@@ -36,16 +36,16 @@ INSERT INTO customer VALUES (34, 'MALE', 'Max', 'Mustermann', 'Wilheminenstraße
 INSERT INTO customer VALUES (35, 'MALE', 'Max', 'Mustermann', 'Wilheminenstraße', '103/2', '3a', '1160', 'Österreich', '01/234 567 890', 'max.mustermann@mail.da' );
 INSERT INTO customer VALUES (36, 'MALE', 'Max', 'Mustermann', 'Wilheminenstraße', '103/2', '3a', '1160', 'Österreich', '01/234 567 890', 'max.mustermann@mail.da' );
 
--- Default customer relationship
-INSERT INTO customer_relationship VALUES ( 1, 'RECRUITED', 2 );
-INSERT INTO customer_relationship VALUES ( 1, 'RECRUITED', 3 );
-INSERT INTO customer_relationship VALUES ( 1, 'RECRUITED', 4 );
-INSERT INTO customer_relationship VALUES ( 1, 'RECRUITED', 5 );
-INSERT INTO customer_relationship VALUES ( 1, 'RECRUITED', 6 );
-INSERT INTO customer_relationship VALUES ( 1, 'RECRUITED', 7 );
-INSERT INTO customer_relationship VALUES ( 1, 'ALSO_OWNS', 12 );
-INSERT INTO customer_relationship VALUES ( 1, 'ALSO_OWNS', 13 );
-INSERT INTO customer_relationship VALUES ( 1, 'ALSO_OWNS', 14 );
-INSERT INTO customer_relationship VALUES ( 1, 'ALSO_OWNS', 15 );
-INSERT INTO customer_relationship VALUES ( 1, 'ALSO_OWNS', 16 );
-INSERT INTO customer_relationship VALUES ( 1, 'ALSO_OWNS', 17 );
+-- Default customer interactions
+INSERT INTO customer_interaction VALUES ( 1, 'RECRUITED', 2 );
+INSERT INTO customer_interaction VALUES ( 1, 'RECRUITED', 3 );
+INSERT INTO customer_interaction VALUES ( 1, 'RECRUITED', 4 );
+INSERT INTO customer_interaction VALUES ( 1, 'RECRUITED', 5 );
+INSERT INTO customer_interaction VALUES ( 1, 'RECRUITED', 6 );
+INSERT INTO customer_interaction VALUES ( 1, 'RECRUITED', 7 );
+INSERT INTO customer_interaction VALUES ( 1, 'ALSO_OWNS', 12 );
+INSERT INTO customer_interaction VALUES ( 1, 'ALSO_OWNS', 13 );
+INSERT INTO customer_interaction VALUES ( 1, 'ALSO_OWNS', 14 );
+INSERT INTO customer_interaction VALUES ( 1, 'ALSO_OWNS', 15 );
+INSERT INTO customer_interaction VALUES ( 1, 'ALSO_OWNS', 16 );
+INSERT INTO customer_interaction VALUES ( 1, 'ALSO_OWNS', 17 );

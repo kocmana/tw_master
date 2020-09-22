@@ -1,10 +1,11 @@
 package at.technikum.masterproject.customerinformation;
 
+import static java.util.stream.Collectors.toUnmodifiableList;
+
 import at.technikum.masterproject.customerinformation.model.Customer;
 import at.technikum.masterproject.customerinformation.model.dto.CustomerDto;
 import at.technikum.masterproject.customerinformation.model.mapper.CustomerMapper;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,8 @@ class CustomerInformationController {
   private final CustomerMapper customerMapper;
 
   @Autowired
-  CustomerInformationController(CustomerInformationService customerInformationService, CustomerMapper customerMapper) {
+  CustomerInformationController(CustomerInformationService customerInformationService,
+      CustomerMapper customerMapper) {
     this.customerInformationService = customerInformationService;
     this.customerMapper = customerMapper;
   }
@@ -34,12 +36,12 @@ class CustomerInformationController {
     List<Customer> allCustomers = customerInformationService.retrieveAllCustomers();
     List<CustomerDto> customerDtos = allCustomers.stream()
         .map(customerMapper::customerToCustomerDto)
-        .collect(Collectors.toUnmodifiableList());
+        .collect(toUnmodifiableList());
     return ResponseEntity.ok(customerDtos);
   }
 
   @GetMapping(path = "/{customerId}")
-  public ResponseEntity<CustomerDto> getCustomerById(@PathVariable Integer customerId) {
+  public ResponseEntity<CustomerDto> getCustomerById(@PathVariable int customerId) {
     Customer customer = customerInformationService.retrieveCustomerById(customerId);
     CustomerDto customerDto = customerMapper.customerToCustomerDto(customer);
     return ResponseEntity.ok(customerDto);
@@ -55,7 +57,7 @@ class CustomerInformationController {
   }
 
   @PatchMapping
-  public ResponseEntity<CustomerDto> updateCustomer(@RequestBody CustomerDto customerDto) {
+  public ResponseEntity<CustomerDto> updateCustomer(@RequestBody @Valid CustomerDto customerDto) {
     Customer customer = customerMapper.customerDtoToCustomer(customerDto);
     Customer savedCustomer = customerInformationService.updateCustomer(customer);
     customerDto = customerMapper.customerToCustomerDto(savedCustomer);

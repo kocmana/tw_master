@@ -1,5 +1,5 @@
 package at.technikum.masterproject.customernetwork.model;
 
-public enum RelationshipType {
+public enum InteractionType {
   RECRUITED, GAVE_PRESENT, ALSO_OWNS
 }

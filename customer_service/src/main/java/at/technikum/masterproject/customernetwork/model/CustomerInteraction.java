@@ -11,9 +11,9 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "customer_relationship")
+@Table(name = "customer_interaction")
 @Data
-public class CustomerRelationship {
+public class CustomerInteraction {
 
   @EmbeddedId
   private CustomerRelationshipId id;
@@ -26,7 +26,7 @@ public class CustomerRelationship {
     private Integer sourceCustomerId;
     @Column(name = "relationship_type")
     @Enumerated(EnumType.STRING)
-    private RelationshipType relationshipType;
+    private InteractionType interactionType;
     @Column(name = "target_customer")
     private Integer targetCustomerId;
   }

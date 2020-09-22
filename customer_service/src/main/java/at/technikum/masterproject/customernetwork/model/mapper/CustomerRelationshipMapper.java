@@ -1,7 +1,7 @@
 package at.technikum.masterproject.customernetwork.model.mapper;
 
-import at.technikum.masterproject.customernetwork.model.CustomerRelationship;
-import at.technikum.masterproject.customernetwork.model.dto.CustomerRelationshipDto;
+import at.technikum.masterproject.customernetwork.model.CustomerInteraction;
+import at.technikum.masterproject.customernetwork.model.dto.CustomerInteractionDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -10,12 +10,14 @@ public interface CustomerRelationshipMapper {
 
   @Mapping(source = "id.sourceCustomerId", target = "sourceCustomerId")
   @Mapping(source = "id.targetCustomerId", target = "targetCustomerId")
-  @Mapping(source = "id.relationshipType", target = "relationshipType")
-  CustomerRelationshipDto customerRelationshipToCustomerRelationshipDto(CustomerRelationship customerRelationship);
+  @Mapping(source = "id.interactionType", target = "interactionType")
+  CustomerInteractionDto customerRelationshipToCustomerRelationshipDto(
+      CustomerInteraction customerInteraction);
 
   @Mapping(source = "sourceCustomerId", target = "id.sourceCustomerId")
   @Mapping(source = "targetCustomerId", target = "id.targetCustomerId")
-  @Mapping(source = "relationshipType", target = "id.relationshipType")
-  CustomerRelationship customerRelationshipDtoToCustomerRelationship(CustomerRelationshipDto customerRelationshipDto);
+  @Mapping(source = "interactionType", target = "id.interactionType")
+  CustomerInteraction customerRelationshipDtoToCustomerRelationship(
+      CustomerInteractionDto customerInteractionDto);
 
 }

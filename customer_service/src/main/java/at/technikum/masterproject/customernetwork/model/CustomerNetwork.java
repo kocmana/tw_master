@@ -11,6 +11,6 @@ import lombok.Data;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class CustomerNetwork {
 
-  private RelationshipType networkType;
+  private InteractionType interactionType;
   private List<Customer> targetCustomer;
 }

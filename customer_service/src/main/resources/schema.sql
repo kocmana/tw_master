@@ -14,7 +14,7 @@ CREATE TABLE customer
     PRIMARY KEY (customer_id)
 );
 
-CREATE TABLE customer_relationship
+CREATE TABLE customer_interaction
 (
     source_customer   INTEGER NOT NULL,
     relationship_type VARCHAR(20) NOT NULL,

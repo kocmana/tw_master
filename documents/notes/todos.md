@@ -14,3 +14,4 @@ annotations
 
 # Issues
 * Pagination on GET /products endpoint seems to not work correctly
+* Autowiring differences for RequestLoggingInterceptor in ecommerce_service

@@ -1,7 +1,7 @@
 package at.technikum.masterproject.config;
 
 import at.technikum.masterproject.commons.delay.interceptor.NormallyDistributedServiceDelayInterceptor;
-import at.technikum.masterproject.interceptor.RequestLoggingInterceptor;
+import at.technikum.masterproject.commons.logging.RequestLoggingInterceptor;
 import at.technikum.masterproject.interceptor.UuidInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package at.technikum.masterproject.interceptor;
+package at.technikum.masterproject.commons.logging;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

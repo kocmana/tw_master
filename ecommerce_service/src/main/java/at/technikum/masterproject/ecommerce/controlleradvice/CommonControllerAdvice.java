@@ -33,7 +33,6 @@ public class CommonControllerAdvice {
         .body(new ErrorResponse(exception.getMessage()));
   }
 
-
   @ExceptionHandler(Exception.class)
   ResponseEntity<ErrorResponse> handleGenericException(Exception exception) {
     log.error("Caught unknown exception: {}, {}", exception.getMessage(), exception.getStackTrace());

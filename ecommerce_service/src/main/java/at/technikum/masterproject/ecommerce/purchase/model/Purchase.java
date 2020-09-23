@@ -23,7 +23,7 @@ public class Purchase implements Serializable {
   private Long id;
   @Column(name = "customer_id")
   private Integer customerId;
-  @OneToMany
+  @OneToMany(mappedBy = "purchase")
   private List<PurchaseItem> items;
   @Column(name = "payment_type")
   @Enumerated(value = EnumType.STRING)

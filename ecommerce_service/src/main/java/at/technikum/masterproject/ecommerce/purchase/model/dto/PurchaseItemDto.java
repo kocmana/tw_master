@@ -1,6 +1,5 @@
 package at.technikum.masterproject.ecommerce.purchase.model.dto;
 
-import at.technikum.masterproject.ecommerce.purchase.model.Purchase;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,9 +9,11 @@ import lombok.Setter;
 @Setter
 public class PurchaseItemDto {
 
-  private Purchase purchase;
+  private Long id;
+  private Integer purchaseId;
   private Integer productId;
   private Integer amount;
-  private Integer pricePerUnit;
+  private Float pricePerUnit;
+  private String currency;
 }
 

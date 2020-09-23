@@ -5,6 +5,7 @@ import at.technikum.masterproject.ecommerce.purchase.model.PurchaseItem;
 import at.technikum.masterproject.ecommerce.purchase.model.dto.PurchaseDto;
 import at.technikum.masterproject.ecommerce.purchase.model.dto.PurchaseItemDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PurchaseMapper {
@@ -13,6 +14,7 @@ public interface PurchaseMapper {
 
   Purchase purchaseDtoToPurchase(PurchaseDto purchase);
 
+  @Mapping(source = "purchase.id", target = "purchaseId")
   PurchaseItemDto purchaseItemToPurchaseItemDto(PurchaseItem purchaseItem);
 
   PurchaseItem purchaseItemDtoToPurchaseItem(PurchaseItemDto purchase);

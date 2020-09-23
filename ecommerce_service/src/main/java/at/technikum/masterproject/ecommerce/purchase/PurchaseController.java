@@ -1,10 +1,11 @@
 package at.technikum.masterproject.ecommerce.purchase;
 
+import static java.util.stream.Collectors.toUnmodifiableList;
+
 import at.technikum.masterproject.ecommerce.purchase.model.Purchase;
 import at.technikum.masterproject.ecommerce.purchase.model.dto.PurchaseDto;
 import at.technikum.masterproject.ecommerce.purchase.model.mapper.PurchaseMapper;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class PurchaseController {
     List<PurchaseDto> purchaseDtos = purchaseService.getPurchasesForCustomer(customerId)
         .stream()
         .map(purchaseMapper::purchaseToPurchaseDto)
-        .collect(Collectors.toUnmodifiableList());
+        .collect(toUnmodifiableList());
     return ResponseEntity.ok(purchaseDtos);
   }
 

@@ -17,7 +17,7 @@ public class Price {
   @Id
   @Column(name = "product_id")
   private Integer productId;
-  private Double value;
+  private Float value;
   private String currency;
   @Id
   @Column(name = "valid_from")

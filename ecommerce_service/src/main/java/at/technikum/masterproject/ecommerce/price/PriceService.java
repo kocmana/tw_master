@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-class PriceService {
+public class PriceService {
 
   private final PriceRepository priceRepository;
 
@@ -17,7 +17,7 @@ class PriceService {
     this.priceRepository = priceRepository;
   }
 
-  Price getCurrentPriceForProduct(Integer productId) {
+  public Price getCurrentPriceForProduct(Integer productId) {
     return priceRepository.findPriceByProductIdThatIsValidAtDateTime(productId, LocalDateTime.now())
         .orElseThrow(() -> generatePriceNotFoundException(productId));
   }

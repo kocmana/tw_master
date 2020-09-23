@@ -1,4 +1,4 @@
-package at.technikum.masterproject.delay.model;
+package at.technikum.masterproject.commons.delay.model;
 
 import java.util.Random;
 

@@ -2,6 +2,7 @@ package at.technikum.masterproject.customerinformation;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
+import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelay;
 import at.technikum.masterproject.customerinformation.model.Customer;
 import at.technikum.masterproject.customerinformation.model.dto.CustomerDto;
 import at.technikum.masterproject.customerinformation.model.mapper.CustomerMapper;
@@ -32,6 +33,7 @@ class CustomerInformationController {
   }
 
   @GetMapping
+  @FixedEndpointDelay(delayInMs = 100)
   public ResponseEntity<List<CustomerDto>> getAllCustomers() {
     List<Customer> allCustomers = customerInformationService.retrieveAllCustomers();
     List<CustomerDto> customerDtos = allCustomers.stream()

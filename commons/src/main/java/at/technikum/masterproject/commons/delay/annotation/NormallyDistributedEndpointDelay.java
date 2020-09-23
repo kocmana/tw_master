@@ -1,4 +1,4 @@
-package at.technikum.masterproject.delay.annotation;
+package at.technikum.masterproject.commons.delay.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

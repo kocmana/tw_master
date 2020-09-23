@@ -1,11 +1,11 @@
-package at.technikum.masterproject.delay;
+package at.technikum.masterproject.commons.delay;
 
-import at.technikum.masterproject.delay.annotation.FixedEndpointDelay;
-import at.technikum.masterproject.delay.annotation.NormallyDistributedEndpointDelay;
-import at.technikum.masterproject.delay.annotation.ProbabilisticEndpointDelay;
-import at.technikum.masterproject.delay.model.FixedDelay;
-import at.technikum.masterproject.delay.model.NormallyDistributedDelay;
-import at.technikum.masterproject.delay.model.ProbabilisticDelay;
+import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelay;
+import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelay;
+import at.technikum.masterproject.commons.delay.annotation.ProbabilisticEndpointDelay;
+import at.technikum.masterproject.commons.delay.model.FixedDelay;
+import at.technikum.masterproject.commons.delay.model.NormallyDistributedDelay;
+import at.technikum.masterproject.commons.delay.model.ProbabilisticDelay;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

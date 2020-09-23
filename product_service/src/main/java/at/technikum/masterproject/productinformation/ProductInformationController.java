@@ -1,8 +1,8 @@
 package at.technikum.masterproject.productinformation;
 
-import at.technikum.masterproject.delay.annotation.FixedEndpointDelay;
-import at.technikum.masterproject.delay.annotation.NormallyDistributedEndpointDelay;
-import at.technikum.masterproject.delay.annotation.ProbabilisticEndpointDelay;
+import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelay;
+import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelay;
+import at.technikum.masterproject.commons.delay.annotation.ProbabilisticEndpointDelay;
 import at.technikum.masterproject.model.ElementCreationResponse;
 import at.technikum.masterproject.productinformation.model.Product;
 import at.technikum.masterproject.productinformation.model.dto.ProductDto;

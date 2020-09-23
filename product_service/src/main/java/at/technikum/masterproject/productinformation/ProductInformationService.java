@@ -37,13 +37,13 @@ public class ProductInformationService {
   }
 
   void updateProduct(Product product) {
-    if (productDoesNotExist(product.getId())){
+    if (productDoesNotExist(product.getId())) {
       throw generateNotFoundException(product.getId());
     }
     productInformationRepository.save(product);
   }
 
-  public boolean productDoesNotExist(Integer productId){
+  public boolean productDoesNotExist(Integer productId) {
     return !productInformationRepository.existsById(productId);
   }
 

@@ -34,13 +34,13 @@ public class CustomerInformationService {
   }
 
   Customer updateCustomer(Customer customer) {
-    if (!customerDoesNotExist(customer.getCustomerId())){
+    if (!customerDoesNotExist(customer.getCustomerId())) {
       throw generateCustomerNotFoundException(customer.getCustomerId());
     }
     return customerInformationRepository.save(customer);
   }
 
-  private boolean customerDoesNotExist(int customerId){
+  private boolean customerDoesNotExist(int customerId) {
     return customerInformationRepository.existsById(customerId);
   }
 

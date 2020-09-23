@@ -1,9 +1,8 @@
 server:
   port: 8080
 
-services:
-  productservice:
-    url: localhost
-    port: 8081
-    username: user1
-    password: user1Pass
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: *

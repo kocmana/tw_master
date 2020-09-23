@@ -44,6 +44,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   private String[] generateWhitelist() {
     return new String[]{
         "/swagger",
+        "/swagger-ui/**",
         "/actuator/**"
     };
   }

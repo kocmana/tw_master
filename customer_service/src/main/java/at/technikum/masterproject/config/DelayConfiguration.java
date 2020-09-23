@@ -1,10 +1,10 @@
 package at.technikum.masterproject.config;
 
-import org.springframework.context.annotation.ComponentScan;
+import at.technikum.masterproject.commons.delay.EnableDelay;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan("at.technikum.masterproject.commons.delay")
+@EnableDelay
 public class DelayConfiguration {
 
 }

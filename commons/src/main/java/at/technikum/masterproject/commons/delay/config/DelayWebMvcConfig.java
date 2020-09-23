@@ -1,31 +1,32 @@
-package at.technikum.masterproject.ecommerce.config;
+package at.technikum.masterproject.commons.delay.config;
 
 import at.technikum.masterproject.commons.delay.interceptor.NormallyDistributedServiceDelayInterceptor;
-import at.technikum.masterproject.commons.logging.RequestLoggingInterceptor;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@ComponentScan("at.technikum.masterproject.commons.logging")
-public class WebMvcConfiguration implements WebMvcConfigurer {
+@Aspect
+@ConditionalOnProperty(prefix = "service.delay", name = "enable-service-delays",
+    havingValue = "true")
+@Slf4j
+public class DelayWebMvcConfig implements WebMvcConfigurer {
 
-  private final RequestLoggingInterceptor requestLoggingInterceptor;
   private final NormallyDistributedServiceDelayInterceptor normallyDistributedServiceDelayInterceptor;
 
   @Autowired
-  public WebMvcConfiguration(
-      RequestLoggingInterceptor requestLoggingInterceptor,
+  public DelayWebMvcConfig(
       NormallyDistributedServiceDelayInterceptor normallyDistributedServiceDelayInterceptor) {
-    this.requestLoggingInterceptor = requestLoggingInterceptor;
     this.normallyDistributedServiceDelayInterceptor = normallyDistributedServiceDelayInterceptor;
+    log.info("Service delays active.");
   }
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(requestLoggingInterceptor);
     registry.addInterceptor(normallyDistributedServiceDelayInterceptor);
   }
 }

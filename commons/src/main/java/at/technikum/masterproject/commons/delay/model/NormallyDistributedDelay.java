@@ -6,9 +6,8 @@ public class NormallyDistributedDelay implements Delay {
 
   private final int mean;
   private final int standardDeviation;
-  private int delayInMs;
-
   private final Random random = new Random();
+  private int delayInMs;
 
   public NormallyDistributedDelay(int mean, int standardDeviation) {
     this.mean = mean;

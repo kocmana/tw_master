@@ -8,7 +8,7 @@
   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
       <charset>utf-8</charset>
-      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %msg%n</pattern>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | request-id: %X{request-id} | %highlight(%-5level) %msg%n</pattern>
     </encoder>
   </appender>
 

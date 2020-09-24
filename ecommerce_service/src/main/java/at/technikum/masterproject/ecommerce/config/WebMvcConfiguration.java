@@ -1,4 +1,4 @@
-package at.technikum.masterproject.productservice.config;
+package at.technikum.masterproject.ecommerce.config;
 
 import at.technikum.masterproject.commons.requestid.RequestIdInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;

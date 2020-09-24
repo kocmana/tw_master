@@ -5,7 +5,7 @@ spring:
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     database: h2
     database-platform: org.hibernate.dialect.H2Dialect
   datasource:
@@ -15,7 +15,3 @@ spring:
     password:
   resources:
     add-mappings: true
-
-security:
-  whitelist:
-    - /actuator/**

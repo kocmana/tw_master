@@ -5,6 +5,11 @@ spring:
       settings:
         trace: true
 
+security:
+  whitelist:
+    - /h2-console/**
+    - /swagger
+
 service:
   delay:
     enable-endpoint-delays: true

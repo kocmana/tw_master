@@ -1,8 +1,8 @@
 server:
   port: 8080
+  http2:
+    enabled: true
 
-management:
-  endpoints:
-    web:
-      exposure:
-        exclude: *
+graphql:
+  tools:
+    schema-location-pattern: "schemas/**/*.graphqls"

@@ -12,22 +12,46 @@
   <artifactId>integration_service</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>integration_service</name>
-  <url>http://maven.apache.org</url>
+  <description>The integration service used for the simulation of various approaches</description>
+  <url>https://github.com/kocmana/tw_master</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- GraphQL -->
+    <graphql-kickstart-spring-boot.version>7.1.0</graphql-kickstart-spring-boot.version>
+    <graphql-kickstart-tools.version>6.2.0</graphql-kickstart-tools.version>
   </properties>
 
   <dependencies>
+    <!-- GraphQL -->
     <dependency>
-      <groupId>com.graphql-java</groupId>
-      <artifactId>graphql-java</artifactId>
-      <version>15.0</version>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>graphql-spring-boot-starter</artifactId>
+      <version>${graphql-kickstart-spring-boot.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.graphql-java</groupId>
-      <artifactId>graphql-spring-boot-starter</artifactId>
-      <version>5.0.2</version>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>graphiql-spring-boot-starter</artifactId>
+      <version>${graphql-kickstart-spring-boot.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>playground-spring-boot-starter</artifactId>
+      <version>${graphql-kickstart-spring-boot.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>graphql-java-tools</artifactId>
+      <version>${graphql-kickstart-tools.version}</version>
+    </dependency>
+
+    <!-- Testing -->
+    <dependency>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>graphql-spring-boot-starter-test</artifactId>
+      <version>${graphql-kickstart-spring-boot.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

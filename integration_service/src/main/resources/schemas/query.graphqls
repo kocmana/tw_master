@@ -1,0 +1,4 @@
+# Main Node for Queries
+type Query {
+    product(id: ID): Product
+}

@@ -1,12 +1,14 @@
 package at.technikum.masterproject.integrationservice.model;
 
-import lombok.Value;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Value
+@Getter
+@NoArgsConstructor
 public class Product {
 
-  int id;
-  String name;
-  String description;
-  float weight;
+  private int id;
+  private String name;
+  private String description;
+  private float weight;
 }

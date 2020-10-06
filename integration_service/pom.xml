@@ -37,13 +37,14 @@
     </dependency>
     <dependency>
       <groupId>com.graphql-java-kickstart</groupId>
-      <artifactId>playground-spring-boot-starter</artifactId>
-      <version>${graphql-kickstart-spring-boot.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.graphql-java-kickstart</groupId>
       <artifactId>graphql-java-tools</artifactId>
       <version>${graphql-kickstart-tools.version}</version>
+    </dependency>
+
+    <!-- Spring Boot -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
 
     <!-- Testing -->

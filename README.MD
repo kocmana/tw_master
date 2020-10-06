@@ -25,15 +25,15 @@ Results should focus around these three core aspects:
 
 ## Stack
 ### Main Technologies Used
-* Java 11
+* Java 11 as latest LTS Version
 * Spring Boot 2.3.3
-* Graph QL
+* Graph QL ([via GraphQL Java Kickstart Spring Boot](https://www.graphql-java-kickstart.com/spring-boot/))
 * Maven 
 
 ### Additional Technologies/Frameworks/Libraries
-* Lombok to reduce boilerplate code
-* Springfox for endpoint documentation
-* Mapstruct for DTO mappings
+* [Lombok](https://projectlombok.org/) to reduce boilerplate code
+* [Springfox](https://springfox.github.io/springfox/) for endpoint documentation
+* [Mapstruct](https://mapstruct.org/) for DTO mappings
 
 ## Mock Service Overview
 | Service | Interface | Authentication | Request ID for Logging | Latency | Other Challenges |

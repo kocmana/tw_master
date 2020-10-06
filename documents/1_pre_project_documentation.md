@@ -1,5 +1,4 @@
 # Pre-Project Documentation
-
 The following is an excerpt of the pre project documentation of the master's project. Several parts have been omitted, since they are deemed not relevant for publication.
 
 ## Background

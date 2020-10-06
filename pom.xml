@@ -68,16 +68,19 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <optional>true</optional>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct</artifactId>
       <version>${mapstruct.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.mapstruct</groupId>
       <artifactId>mapstruct-processor</artifactId>
       <version>${mapstruct.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>

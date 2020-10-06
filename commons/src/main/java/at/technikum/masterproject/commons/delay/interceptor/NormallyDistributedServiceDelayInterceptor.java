@@ -32,7 +32,7 @@ public class NormallyDistributedServiceDelayInterceptor extends HandlerIntercept
   }
 
   private void delayService() {
-    if(delayProperties.isLogDelays()){
+    if (delayProperties.isLogDelays()) {
       log.info("Simulating RTT: Delaying service call for {}ms...", delay.getDelayInMs());
       delay.delay();
     }

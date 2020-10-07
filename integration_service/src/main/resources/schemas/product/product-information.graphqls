@@ -4,4 +4,6 @@ type Product {
     name: String
     description: String
     weight: Float
+    dimension: ProductDimension
+    reviewsForProduct: [ProductReview!]
 }

@@ -1,31 +1,27 @@
 package at.technikum.masterproject.integrationservice.resolver;
 
-import at.technikum.masterproject.integrationservice.model.product.Product;
+import at.technikum.masterproject.integrationservice.model.customer.Customer;
 import at.technikum.masterproject.integrationservice.model.product.ProductReview;
 import at.technikum.masterproject.integrationservice.productservice.ProductReviewClient;
 import graphql.kickstart.tools.GraphQLResolver;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 
 @Component
-@Slf4j
-public class ProductResolver implements GraphQLResolver<Product> {
+public class CustomerResolver implements GraphQLResolver<Customer> {
 
   private final ProductReviewClient productReviewClient;
 
   @Autowired
-  public ProductResolver(
-      ProductReviewClient productReviewClient) {
+  public CustomerResolver(ProductReviewClient productReviewClient) {
     this.productReviewClient = productReviewClient;
   }
 
-  public List<ProductReview> getReviewsForProduct(final Product product) {
-    log.info("Retrieving all product reviews for product {} query", product.getName());
-    Flux<ProductReview> productReviews = productReviewClient.getAllProductReviewsForProduct(product.getId());
-    return productReviews.collectList().block();
+  public List<ProductReview> getReviewsOfCustomer(Customer customer) {
+    Flux<ProductReview> reviews = productReviewClient
+        .getAllProductReviewsByCustomer(customer.getCustomerId());
+    return reviews.collectList().block();
   }
-
 }

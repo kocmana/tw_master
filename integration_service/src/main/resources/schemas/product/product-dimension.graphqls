@@ -1,0 +1,7 @@
+# Product Dimensions for a given Product.
+type ProductDimension {
+
+    width: Float
+    height: Float
+    depth: Float
+}

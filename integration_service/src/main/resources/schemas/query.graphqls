@@ -1,4 +1,10 @@
 # Main Node for Queries
 type Query {
+    products: [Product!]
     product(id: ID): Product
+
+    customers: [Customer!]
+    customer(customerId: ID): Customer!
+
+    reviews: [ProductReview!]
 }

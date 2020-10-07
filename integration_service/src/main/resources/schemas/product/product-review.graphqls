@@ -1,0 +1,9 @@
+# Reviews for a product
+type ProductReview {
+    id: ID!
+    customerId: ID!
+    productId: ID!
+    stars: Int
+    review: String
+    product: Product
+}

@@ -9,8 +9,8 @@ services:
   customerservice:
     url: localhost
     port: 8082
-    username: admin
-    password: adminPassword
+    api-key-header: x-api-key
+    api-key: supersecret
   ecommerceService:
     url: localhost
     port: 8083

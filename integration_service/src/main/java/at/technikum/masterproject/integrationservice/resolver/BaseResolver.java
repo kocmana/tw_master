@@ -67,8 +67,8 @@ public class BaseResolver implements GraphQLQueryResolver {
     return customer.block();
   }
 
-  public List<CustomerNetwork> customerNetwork(Integer customerId){
-    log.info("Retrieved customer query for customerId {}", customerId);
+  public List<CustomerNetwork> customerNetwork(Integer customerId) {
+    log.info("Retrieved customer network query for customerId {}", customerId);
     Flux<CustomerNetwork> customerNetworks = customerNetworkClient.getNetworkById(customerId);
     return customerNetworks.collectList().block();
   }

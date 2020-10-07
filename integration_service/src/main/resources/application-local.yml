@@ -16,6 +16,6 @@ services:
     port: 8083
     username: admin
     password: adminPassword
-#
-#graphiql:
-#  enabled: true
+
+graphiql:
+  enabled: false

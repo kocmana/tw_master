@@ -2,10 +2,12 @@ package at.technikum.masterproject.integrationservice.resolver;
 
 import at.technikum.masterproject.integrationservice.client.customerservice.CustomerInformationClient;
 import at.technikum.masterproject.integrationservice.client.customerservice.CustomerNetworkClient;
+import at.technikum.masterproject.integrationservice.client.ecommerceservice.PurchaseClient;
 import at.technikum.masterproject.integrationservice.client.productservice.ProductInformationClient;
 import at.technikum.masterproject.integrationservice.client.productservice.ProductReviewClient;
 import at.technikum.masterproject.integrationservice.model.customer.Customer;
 import at.technikum.masterproject.integrationservice.model.customer.CustomerNetwork;
+import at.technikum.masterproject.integrationservice.model.ecommerce.Purchase;
 import at.technikum.masterproject.integrationservice.model.product.Product;
 import at.technikum.masterproject.integrationservice.model.product.ProductReview;
 import graphql.kickstart.tools.GraphQLQueryResolver;
@@ -24,17 +26,20 @@ public class BaseResolver implements GraphQLQueryResolver {
   private final ProductReviewClient productReviewClient;
   private final CustomerInformationClient customerInformationClient;
   private final CustomerNetworkClient customerNetworkClient;
+  private final PurchaseClient purchaseClient;
 
   @Autowired
   public BaseResolver(
       ProductInformationClient productInformationClient,
       ProductReviewClient productReviewClient,
       CustomerInformationClient customerInformationClient,
-      CustomerNetworkClient customerNetworkClient) {
+      CustomerNetworkClient customerNetworkClient,
+      PurchaseClient purchaseClient) {
     this.productInformationClient = productInformationClient;
     this.productReviewClient = productReviewClient;
     this.customerInformationClient = customerInformationClient;
     this.customerNetworkClient = customerNetworkClient;
+    this.purchaseClient = purchaseClient;
   }
 
   public List<Product> products() {
@@ -71,6 +76,12 @@ public class BaseResolver implements GraphQLQueryResolver {
     log.info("Retrieved customer network query for customerId {}", customerId);
     Flux<CustomerNetwork> customerNetworks = customerNetworkClient.getNetworkById(customerId);
     return customerNetworks.collectList().block();
+  }
+
+  public Purchase purchase(Integer purchaseId) {
+    log.info("Retrieved purchase query for purchaseId {}", purchaseId);
+    Mono<Purchase> purchase = purchaseClient.getPurchase(purchaseId);
+    return purchase.block();
   }
 
 }

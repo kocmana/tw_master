@@ -1,0 +1,11 @@
+type Purchase {
+    id: ID
+    customerId: Int
+    items: [PurchaseItem!]
+    paymentType: PaymentType
+    customer: Customer
+}
+
+enum PaymentType{
+    CASH, DEBIT_CARD, INVOICE
+}

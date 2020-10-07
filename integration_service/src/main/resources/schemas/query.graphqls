@@ -8,4 +8,6 @@ type Query {
     customerNetwork(customerId: ID): [CustomerNetwork!]
 
     reviews: [ProductReview!]
+
+    purchase(id: ID): Purchase
 }

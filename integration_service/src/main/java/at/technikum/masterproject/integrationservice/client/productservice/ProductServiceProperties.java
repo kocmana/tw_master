@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.productservice;
+package at.technikum.masterproject.integrationservice.client.productservice;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

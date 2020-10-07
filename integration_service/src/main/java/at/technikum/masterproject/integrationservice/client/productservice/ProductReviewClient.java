@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.productservice;
+package at.technikum.masterproject.integrationservice.client.productservice;
 
 import at.technikum.masterproject.integrationservice.model.product.ProductReview;
 import reactor.core.publisher.Flux;

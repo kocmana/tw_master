@@ -1,11 +1,11 @@
 package at.technikum.masterproject.integrationservice.resolver;
 
-import at.technikum.masterproject.integrationservice.customerservice.CustomerInformationClient;
+import at.technikum.masterproject.integrationservice.client.customerservice.CustomerInformationClient;
+import at.technikum.masterproject.integrationservice.client.productservice.ProductInformationClient;
+import at.technikum.masterproject.integrationservice.client.productservice.ProductReviewClient;
 import at.technikum.masterproject.integrationservice.model.customer.Customer;
 import at.technikum.masterproject.integrationservice.model.product.Product;
 import at.technikum.masterproject.integrationservice.model.product.ProductReview;
-import at.technikum.masterproject.integrationservice.productservice.ProductInformationClient;
-import at.technikum.masterproject.integrationservice.productservice.ProductReviewClient;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;

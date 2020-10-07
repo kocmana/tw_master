@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.customerservice;
+package at.technikum.masterproject.integrationservice.client.customerservice;
 
 import at.technikum.masterproject.integrationservice.model.customer.Customer;
 import at.technikum.masterproject.integrationservice.model.product.Product;

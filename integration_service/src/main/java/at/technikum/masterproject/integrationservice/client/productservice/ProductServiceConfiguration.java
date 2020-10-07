@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.productservice;
+package at.technikum.masterproject.integrationservice.client.productservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

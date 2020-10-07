@@ -1,8 +1,8 @@
 package at.technikum.masterproject.integrationservice.resolver;
 
+import at.technikum.masterproject.integrationservice.client.productservice.ProductInformationClient;
 import at.technikum.masterproject.integrationservice.model.product.Product;
 import at.technikum.masterproject.integrationservice.model.product.ProductReview;
-import at.technikum.masterproject.integrationservice.productservice.ProductInformationClient;
 import graphql.kickstart.tools.GraphQLResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

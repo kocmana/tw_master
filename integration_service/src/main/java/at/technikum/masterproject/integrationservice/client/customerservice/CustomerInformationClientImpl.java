@@ -1,7 +1,8 @@
-package at.technikum.masterproject.integrationservice.productservice;
+package at.technikum.masterproject.integrationservice.client.customerservice;
 
 import static org.springframework.http.HttpMethod.PATCH;
 
+import at.technikum.masterproject.integrationservice.model.customer.Customer;
 import at.technikum.masterproject.integrationservice.model.product.Product;
 import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
@@ -14,63 +15,63 @@ import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
-public class ProductInformationClientImpl implements ProductInformationClient {
+public class CustomerInformationClientImpl implements CustomerInformationClient {
 
-  private static final String PRODUCT_ENDPOINT = "product";
+  private static final String CUSTOMER_ENDPOINT = "customer";
 
   private final WebClient webClient;
   private final Consumer<? super Throwable> handleError = exception -> log.info("Product service call failed: {}",
       exception.getMessage());
 
   @Autowired
-  public ProductInformationClientImpl(@Qualifier("productServiceWebClient") WebClient webClient) {
+  public CustomerInformationClientImpl(@Qualifier("customerServiceWebClient") WebClient webClient) {
     this.webClient = webClient;
   }
 
   @Override
-  public Mono<Product> getProductById(int id) {
+  public Mono<Customer> getCustomerById(int id) {
     return webClient.get()
         .uri(uriBuilder -> uriBuilder
-            .path(PRODUCT_ENDPOINT)
+            .path(CUSTOMER_ENDPOINT)
             .pathSegment("{id}")
             .build(id))
         .retrieve()
-        .bodyToMono(Product.class)
+        .bodyToMono(Customer.class)
         .doOnError(handleError);
   }
 
   @Override
-  public Flux<Product> getAllProducts() {
+  public Flux<Customer> getAllCustomer() {
     return webClient.get()
         .uri(uriBuilder -> uriBuilder
-            .path(PRODUCT_ENDPOINT)
+            .path(CUSTOMER_ENDPOINT)
             .build())
         .retrieve()
-        .bodyToFlux(Product.class)
+        .bodyToFlux(Customer.class)
         .doOnError(handleError);
   }
 
   @Override
-  public Mono<Product> saveProduct(Product product) {
+  public Mono<Customer> saveCustomer(Product product) {
     return webClient.post()
         .uri(uriBuilder -> uriBuilder
-            .path(PRODUCT_ENDPOINT)
+            .path(CUSTOMER_ENDPOINT)
             .build())
         .bodyValue(product)
         .retrieve()
-        .bodyToMono(Product.class)
+        .bodyToMono(Customer.class)
         .doOnError(handleError);
   }
 
   @Override
-  public Mono<Product> updateProduct(Product product) {
+  public Mono<Customer> updateCustomer(Product product) {
     return webClient.method(PATCH)
         .uri(uriBuilder -> uriBuilder
-            .path(PRODUCT_ENDPOINT)
+            .path(CUSTOMER_ENDPOINT)
             .build())
         .bodyValue(product)
         .retrieve()
-        .bodyToMono(Product.class)
+        .bodyToMono(Customer.class)
         .doOnError(handleError);
   }
 

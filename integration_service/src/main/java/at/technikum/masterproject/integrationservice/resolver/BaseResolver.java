@@ -1,9 +1,11 @@
 package at.technikum.masterproject.integrationservice.resolver;
 
 import at.technikum.masterproject.integrationservice.client.customerservice.CustomerInformationClient;
+import at.technikum.masterproject.integrationservice.client.customerservice.CustomerNetworkClient;
 import at.technikum.masterproject.integrationservice.client.productservice.ProductInformationClient;
 import at.technikum.masterproject.integrationservice.client.productservice.ProductReviewClient;
 import at.technikum.masterproject.integrationservice.model.customer.Customer;
+import at.technikum.masterproject.integrationservice.model.customer.CustomerNetwork;
 import at.technikum.masterproject.integrationservice.model.product.Product;
 import at.technikum.masterproject.integrationservice.model.product.ProductReview;
 import graphql.kickstart.tools.GraphQLQueryResolver;
@@ -21,15 +23,18 @@ public class BaseResolver implements GraphQLQueryResolver {
   private final ProductInformationClient productInformationClient;
   private final ProductReviewClient productReviewClient;
   private final CustomerInformationClient customerInformationClient;
+  private final CustomerNetworkClient customerNetworkClient;
 
   @Autowired
   public BaseResolver(
       ProductInformationClient productInformationClient,
       ProductReviewClient productReviewClient,
-      CustomerInformationClient customerInformationClient) {
+      CustomerInformationClient customerInformationClient,
+      CustomerNetworkClient customerNetworkClient) {
     this.productInformationClient = productInformationClient;
     this.productReviewClient = productReviewClient;
     this.customerInformationClient = customerInformationClient;
+    this.customerNetworkClient = customerNetworkClient;
   }
 
   public List<Product> products() {
@@ -58,9 +63,14 @@ public class BaseResolver implements GraphQLQueryResolver {
 
   public Customer customer(Integer customerId) {
     log.info("Retrieved customer query for customerId {}", customerId);
-    Mono<Customer> product = customerInformationClient.getCustomerById(customerId);
-    return product.block();
+    Mono<Customer> customer = customerInformationClient.getCustomerById(customerId);
+    return customer.block();
   }
 
+  public List<CustomerNetwork> customerNetwork(Integer customerId){
+    log.info("Retrieved customer query for customerId {}", customerId);
+    Flux<CustomerNetwork> customerNetworks = customerNetworkClient.getNetworkById(customerId);
+    return customerNetworks.collectList().block();
+  }
 
 }

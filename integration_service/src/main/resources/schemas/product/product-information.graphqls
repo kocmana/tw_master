@@ -1,4 +1,4 @@
-# Basic Information for a product
+# Basic information for a product
 type Product {
     id: ID!
     name: String

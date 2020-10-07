@@ -1,4 +1,4 @@
-# Basic Information on customers
+# Basic information on customers
 type Customer {
     customerId: ID!
     gender: Gender
@@ -11,7 +11,8 @@ type Customer {
     country: String!
     telephoneNumber: String
     emailAddress: String!
-    reviewsOfCustomer: [ProductReview!]
+    reviews: [ProductReview!]
+    network: [CustomerNetwork!]
 }
 
 enum Gender {

@@ -5,6 +5,7 @@ type Query {
 
     customers: [Customer!]
     customer(customerId: ID): Customer!
+    customerNetwork(customerId: ID): [CustomerNetwork!]
 
     reviews: [ProductReview!]
 }

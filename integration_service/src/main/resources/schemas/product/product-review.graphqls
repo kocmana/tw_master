@@ -6,4 +6,5 @@ type ProductReview {
     stars: Int
     review: String
     product: Product
+    customer: Customer
 }

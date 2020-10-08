@@ -84,14 +84,19 @@ Based on controller or rest endpoint level, probabilities for failures (as repre
 All services can be run using the `local` profile without any additional required setup.
 This will use a H2 in memory database as persistence layer for each simulated service.
 
+If run in `local` profile, some test data and default users are set up for the respective service during start up. For services with basic auth, user credentials for these users follow the same pattern for all services:
+ * **User name:** `$service_$role` (e.g. `productservice_user`)
+ * **Password:** `$service_$role_password` (e.g. `productservice_user_password`)
+
 When using the `local` profile services will expose their APIs as follows:
 
-| Service | URI | Port |
-|---------|-----|------|
-| Customer Service | http://localhost | 8082 |
-| eCommerce Service | http://localhost | 8083 |
-| Product Service | http://localhost | 8081 |
-| Integration Service | http://localhost | 8080 |
+| Service | URI | Port | Username | Password | API Key |
+|---------|-----|------|----------|----------|---------|
+| Customer Service | http://localhost | 8082 | - | - | - |
+| eCommerce Service | http://localhost | 8083 |  `ecommerceservice_$role` | `ecommerceservice_$role_password` | - |
+| Product Service | http://localhost | 8081 | `productservice_$role` | `productservice_$role_password` | - |
+| Integration Service | http://localhost | 8080 | | |
+
 
 ### API Reference
 * A complete postman collection as well as a postman environment for the local setup is available as part of this repository.

@@ -1,7 +1,6 @@
 package at.technikum.masterproject.integrationservice.client.ecommerceservice;
 
-import at.technikum.masterproject.integrationservice.model.customer.CustomerInteraction;
-import at.technikum.masterproject.integrationservice.model.ecommerce.Purchase;
+import at.technikum.masterproject.integrationservice.model.ecommerce.Price;
 import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,10 @@ import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
-public class PurchaseClientImpl implements PurchaseClient {
+public class PriceClientImpl implements PriceClient {
 
-  private static final String PURCHASE_ENDPOINT = "purchase";
-  private static final String PURCHASE_BY_CUSTOMER_ENDPOINT = "purchase/customer";
+  private static final String PRICE_ENDPOINT = "price";
+  private static final String PRICE_BY_PRODUCT_ENDPOINT = "price/product";
 
   private final WebClient webClient;
   private final Consumer<? super Throwable> handleError = exception -> log
@@ -24,44 +23,46 @@ public class PurchaseClientImpl implements PurchaseClient {
           exception.getMessage());
 
   @Autowired
-  public PurchaseClientImpl(@Qualifier("ecommerceServiceWebClient") WebClient webClient) {
+  public PriceClientImpl(@Qualifier("ecommerceServiceWebClient") WebClient webClient) {
     this.webClient = webClient;
   }
 
   @Override
-  public Mono<Purchase> getPurchase(int purchaseId) {
+  public Mono<Price> getCurrentPriceForProduct(int productId) {
     return webClient.get()
         .uri(uriBuilder -> uriBuilder
-            .path(PURCHASE_ENDPOINT)
-            .pathSegment("{purchaseId}")
-            .build(purchaseId))
+            .path(PRICE_BY_PRODUCT_ENDPOINT)
+            .pathSegment("{productId}")
+            .build(productId))
         .retrieve()
-        .bodyToMono(Purchase.class)
+        .bodyToMono(Price.class)
+        .log()
         .doOnError(handleError);
   }
 
   @Override
-  public Flux<Purchase> getPurchasesForCustomer(int customerId) {
+  public Flux<Price> getAllPricesForProduct(int productId) {
     return webClient.get()
         .uri(uriBuilder -> uriBuilder
-            .path(PURCHASE_BY_CUSTOMER_ENDPOINT)
-            .pathSegment("{customerId}")
-            .build(customerId))
+            .path(PRICE_BY_PRODUCT_ENDPOINT)
+            .pathSegment("{productId}")
+            .pathSegment("all")
+            .build(productId))
         .retrieve()
-        .bodyToFlux(Purchase.class)
+        .bodyToFlux(Price.class)
+        .log()
         .doOnError(handleError);
   }
 
   @Override
-  public Mono<CustomerInteraction> savePurchase(
-      CustomerInteraction customerInteraction) {
+  public Mono<Price> savePrice(Price price) {
     return webClient.post()
         .uri(uriBuilder -> uriBuilder
-            .path(PURCHASE_ENDPOINT)
+            .path(PRICE_ENDPOINT)
             .build())
-        .bodyValue(customerInteraction)
+        .bodyValue(price)
         .retrieve()
-        .bodyToMono(CustomerInteraction.class)
+        .bodyToMono(Price.class)
         .doOnError(handleError);
   }
 

@@ -1,7 +1,7 @@
 type PurchaseItem {
-    id: ID
-    purchaseId:Int
-    productId: Int
+    id: ID!
+    purchaseId:Int!
+    productId: Int!
     amount: Int
     pricePerUnit: Float
     currency: String

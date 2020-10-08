@@ -14,7 +14,7 @@ public class PriceDto {
   @NotNull
   private Integer productId;
   @NotNull
-  private Double value;
+  private Float value;
   @NotNull @Length(min = 1, max = 20)
   private String currency;
   @NotNull

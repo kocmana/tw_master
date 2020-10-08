@@ -1,6 +1,7 @@
+# Basket information on purchases of a customer
 type Purchase {
-    id: ID
-    customerId: Int
+    id: ID!
+    customerId: Int!
     items: [PurchaseItem!]
     paymentType: PaymentType
     customer: Customer

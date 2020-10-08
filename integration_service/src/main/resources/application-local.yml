@@ -18,4 +18,4 @@ services:
     password: adminPassword
 
 graphiql:
-  enabled: false
+  enabled: true

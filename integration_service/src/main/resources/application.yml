@@ -6,3 +6,6 @@ server:
 graphql:
   tools:
     schema-location-pattern: "schemas/**/*.graphqls"
+
+graphiql:
+  enabled: false

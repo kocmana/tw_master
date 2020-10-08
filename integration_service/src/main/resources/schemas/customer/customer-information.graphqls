@@ -13,6 +13,7 @@ type Customer {
     emailAddress: String!
     reviews: [ProductReview!]
     network: [CustomerNetwork!]
+    purchases: [Purchase!]
 }
 
 enum Gender {

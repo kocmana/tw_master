@@ -13,6 +13,7 @@ However, using GraphQL as an integration layer gives rise to a new set of potent
 In light of these challenges, in purchase to assess the applicability of GraphQL as integration layer across heterogeneous platforms, a prove of concept for unifying access several distributed service providers should be established in the course of this Master Thesis.
 
 The main research topics should be:
+* Management of the n+1 problem
 * Management of potential latencies in requests across several platforms
 * Access and credential management for downstream services
 * Tracing and logging of requests
@@ -36,12 +37,11 @@ Results should focus around these three core aspects:
 * [Mapstruct](https://mapstruct.org/) for DTO mappings
 
 ## Mock Service Overview
-| Service | Interface | Authentication | Request ID for Logging | Latency | Other Challenges |
-|---------|-----------|----------------|-----------------|---------|------------------|
-| Customer Service | REST | API Key | Request Epoch as Request ID | constant, low | none |
-| Product Service | REST | Basic Auth | UUID | normally distributed, medium to high, dependent on endpoint | Pagination in API response |
-| ECommerce Service | REST | OAuth | UID | Spikes of unpredictable high latency (i.e. service warm up behavior) | none |
-| OAuth 2 Authentication Server | REST | OAuth 2 | none | none | none |
+| Service | Domain Objects |Interface | Authentication | Request ID for Logging | Latency | Other Challenges |
+|---------|----------------|----------|----------------|------------------------|---------|------------------|
+| **Customer Service** | Customer Information, Customer Networks | REST | API Key | Request Epoch as Request ID | constant, low | Random failure of API (1% of calls) to trigger Retry Logic |
+| **Product Service** | Product Information, Product Reviews | REST | Basic Auth | UUID | normally distributed, medium to high, dependent on endpoint | Pagination in API response |
+| **ECommerce Service** | Purchases, Price Information | REST | Basic Auth | UID | Spikes of unpredictable high latency (i.e. service warm up behavior) | N+1 issue inducing API design (data only represented by IDs)  |
 
 ### Service Description
 

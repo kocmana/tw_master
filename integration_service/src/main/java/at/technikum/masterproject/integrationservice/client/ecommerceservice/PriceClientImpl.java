@@ -36,7 +36,6 @@ public class PriceClientImpl implements PriceClient {
             .build(productId))
         .retrieve()
         .bodyToMono(Price.class)
-        .log()
         .doOnError(handleError);
   }
 
@@ -50,7 +49,6 @@ public class PriceClientImpl implements PriceClient {
             .build(productId))
         .retrieve()
         .bodyToFlux(Price.class)
-        .log()
         .doOnError(handleError);
   }
 

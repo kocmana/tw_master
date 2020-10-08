@@ -13,3 +13,20 @@ graphql:
 
 graphiql:
   enabled: false
+
+services:
+  productservice:
+    url: ${PRODUCTSERVICE_URL}
+    port: ${PRODUCTSERVICE_PORT}
+    username: ${PRODUCTSERVICE_USERNAME}
+    password: ${PRODUCTSERVICE_USERNAME}
+  customerservice:
+    url: ${CUSTOMERSERVICE_URL}
+    port: ${CUSTOMERSERVICE_PORT}
+    api-key-header: x-api-key
+    api-key: ${CUSTOMERSERVICE_API_KEY}
+  ecommerceService:
+    url: ${ECOMOMERCESERVICE_URL}
+    port: ${ECOMMERCESERVICE_PORT}
+    username: ${ECOMMERCESERVICE_USERNAME}
+    password: ${ECOMMERCESERVICE_USERNAME}

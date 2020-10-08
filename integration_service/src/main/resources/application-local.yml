@@ -5,8 +5,8 @@ services:
   productservice:
     url: localhost
     port: 8081
-    username: admin
-    password: adminPassword
+    username: productservice_user
+    password: productservice_user_password
   customerservice:
     url: localhost
     port: 8082
@@ -15,8 +15,8 @@ services:
   ecommerceService:
     url: localhost
     port: 8083
-    username: admin
-    password: adminPassword
+    username: ecommerceservice_user
+    password: ecommerceservice_user_password
 
 security:
   whitelist:

@@ -4,6 +4,7 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password:
+    data: classpath:testdata.sql
   resources:
     add-mappings: true
   h2:

@@ -16,9 +16,9 @@ CREATE TABLE customer
 
 CREATE TABLE customer_interaction
 (
-    source_customer   INTEGER NOT NULL,
+    source_customer   INTEGER     NOT NULL,
     relationship_type VARCHAR(20) NOT NULL,
-    target_customer   INTEGER NOT NULL,
+    target_customer   INTEGER     NOT NULL,
     PRIMARY KEY (source_customer, relationship_type, target_customer),
     FOREIGN KEY (source_customer) REFERENCES customer ON DELETE CASCADE,
     FOREIGN KEY (target_customer) REFERENCES customer ON DELETE CASCADE

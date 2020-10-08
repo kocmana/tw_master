@@ -1,20 +1,76 @@
 package at.technikum.masterproject.integrationservice.config;
 
+import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.List;
+import javax.sql.DataSource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@Slf4j
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+  private final BasicAuthEntryPoint authenticationEntryPoint;
+  private final SecurityWhitelistProperties securityWhitelistProperties;
+  private final DataSource dataSource;
+
+  @Autowired
+  public WebSecurityConfiguration(BasicAuthEntryPoint authenticationEntryPoint,
+      SecurityWhitelistProperties securityWhitelistProperties, DataSource dataSource) {
+    this.authenticationEntryPoint = authenticationEntryPoint;
+    this.securityWhitelistProperties = securityWhitelistProperties;
+    this.dataSource = dataSource;
+  }
+
   @Override
-  protected void configure(HttpSecurity httpSecurity) throws Exception {
-    httpSecurity.csrf().disable()
-        .authorizeRequests()
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.jdbcAuthentication()
+        .dataSource(dataSource)
+        .passwordEncoder(passwordEncoder());
+
+    List<String> passwords = Arrays
+        .asList("productservice_user_password", "productservice_admin_password",
+            "ecommerceservice_user_password", "ecommerceservice_admin_password",
+            "integrationservice_user_password", "integrationservice_admin_password");
+    passwords.stream()
+        .forEach(password -> log.info("{}: {}", password, passwordEncoder().encode(password)));
+  }
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+        .antMatchers("/actuator/**")
+        .permitAll()
+        .antMatchers(generateConfigurationWhitelist())
+        .permitAll()
         .anyRequest()
-        .permitAll();
+        .authenticated()
+        .and()
+        .httpBasic()
+        .authenticationEntryPoint(authenticationEntryPoint);
+
+    http.csrf().disable()
+        .headers().frameOptions().disable();
+  }
+
+  private String[] generateConfigurationWhitelist() {
+    List<String> whitelist = securityWhitelistProperties.getWhitelist();
+    return whitelist.toArray(new String[0]);
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder(10, new SecureRandom());
   }
 
 }

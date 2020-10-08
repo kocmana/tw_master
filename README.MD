@@ -42,6 +42,7 @@ Results should focus around these three core aspects:
 | **Customer Service** | Customer Information, Customer Networks | REST | API Key | Request Epoch as Request ID | constant, low | Random failure of API (1% of calls) to trigger Retry Logic |
 | **Product Service** | Product Information, Product Reviews | REST | Basic Auth | UUID | normally distributed, medium to high, dependent on endpoint | Pagination in API response |
 | **ECommerce Service** | Purchases, Price Information | REST | Basic Auth | UID | Spikes of unpredictable high latency (i.e. service warm up behavior) | N+1 issue inducing API design (data only represented by IDs)  |
+| **Integration Service** | GraphQL Server integrating the three services | GraphQL/REST | Basic Auth | UUID | - | - |
 
 ### Service Description
 
@@ -95,7 +96,7 @@ When using the `local` profile services will expose their APIs as follows:
 | Customer Service | http://localhost | 8082 | - | - | - |
 | eCommerce Service | http://localhost | 8083 |  `ecommerceservice_$role` | `ecommerceservice_$role_password` | - |
 | Product Service | http://localhost | 8081 | `productservice_$role` | `productservice_$role_password` | - |
-| Integration Service | http://localhost | 8080 | | |
+| Integration Service | http://localhost | 8080 | `integrationservice_$role` | `integrationservice_$role_password` |
 
 
 ### API Reference

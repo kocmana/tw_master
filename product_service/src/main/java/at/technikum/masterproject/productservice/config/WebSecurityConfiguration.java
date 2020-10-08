@@ -28,7 +28,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     this.dataSource = dataSource;
   }
 
-  @Autowired
+  @Override
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.jdbcAuthentication()
         .dataSource(dataSource);

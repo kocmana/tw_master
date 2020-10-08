@@ -79,3 +79,25 @@ These endpoint-specific delays can be used to simulate different service respons
 *TODO*
 
 Based on controller or rest endpoint level, probabilities for failures (as represented by 4** and 5** status code responses) can be set.
+
+## Installation/How To Use
+All services can be run using the `local` profile without any additional required setup.
+This will use a H2 in memory database as persistence layer for each simulated service.
+
+When using the `local` profile services will expose their APIs as follows:
+
+| Service | URI | Port |
+|---------|-----|------|
+| Customer Service | http://localhost | 8082 |
+| eCommerce Service | http://localhost | 8083 |
+| Product Service | http://localhost | 8081 |
+| Integration Service | http://localhost | 8080 |
+
+### API Reference
+* A complete postman collection as well as a postman environment for the local setup is available as part of this repository.
+It can be found [here](https://github.com/kocmana/tw_master/tree/master/documents/postman).
+* Additionally, Springfox generated Swagger documentation is available for each service, with exception of the Integration Service under `/swagger`
+
+### Additional Support for Tinkering
+* **H2 Consoles** are exposed for `local` profile under `/h2-console` for all services except the Integration Service
+* **GraphiQL** is exposed for the Integration Service under `/graphiql` for the `local` profile 

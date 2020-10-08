@@ -1,9 +1,25 @@
 spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  resources:
+    add-mappings: true
   h2:
     console:
       enabled: true
-      settings:
-        trace: true
+      path: /h2-console
+
+logging:
+  level:
+    org.hibernate.SQL: warn
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: swagger
 
 security:
   whitelist:
@@ -17,3 +33,11 @@ service:
     service-delay-mean: 100
     service-delay-standard-deviation: 100
     log-delays: true
+
+customerservice:
+  api-key:
+    header: x-api-key
+    values:
+      - supersecret
+      - megasecret
+      - toptoptopsecret

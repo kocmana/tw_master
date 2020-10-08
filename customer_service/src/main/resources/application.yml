@@ -1,24 +1,14 @@
 server:
   port: 8082
+  http2:
+    enabled: true
 
 spring:
+  application:
+    name: CustomerService
   jpa:
     open-in-view: true
     hibernate:
       ddl-auto: none
   resources:
     add-mappings: true
-
-springfox:
-  documentation:
-    swagger:
-      v2:
-        path: swagger
-
-customerservice:
-  api-key:
-    header: x-api-key
-    values:
-      - supersecret
-      - megasecret
-      - toptoptopsecret

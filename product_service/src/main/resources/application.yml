@@ -1,16 +1,14 @@
 server:
   port: 8081
+  http2:
+    enabled: true
 
 spring:
+  application:
+    name: ProductService
   jpa:
     open-in-view: true
     hibernate:
       ddl-auto: none
   resources:
     add-mappings: true
-
-springfox:
-  documentation:
-    swagger:
-      v2:
-        path: swagger

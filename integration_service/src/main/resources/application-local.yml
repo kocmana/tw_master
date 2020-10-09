@@ -25,4 +25,4 @@ services:
 security:
   whitelist:
     - /graphiql
-    - /graphiql/**
+    - /vendor/graphiql/**

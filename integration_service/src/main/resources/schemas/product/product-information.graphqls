@@ -5,7 +5,7 @@ type Product {
     description: String
     weight: Float
     dimension: ProductDimension
-    reviewsForProduct: [ProductReview!]
+    reviews: [ProductReview!]
     price: Price
     prices: [Price!]
 }

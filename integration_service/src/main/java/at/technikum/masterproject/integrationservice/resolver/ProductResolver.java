@@ -28,7 +28,7 @@ public class ProductResolver implements GraphQLResolver<Product> {
     this.priceClient = priceClient;
   }
 
-  public List<ProductReview> getReviewsForProduct(Product product) {
+  public List<ProductReview> getReviews(Product product) {
     log.info("Retrieving all product reviews for product {} query", product.getName());
     Flux<ProductReview> productReviews = productReviewClient.getAllProductReviewsForProduct(product.getId());
     return productReviews.collectList().block();

@@ -2,6 +2,7 @@ package at.technikum.masterproject.productservice.productreview;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
+import at.technikum.masterproject.commons.failure.annotation.ProbabilisticFailureSimulation;
 import at.technikum.masterproject.productservice.model.ElementCreationResponse;
 import at.technikum.masterproject.productservice.productinformation.ProductInformationService;
 import at.technikum.masterproject.productservice.productinformation.model.Product;
@@ -47,6 +48,7 @@ public class ProductReviewController {
   }
 
   @GetMapping("/product/{productId}")
+  @ProbabilisticFailureSimulation(probability = 0.5f, errorCode = 404)
   public ResponseEntity<List<ProductReviewDto>> getReviewsForProduct(
       @PathVariable @Valid @NotNull int productId) {
     if (productInformationService.productDoesNotExist(productId)) {

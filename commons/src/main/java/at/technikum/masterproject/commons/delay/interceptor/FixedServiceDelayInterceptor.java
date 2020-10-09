@@ -1,6 +1,6 @@
 package at.technikum.masterproject.commons.delay.interceptor;
 
-import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelay;
+import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelaySimulation;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class FixedServiceDelayInterceptor extends HandlerInterceptorAdapter {
 
   @Override
-  @FixedEndpointDelay(delayInMs = 100)
+  @FixedEndpointDelaySimulation(delayInMs = 100)
   public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
     return true;
   }

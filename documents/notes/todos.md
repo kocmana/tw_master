@@ -11,7 +11,7 @@
 * switch to JSR354 representation/Java Money/Currency API for price service
 * ~~add global api delay on service level by adding some "LatencySimulatorInterceptor" annotated with the regular Delay 
 annotations~~ - done
-* add probability based failure on API and endpoint level
+* add probability based probabilisticFailure on API and endpoint level
 * use Jetty instead of Tomcat for integration service
 
 # Issues

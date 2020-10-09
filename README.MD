@@ -19,7 +19,7 @@ The main research topics should be:
 * Tracing and logging of requests
 
 ##  Expected Results
-Results should focus around these three core aspects:
+Results should focus on these three core aspects:
 * A proof of concept of implementing GraphQL in a heterogeneous distributed architecture
 * Insights into potential issues and shortcomings of GraphQL when used as integration layer as well as potential solutions to those issues
 * Recommendations for use cases where GraphQL should and should not be applied as integration layer
@@ -39,7 +39,7 @@ Results should focus around these three core aspects:
 ## Mock Service Overview
 | Service | Domain Objects |Interface | Authentication | Request ID for Logging | Latency | Other Challenges |
 |---------|----------------|----------|----------------|------------------------|---------|------------------|
-| **Customer Service** | Customer Information, Customer Networks | REST | API Key | Request Epoch as Request ID | constant, low | Random failure of API (1% of calls) to trigger Retry Logic |
+| **Customer Service** | Customer Information, Customer Networks | REST | API Key | Request Epoch as Request ID | constant, low | Random probabilisticFailure of API (1% of calls) to trigger Retry Logic |
 | **Product Service** | Product Information, Product Reviews | REST | Basic Auth | UUID | normally distributed, medium to high, dependent on endpoint | Pagination in API response |
 | **ECommerce Service** | Purchases, Price Information | REST | Basic Auth | UID | Spikes of unpredictable high latency (i.e. service warm up behavior) | N+1 issue inducing API design (data only represented by IDs)  |
 | **Integration Service** | GraphQL Server integrating the three services | GraphQL/REST | Basic Auth | UUID | - | - |
@@ -58,7 +58,7 @@ Product Service also provides services on two distinct domains:
 
 #### eCommerce Service
 Again, eCommerce Service provides services for two interacting domains:
-* **Price Information:** Information on current and historic pricings can be managed.
+* **Price Information:** Information on current and historic pricing can be managed.
 * **Purchase Information:** Past purchases can be retrieved and new purchases can be made.
 
 ### Simulation Support
@@ -66,20 +66,23 @@ In order to support simulation, two additional functionalities are provided:
 
 #### Overall Service Delay and API Specific Delay
 Services can be configured in the respective application properties to incorporate "lag" based on three distinct approaches:
+These lag simulations can be activated by adding `@EnableDelaySimulation` on a class in the spring context. 
 * **Fixed Delay:** Calls to all endpoints exposed by this service exhibit a fixed delay.
 * **Normally Distributed Random Delay:** Calls to all endpoints exposed by this service exhibit a random delay following a gaussian distribution with configurable mean and standard deviation.
 * **Probabilistic Delay:** Calls to all endpoints to this service either exhibit no or a fixed amount of delay, based on a probability that can be set. This is intended to simulate wake up behavior or less reliable downstream services.
 
 Similar to the overall delay approaches, all endpoints can be used to simulate similar delays by adding annotation to the respective controller functions:
-* **Fixed Delay**: `@FixedDelay` 
-* **Normally Distributed Random Delay**: `@NormallyDistributedDelay` 
-* **Probabilistic Delay:** `@ProbabilisticDelay`
+* **Fixed Delay**: `@FixedDelaySimulation`, providing `delayInMs`
+* **Normally Distributed Random Delay**: `@NormallyDistributedDelaySimulation`, providing `mean` and `standardDeviation`  
+* **Probabilistic Delay:** `@ProbabilisticDelaySimulation`, providing `probability`and `delayInMs`
+
 These endpoint-specific delays can be used to simulate different service response times with respect to server loads and average query response times.
 
 #### Probabilistic Failure
-*TODO*
-
 Based on controller or rest endpoint level, probabilities for failures (as represented by 4** and 5** status code responses) can be set.
+This simulated error behaviour can be enabled by adding `@EnableFailureSimulation` on a class in the spring context.
+
+Adding the `@ProbabilisticFailureSimulation` (providing both `probability` and `errorCode`) on class or method level enables failure simulation.
 
 ## Installation/How To Use
 All services can be run using the `local` profile without any additional required setup.

@@ -13,6 +13,6 @@ import org.springframework.context.annotation.Import;
 @Target(value = TYPE)
 @Documented
 @Import(value = DelayConfig.class)
-public @interface EnableDelay {
+public @interface EnableDelaySimulation {
 
 }

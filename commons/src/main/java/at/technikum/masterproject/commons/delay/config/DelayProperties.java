@@ -13,7 +13,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @Getter
 public class DelayProperties {
 
-  private boolean enableEndpointDelays = false;
+  private boolean enableEndpointDelays = true;
   private boolean enableServiceDelays = false;
   private int serviceDelayMean = 0;
   private int serviceDelayStandardDeviation = 0;

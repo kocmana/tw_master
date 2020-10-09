@@ -1,20 +1,17 @@
 package at.technikum.masterproject.commons.delay.aspect;
 
 import static at.technikum.masterproject.commons.delay.DelayFactory.createDelayFromAnnotation;
-import static org.springframework.core.annotation.AnnotationUtils.findAnnotation;
+import static at.technikum.masterproject.commons.util.AnnotationUtils.extractAnnotation;
 
-import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelay;
-import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelay;
-import at.technikum.masterproject.commons.delay.annotation.ProbabilisticEndpointDelay;
+import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelaySimulation;
+import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelaySimulation;
+import at.technikum.masterproject.commons.delay.annotation.ProbabilisticEndpointDelaySimulation;
 import at.technikum.masterproject.commons.delay.config.DelayProperties;
 import at.technikum.masterproject.commons.delay.model.Delay;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -31,12 +28,12 @@ public class DelayAspect {
   @Autowired
   public DelayAspect(DelayProperties delayProperties) {
     this.delayProperties = delayProperties;
-    log.info("Delay aspects active.");
+    log.warn("Delay annotation active.");
   }
 
-  @Around("@annotation(at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelay)")
+  @Around("@annotation(at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelaySimulation)")
   public Object delayExecutionWithFixedDuration(ProceedingJoinPoint joinPoint) throws Throwable {
-    FixedEndpointDelay annotation = extractAnnotation(joinPoint, FixedEndpointDelay.class);
+    FixedEndpointDelaySimulation annotation = extractAnnotation(joinPoint, FixedEndpointDelaySimulation.class);
     Delay delay = createDelayFromAnnotation(annotation);
 
     delayResponse(delay);
@@ -44,11 +41,11 @@ public class DelayAspect {
     return joinPoint.proceed();
   }
 
-  @Around("@annotation(at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelay)")
+  @Around("@annotation(at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelaySimulation)")
   public Object delayExecutionWithNormallyDistributedDuration(ProceedingJoinPoint joinPoint)
       throws Throwable {
-    NormallyDistributedEndpointDelay annotation = extractAnnotation(joinPoint,
-        NormallyDistributedEndpointDelay.class);
+    NormallyDistributedEndpointDelaySimulation annotation = extractAnnotation(joinPoint,
+        NormallyDistributedEndpointDelaySimulation.class);
     Delay delay = createDelayFromAnnotation(annotation);
 
     delayResponse(delay);
@@ -56,23 +53,15 @@ public class DelayAspect {
     return joinPoint.proceed();
   }
 
-  @Around("@annotation(at.technikum.masterproject.commons.delay.annotation.ProbabilisticEndpointDelay)")
+  @Around("@annotation(at.technikum.masterproject.commons.delay.annotation.ProbabilisticEndpointDelaySimulation)")
   public Object delayExecutionWithProbability(ProceedingJoinPoint joinPoint) throws Throwable {
-    ProbabilisticEndpointDelay annotation = extractAnnotation(joinPoint,
-        ProbabilisticEndpointDelay.class);
+    ProbabilisticEndpointDelaySimulation annotation = extractAnnotation(joinPoint,
+        ProbabilisticEndpointDelaySimulation.class);
     Delay delay = createDelayFromAnnotation(annotation);
 
     delayResponse(delay);
 
     return joinPoint.proceed();
-  }
-
-  private <T extends Annotation> T extractAnnotation(ProceedingJoinPoint joinPoint,
-      Class<T> annotationType) {
-    MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-    Method method = methodSignature.getMethod();
-
-    return findAnnotation(method, annotationType);
   }
 
   private void delayResponse(Delay delay) {

@@ -1,8 +1,8 @@
 package at.technikum.masterproject.productservice.productinformation;
 
-import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelay;
-import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelay;
-import at.technikum.masterproject.commons.delay.annotation.ProbabilisticEndpointDelay;
+import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelaySimulation;
+import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelaySimulation;
+import at.technikum.masterproject.commons.delay.annotation.ProbabilisticEndpointDelaySimulation;
 import at.technikum.masterproject.productservice.model.ElementCreationResponse;
 import at.technikum.masterproject.productservice.productinformation.model.Product;
 import at.technikum.masterproject.productservice.productinformation.model.dto.ProductDto;
@@ -37,7 +37,7 @@ public class ProductInformationController {
   }
 
   @GetMapping
-  @NormallyDistributedEndpointDelay(mean = 1000, standardDeviation = 500)
+  @NormallyDistributedEndpointDelaySimulation(mean = 1000, standardDeviation = 500)
   public ResponseEntity<List<ProductDto>> getAllProducts(Pageable pageable) {
     List<Product> products = productInformationService.retrieveAllProductsWithPagination(pageable);
     List<ProductDto> productDtos = products.stream()
@@ -47,14 +47,14 @@ public class ProductInformationController {
   }
 
   @GetMapping(value = "/{id}")
-  @ProbabilisticEndpointDelay(probability = 0.5f, duration = 3000)
+  @ProbabilisticEndpointDelaySimulation(probability = 0.5f, delayInMs = 3000)
   public ResponseEntity<ProductDto> getProductById(@PathVariable int id) {
     Product product = productInformationService.retrieveProductById(id);
     return ResponseEntity.ok(productMapper.productToProductDto(product));
   }
 
   @PostMapping
-  @FixedEndpointDelay(delayInMs = 100)
+  @FixedEndpointDelaySimulation(delayInMs = 100)
   public ResponseEntity<ElementCreationResponse> saveProduct(@RequestBody @Valid ProductDto productDto) {
     Product productToSave = productMapper.productDtoToProduct(productDto);
     int idOfNewProduct = productInformationService.saveNewProduct(productToSave);
@@ -62,7 +62,7 @@ public class ProductInformationController {
   }
 
   @PatchMapping
-  @FixedEndpointDelay(delayInMs = 100)
+  @FixedEndpointDelaySimulation(delayInMs = 100)
   public void updateProductInformation(@RequestBody @Valid ProductDto productDto) {
     productInformationService.updateProduct(productMapper.productDtoToProduct(productDto));
   }

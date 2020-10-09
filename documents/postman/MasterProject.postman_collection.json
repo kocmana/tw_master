@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "62a02356-ac34-4b4b-b894-938550af0420",
+		"_postman_id": "fd4a0399-3ae7-4b04-bd04-c23949bff392",
 		"name": "Master Project",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -17,11 +17,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8081/product",
+									"raw": "{{productService.url}}/product",
 									"host": [
-										"localhost"
+										"{{productService.url}}"
 									],
-									"port": "8081",
 									"path": [
 										"product"
 									]
@@ -35,11 +34,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8081/product/1",
+									"raw": "{{productService.url}}/product/1",
 									"host": [
-										"localhost"
+										"{{productService.url}}"
 									],
-									"port": "8081",
 									"path": [
 										"product",
 										"1"
@@ -70,12 +68,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8081/product",
-									"protocol": "http",
+									"raw": "{{productService.url}}/product",
 									"host": [
-										"localhost"
+										"{{productService.url}}"
 									],
-									"port": "8081",
 									"path": [
 										"product"
 									]
@@ -98,12 +94,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8081/product",
-									"protocol": "http",
+									"raw": "{{productService.url}}/product",
 									"host": [
-										"localhost"
+										"{{productService.url}}"
 									],
-									"port": "8081",
 									"path": [
 										"product"
 									]
@@ -124,11 +118,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8081/review",
+									"raw": "{{productService.url}}/review",
 									"host": [
-										"localhost"
+										"{{productService.url}}"
 									],
-									"port": "8081",
 									"path": [
 										"review"
 									]
@@ -142,11 +135,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8081/review/product/:productId",
+									"raw": "{{productService.url}}/review/product/:productId",
 									"host": [
-										"localhost"
+										"{{productService.url}}"
 									],
-									"port": "8081",
 									"path": [
 										"review",
 										"product",
@@ -168,11 +160,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8081/review/customer/:customerId",
+									"raw": "{{productService.url}}/review/customer/:customerId",
 									"host": [
-										"localhost"
+										"{{productService.url}}"
 									],
-									"port": "8081",
 									"path": [
 										"review",
 										"customer",
@@ -203,11 +194,10 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8081/review/product/:productId",
+									"raw": "{{productService.url}}/review/product/:productId",
 									"host": [
-										"localhost"
+										"{{productService.url}}"
 									],
-									"port": "8081",
 									"path": [
 										"review",
 										"product",
@@ -233,11 +223,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8081/swagger",
+							"raw": "{{productService.url}}/swagger",
 							"host": [
-								"localhost"
+								"{{productService.url}}"
 							],
-							"port": "8081",
 							"path": [
 								"swagger"
 							]
@@ -250,13 +239,13 @@
 				"type": "basic",
 				"basic": [
 					{
-						"key": "password",
-						"value": "{{productService.password}}",
+						"key": "username",
+						"value": "{{productService.user.username}}",
 						"type": "string"
 					},
 					{
-						"key": "username",
-						"value": "{{productService.username}}",
+						"key": "password",
+						"value": "{{productService.user.password}}",
 						"type": "string"
 					}
 				]
@@ -265,7 +254,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "022d1204-3a26-49a1-9107-bd5731e6bfa2",
+						"id": "c4d13bcc-0bc8-4693-a8a5-f135a40567dd",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -275,7 +264,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c64d28ed-de7b-46e6-a7d4-99b52a86396f",
+						"id": "5e43cdd1-29a6-4216-8411-1ccc286e1f78",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -297,12 +286,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8082/customer",
-									"protocol": "http",
+									"raw": "{{customerService.url}}/customer",
 									"host": [
-										"localhost"
+										"{{customerService.url}}"
 									],
-									"port": "8082",
 									"path": [
 										"customer"
 									]
@@ -316,12 +303,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:8082/customer/:customerId",
-									"protocol": "http",
+									"raw": "{{customerService.url}}/customer/:customerId",
 									"host": [
-										"localhost"
+										"{{customerService.url}}"
 									],
-									"port": "8082",
 									"path": [
 										"customer",
 										":customerId"
@@ -351,12 +336,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8082/customer",
-									"protocol": "http",
+									"raw": "{{customerService.url}}/customer",
 									"host": [
-										"localhost"
+										"{{customerService.url}}"
 									],
-									"port": "8082",
 									"path": [
 										"customer"
 									]
@@ -379,12 +362,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8082/customer",
-									"protocol": "http",
+									"raw": "{{customerService.url}}/customer",
 									"host": [
-										"localhost"
+										"{{customerService.url}}"
 									],
-									"port": "8082",
 									"path": [
 										"customer"
 									]
@@ -397,7 +378,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "0f6501ef-a6bf-4749-8fa8-ca4c63baf031",
+								"id": "fc1aeda4-9ae0-42b6-a687-d52e410e48d0",
 								"type": "text/javascript",
 								"exec": [
 									""
@@ -407,7 +388,7 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "c454e3c0-4342-436b-9cce-883634a93b9d",
+								"id": "c1af6ec4-45a8-4b0b-973a-0b88ee62bc96",
 								"type": "text/javascript",
 								"exec": [
 									""
@@ -439,12 +420,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8082/network/:customerId",
-									"protocol": "http",
+									"raw": "{{customerService.url}}/network/:customerId",
 									"host": [
-										"localhost"
+										"{{customerService.url}}"
 									],
-									"port": "8082",
 									"path": [
 										"network",
 										":customerId"
@@ -474,12 +453,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8082/network/",
-									"protocol": "http",
+									"raw": "{{customerService.url}}/network/",
 									"host": [
-										"localhost"
+										"{{customerService.url}}"
 									],
-									"port": "8082",
 									"path": [
 										"network",
 										""
@@ -498,11 +475,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8082/swagger",
+							"raw": "{{customerService.url}}/swagger",
 							"host": [
-								"localhost"
+								"{{customerService.url}}"
 							],
-							"port": "8082",
 							"path": [
 								"swagger"
 							]
@@ -530,7 +506,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "5b8bda64-9120-4029-9090-ec8720c8b546",
+						"id": "c69216d2-2deb-43bf-81d7-1aa07c630144",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -540,7 +516,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a6873429-bb3a-4348-97c8-d423e524a17f",
+						"id": "51d23934-219c-45b0-910e-b47cfaa654c0",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -562,11 +538,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8083/purchase/:purchaseId",
+									"raw": "{{ecommerceService.url}}/purchase/:purchaseId",
 									"host": [
-										"localhost"
+										"{{ecommerceService.url}}"
 									],
-									"port": "8083",
 									"path": [
 										"purchase",
 										":purchaseId"
@@ -596,11 +571,10 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8083/purchase/",
+									"raw": "{{ecommerceService.url}}/purchase/",
 									"host": [
-										"localhost"
+										"{{ecommerceService.url}}"
 									],
-									"port": "8083",
 									"path": [
 										"purchase",
 										""
@@ -622,11 +596,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8083/price/product/:productId",
+									"raw": "{{ecommerceService.url}}/price/product/:productId",
 									"host": [
-										"localhost"
+										"{{ecommerceService.url}}"
 									],
-									"port": "8083",
 									"path": [
 										"price",
 										"product",
@@ -648,11 +621,10 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8083/price/product/:productId/all",
+									"raw": "{{ecommerceService.url}}/price/product/:productId/all",
 									"host": [
-										"localhost"
+										"{{ecommerceService.url}}"
 									],
-									"port": "8083",
 									"path": [
 										"price",
 										"product",
@@ -684,11 +656,10 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8083/price/",
+									"raw": "{{ecommerceService.url}}/price/",
 									"host": [
-										"localhost"
+										"{{ecommerceService.url}}"
 									],
-									"port": "8083",
 									"path": [
 										"price",
 										""
@@ -707,11 +678,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8083/swagger",
+							"raw": "{{ecommerceService.url}}/swagger",
 							"host": [
-								"localhost"
+								"{{ecommerceService.url}}"
 							],
-							"port": "8083",
 							"path": [
 								"swagger"
 							]
@@ -725,12 +695,12 @@
 				"basic": [
 					{
 						"key": "password",
-						"value": "{{ecommerceService.password}}",
+						"value": "{{ecommerceService.user.password}}",
 						"type": "string"
 					},
 					{
 						"key": "username",
-						"value": "{{ecommerceService.username}}",
+						"value": "{{ecommerceService.user.username}}",
 						"type": "string"
 					}
 				]
@@ -739,7 +709,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "7f27b4ca-74c9-4959-9a8b-6ad60f61555e",
+						"id": "836a3cb8-ff63-4c50-954e-dd55714ca46e",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -749,7 +719,74 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "70f64070-4e10-40a5-b563-0203fb1b075c",
+						"id": "919e50d9-248e-4532-be8a-b6b09cb96ae7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Integration Service",
+			"item": [
+				{
+					"name": "GraphQL Endpoint",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\r\n  customer(customerId: 1) {\r\n    gender\r\n    firstName\r\n    lastName\r\n    emailAddress\r\n    purchases {\r\n      id\r\n      paymentType\r\n      items {\r\n        product {\r\n          id\r\n          name\r\n          price {\r\n            value\r\n            currency\r\n          }\r\n          reviews {\r\n            stars\r\n            review\r\n          }\r\n        }\r\n      }\r\n    }\r\n    network {\r\n      interactionType\r\n      targetCustomer {\r\n        gender\r\n        firstName\r\n        lastName\r\n      }\r\n    }\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{integrationService.url}}/graphql",
+							"host": [
+								"{{integrationService.url}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{integrationService.user.password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{integrationService.user.username}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fd2bc73f-97fd-4214-a609-2ceffd41904d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f0a167b3-14f1-40ed-92fb-67b35c202695",
 						"type": "text/javascript",
 						"exec": [
 							""

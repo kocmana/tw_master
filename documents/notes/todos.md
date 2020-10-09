@@ -12,7 +12,7 @@
 * ~~add global api delay on service level by adding some "LatencySimulatorInterceptor" annotated with the regular Delay 
 annotations~~ - done
 * add probability based failure on API and endpoint level
-* switch from jdbc based security/user management to jpa to get rid of jdbc 
+* use Jetty instead of Tomcat for integration service
 
 # Issues
 * Pagination on GET /products endpoint seems to not work correctly

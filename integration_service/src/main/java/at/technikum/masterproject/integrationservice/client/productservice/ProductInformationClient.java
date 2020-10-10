@@ -1,16 +1,15 @@
 package at.technikum.masterproject.integrationservice.client.productservice;
 
 import at.technikum.masterproject.integrationservice.model.product.Product;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import java.util.List;
 
 public interface ProductInformationClient {
 
-  Mono<Product> getProductById(int id);
+  Product getProductById(int id);
 
-  Flux<Product> getAllProducts();
+  List<Product> getAllProducts();
 
-  Mono<Product> saveProduct(Product product);
+  Product saveProduct(Product product);
 
-  Mono<Product> updateProduct(Product product);
+  Product updateProduct(Product product);
 }

@@ -15,8 +15,6 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @Component
 @Slf4j
@@ -44,20 +42,17 @@ public class BaseResolver implements GraphQLQueryResolver {
 
   public List<Product> products() {
     log.info("Retrieving all products query");
-    Flux<Product> product = productInformationClient.getAllProducts();
-    return product.collectList().block();
+    return productInformationClient.getAllProducts();
   }
 
   public Product product(Integer id) {
     log.info("Retrieved product query for id {}", id);
-    Mono<Product> product = productInformationClient.getProductById(id);
-    return product.block();
+    return productInformationClient.getProductById(id);
   }
 
   public List<ProductReview> reviews() {
     log.info("Retrieving all product reviews query");
-    Flux<ProductReview> productReviews = productReviewClient.getAllProductReviews();
-    return productReviews.collectList().block();
+    return productReviewClient.getAllProductReviews();
   }
 
   public List<Customer> customers() {

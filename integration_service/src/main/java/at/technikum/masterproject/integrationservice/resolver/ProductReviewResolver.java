@@ -9,7 +9,6 @@ import graphql.kickstart.tools.GraphQLResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 @Component
 @Slf4j
@@ -27,8 +26,7 @@ public class ProductReviewResolver implements GraphQLResolver<ProductReview> {
   }
 
   public Product getProduct(ProductReview productReview) {
-    Mono<Product> product = productInformationClient.getProductById(productReview.getId());
-    return product.block();
+    return productInformationClient.getProductById(productReview.getId());
   }
 
   public Customer getCustomer(ProductReview productReview) {

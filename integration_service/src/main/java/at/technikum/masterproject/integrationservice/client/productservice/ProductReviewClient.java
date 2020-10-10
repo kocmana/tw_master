@@ -1,16 +1,15 @@
 package at.technikum.masterproject.integrationservice.client.productservice;
 
 import at.technikum.masterproject.integrationservice.model.product.ProductReview;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import java.util.List;
 
 public interface ProductReviewClient {
 
-  Flux<ProductReview> getAllProductReviews();
+  List<ProductReview> getAllProductReviews();
 
-  Flux<ProductReview> getAllProductReviewsForProduct(int productId);
+  List<ProductReview> getAllProductReviewsForProduct(int productId);
 
-  Flux<ProductReview> getAllProductReviewsByCustomer(int customerId);
+  List<ProductReview> getAllProductReviewsByCustomer(int customerId);
 
-  Mono<ProductReview> saveProductReview(int productId, ProductReview productReview);
+  ProductReview saveProductReview(int productId, ProductReview productReview);
 }

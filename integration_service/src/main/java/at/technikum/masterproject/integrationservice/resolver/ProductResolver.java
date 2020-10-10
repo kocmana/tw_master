@@ -10,7 +10,6 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 
 @Component
 @Slf4j
@@ -20,8 +19,7 @@ public class ProductResolver implements GraphQLResolver<Product> {
   private final PriceClient priceClient;
 
   @Autowired
-  public ProductResolver(
-      ProductReviewClient productReviewClient,
+  public ProductResolver(ProductReviewClient productReviewClient,
       PriceClient priceClient) {
     this.productReviewClient = productReviewClient;
     this.priceClient = priceClient;
@@ -29,9 +27,7 @@ public class ProductResolver implements GraphQLResolver<Product> {
 
   public List<ProductReview> getReviews(Product product) {
     log.info("Retrieving all product reviews for product {} query", product.getName());
-    Flux<ProductReview> productReviews = productReviewClient
-        .getAllProductReviewsForProduct(product.getId());
-    return productReviews.collectList().block();
+    return productReviewClient.getAllProductReviewsForProduct(product.getId());
   }
 
   public Price getPrice(Product product) {

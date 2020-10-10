@@ -11,7 +11,6 @@ import graphql.kickstart.tools.GraphQLResolver;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 
 @Component
 public class CustomerResolver implements GraphQLResolver<Customer> {
@@ -30,9 +29,7 @@ public class CustomerResolver implements GraphQLResolver<Customer> {
   }
 
   public List<ProductReview> getReviews(Customer customer) {
-    Flux<ProductReview> reviews = productReviewClient
-        .getAllProductReviewsByCustomer(customer.getCustomerId());
-    return reviews.collectList().block();
+    return productReviewClient.getAllProductReviewsByCustomer(customer.getCustomerId());
   }
 
   public List<CustomerNetwork> getNetwork(Customer customer) {

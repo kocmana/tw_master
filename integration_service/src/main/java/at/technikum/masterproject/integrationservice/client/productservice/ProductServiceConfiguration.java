@@ -1,9 +1,10 @@
 package at.technikum.masterproject.integrationservice.client.productservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
@@ -16,13 +17,12 @@ public class ProductServiceConfiguration {
     this.productServiceProperties = productServiceProperties;
   }
 
-  @Bean("productServiceWebClient")
-  WebClient productServiceWebclient() {
-    return WebClient.builder()
-        .baseUrl(setRootUri())
-        .defaultHeaders(header -> header.setBasicAuth(
-            productServiceProperties.getUsername(),
-            productServiceProperties.getPassword()))
+  @Bean("productServiceRestTemplate")
+  RestTemplate productServiceWebclient(RestTemplateBuilder restTemplateBuilder) {
+    return restTemplateBuilder
+        .rootUri(setRootUri())
+        .basicAuthentication(productServiceProperties.getUsername(),
+            productServiceProperties.getPassword())
         .build();
   }
 

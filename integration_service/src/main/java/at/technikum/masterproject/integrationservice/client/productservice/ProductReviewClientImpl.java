@@ -1,80 +1,87 @@
 package at.technikum.masterproject.integrationservice.client.productservice;
 
 import at.technikum.masterproject.integrationservice.model.product.ProductReview;
-import java.util.function.Consumer;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
 public class ProductReviewClientImpl implements ProductReviewClient {
 
-  private static final String REVIEW_ENDPOINT = "review";
-  private static final String REVIEW_BY_PRODUCT_ENDPOINT = "review/product";
-  private static final String REVIEW_BY_CUSTOMER_ENDPOINT = "review/customer";
+  private static final String REVIEW_ENDPOINT = "/review";
+  private static final String REVIEW_BY_PRODUCT_ENDPOINT = "/review/product/{productId}";
+  private static final String REVIEW_BY_CUSTOMER_ENDPOINT = "/review/customer/{customerId}";
 
-  private final WebClient webClient;
-  private final Consumer<? super Throwable> handleError = exception -> log.error("Product call failed: {}",
-      exception.getMessage());
+  private final RestTemplate restTemplate;
 
   @Autowired
-  public ProductReviewClientImpl(@Qualifier("productServiceWebClient") WebClient webClient) {
-    this.webClient = webClient;
+  public ProductReviewClientImpl(
+      @Qualifier("productServiceRestTemplate") RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
   }
 
   @Override
-  public Flux<ProductReview> getAllProductReviews() {
-    return webClient.get()
-        .uri(uriBuilder -> uriBuilder
-            .path(REVIEW_ENDPOINT)
-            .build())
-        .retrieve()
-        .bodyToFlux(ProductReview.class)
-        .retry(3)
-        .doOnError(handleError);
+  public List<ProductReview> getAllProductReviews() {
+    ResponseEntity<List<ProductReview>> response = restTemplate.exchange(
+        REVIEW_ENDPOINT,
+        HttpMethod.GET,
+        HttpEntity.EMPTY,
+        new ParameterizedTypeReference<List<ProductReview>>() {
+        }
+    );
+
+    return Optional.ofNullable(response.getBody())
+        .orElse(Collections.emptyList());
   }
 
   @Override
-  public Flux<ProductReview> getAllProductReviewsForProduct(int productId) {
-    return webClient.get()
-        .uri(uriBuilder -> uriBuilder
-            .path(REVIEW_BY_PRODUCT_ENDPOINT)
-            .pathSegment("{id}")
-            .build(productId))
-        .retrieve()
-        .bodyToFlux(ProductReview.class)
-        .retry(3)
-        .doOnError(handleError);
+  public List<ProductReview> getAllProductReviewsForProduct(int productId) {
+    ResponseEntity<List<ProductReview>> response = restTemplate.exchange(
+        REVIEW_BY_PRODUCT_ENDPOINT,
+        HttpMethod.GET,
+        HttpEntity.EMPTY,
+        new ParameterizedTypeReference<List<ProductReview>>() {
+        },
+        productId
+    );
+
+    return Optional.ofNullable(response.getBody())
+        .orElse(Collections.emptyList());
   }
 
   @Override
-  public Flux<ProductReview> getAllProductReviewsByCustomer(int customerId) {
-    return webClient.get()
-        .uri(uriBuilder -> uriBuilder
-            .path(REVIEW_BY_CUSTOMER_ENDPOINT)
-            .pathSegment("{id}")
-            .build(customerId))
-        .retrieve()
-        .bodyToFlux(ProductReview.class)
-        .doOnError(handleError);
+  public List<ProductReview> getAllProductReviewsByCustomer(int customerId) {
+    ResponseEntity<List<ProductReview>> response = restTemplate.exchange(
+        REVIEW_BY_CUSTOMER_ENDPOINT,
+        HttpMethod.GET,
+        HttpEntity.EMPTY,
+        new ParameterizedTypeReference<List<ProductReview>>() {
+        },
+        customerId
+    );
+
+    return Optional.ofNullable(response.getBody())
+        .orElse(Collections.emptyList());
   }
 
   @Override
-  public Mono<ProductReview> saveProductReview(int productId, ProductReview productReview) {
-    return webClient.post()
-        .uri(uriBuilder -> uriBuilder
-            .path(REVIEW_BY_PRODUCT_ENDPOINT)
-            .pathSegment("{id}")
-            .build(productId))
-        .bodyValue(productReview)
-        .retrieve()
-        .bodyToMono(ProductReview.class)
-        .doOnError(handleError);
+  public ProductReview saveProductReview(int productId, ProductReview productReview) {
+    return restTemplate.postForObject(
+        REVIEW_BY_PRODUCT_ENDPOINT,
+        productReview,
+        ProductReview.class,
+        productId
+    );
   }
 
 }

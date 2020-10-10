@@ -32,8 +32,7 @@ public class ProductReviewResolver implements GraphQLResolver<ProductReview> {
   }
 
   public Customer getCustomer(ProductReview productReview) {
-    Mono<Customer> customer = customerInformationClient.getCustomerById(productReview.getId());
-    return customer.block();
+    return customerInformationClient.getCustomerById(productReview.getId());
   }
 
 }

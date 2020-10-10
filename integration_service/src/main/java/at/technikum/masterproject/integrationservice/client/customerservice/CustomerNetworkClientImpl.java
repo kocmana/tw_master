@@ -2,52 +2,54 @@ package at.technikum.masterproject.integrationservice.client.customerservice;
 
 import at.technikum.masterproject.integrationservice.model.customer.CustomerInteraction;
 import at.technikum.masterproject.integrationservice.model.customer.CustomerNetwork;
-import java.util.function.Consumer;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
 public class CustomerNetworkClientImpl implements CustomerNetworkClient {
 
-  private static final String NETWORK_ENDPOINT = "network";
+  private static final String NETWORK_ENDPOINT = "/network";
+  private static final String NETWORK_BY_CUSTOMER_ENDPOINT = "/network/{customerId}";
 
-  private final WebClient webClient;
-  private final Consumer<? super Throwable> handleError = exception -> log.info("Product service call failed: {}",
-      exception.getMessage());
+  private final RestTemplate restTemplate;
 
   @Autowired
-  public CustomerNetworkClientImpl(@Qualifier("customerServiceWebClient") WebClient webClient) {
-    this.webClient = webClient;
+  public CustomerNetworkClientImpl(
+      @Qualifier("customerServiceRestTemplate") RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
   }
 
   @Override
-  public Flux<CustomerNetwork> getNetworkById(int customerId) {
-    return webClient.get()
-        .uri(uriBuilder -> uriBuilder
-            .path(NETWORK_ENDPOINT)
-            .pathSegment("{customerId}")
-            .build(customerId))
-        .retrieve()
-        .bodyToFlux(CustomerNetwork.class)
-        .doOnError(handleError);
+  public List<CustomerNetwork> getNetworkById(int customerId) {
+    ResponseEntity<List<CustomerNetwork>> response = restTemplate.exchange(
+        NETWORK_BY_CUSTOMER_ENDPOINT,
+        HttpMethod.GET,
+        HttpEntity.EMPTY,
+        new ParameterizedTypeReference<List<CustomerNetwork>>() {
+        },
+        customerId);
+
+    return Optional.ofNullable(response.getBody())
+        .orElse(Collections.emptyList());
   }
 
   @Override
-  public Mono<CustomerInteraction> saveCustomerRelationship(CustomerInteraction customerInteraction) {
-    return webClient.post()
-        .uri(uriBuilder -> uriBuilder
-            .path(NETWORK_ENDPOINT)
-            .build())
-        .bodyValue(customerInteraction)
-        .retrieve()
-        .bodyToMono(CustomerInteraction.class)
-        .doOnError(handleError);
+  public CustomerInteraction saveCustomerRelationship(CustomerInteraction customerInteraction) {
+    return restTemplate.postForObject(
+        NETWORK_ENDPOINT,
+        customerInteraction,
+        CustomerInteraction.class);
   }
 
 }

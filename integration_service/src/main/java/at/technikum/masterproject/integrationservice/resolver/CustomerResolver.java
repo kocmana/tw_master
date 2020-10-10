@@ -36,8 +36,7 @@ public class CustomerResolver implements GraphQLResolver<Customer> {
   }
 
   public List<CustomerNetwork> getNetwork(Customer customer) {
-    Flux<CustomerNetwork> customerNetwork = customerNetworkClient.getNetworkById(customer.getCustomerId());
-    return customerNetwork.collectList().block();
+    return customerNetworkClient.getNetworkById(customer.getCustomerId());
   }
 
   public List<Purchase> getPurchases(Customer customer) {

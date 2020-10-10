@@ -62,20 +62,17 @@ public class BaseResolver implements GraphQLQueryResolver {
 
   public List<Customer> customers() {
     log.info("Retrieving all customers query");
-    Flux<Customer> productReviews = customerInformationClient.getAllCustomer();
-    return productReviews.collectList().block();
+    return customerInformationClient.getAllCustomer();
   }
 
   public Customer customer(Integer customerId) {
     log.info("Retrieved customer query for customerId {}", customerId);
-    Mono<Customer> customer = customerInformationClient.getCustomerById(customerId);
-    return customer.block();
+    return customerInformationClient.getCustomerById(customerId);
   }
 
   public List<CustomerNetwork> customerNetwork(Integer customerId) {
     log.info("Retrieved customer network query for customerId {}", customerId);
-    Flux<CustomerNetwork> customerNetworks = customerNetworkClient.getNetworkById(customerId);
-    return customerNetworks.collectList().block();
+    return customerNetworkClient.getNetworkById(customerId);
   }
 
   public Purchase purchase(Integer purchaseId) {

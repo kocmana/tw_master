@@ -1,9 +1,10 @@
 package at.technikum.masterproject.integrationservice.client.customerservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
@@ -16,13 +17,12 @@ public class CustomerServiceConfig {
     this.customerServiceProperties = customerServiceProperties;
   }
 
-  @Bean("customerServiceWebClient")
-  WebClient productServiceWebclient() {
-    return WebClient.builder()
-        .baseUrl(setRootUri())
-        .defaultHeaders(headers -> headers.add(
-            customerServiceProperties.getApiKeyHeader(),
-            customerServiceProperties.getApiKey()))
+  @Bean("customerServiceRestTemplate")
+  RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
+    return restTemplateBuilder
+        .defaultHeader(customerServiceProperties.getApiKeyHeader(),
+            customerServiceProperties.getApiKey())
+        .rootUri(setRootUri())
         .build();
   }
 

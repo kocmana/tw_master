@@ -7,7 +7,6 @@ import graphql.kickstart.tools.GraphQLResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 @Component
 @Slf4j
@@ -22,7 +21,6 @@ public class PurchaseResolver implements GraphQLResolver<Purchase> {
   }
 
   public Customer getCustomer(Purchase purchase) {
-    Mono<Customer> customer = customerInformationClient.getCustomerById(purchase.getCustomerId());
-    return customer.block();
+    return customerInformationClient.getCustomerById(purchase.getCustomerId());
   }
 }

@@ -1,17 +1,15 @@
 package at.technikum.masterproject.integrationservice.client.customerservice;
 
 import at.technikum.masterproject.integrationservice.model.customer.Customer;
-import at.technikum.masterproject.integrationservice.model.product.Product;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import java.util.List;
 
 public interface CustomerInformationClient {
 
-  Mono<Customer> getCustomerById(int id);
+  Customer getCustomerById(int id);
 
-  Flux<Customer> getAllCustomer();
+  List<Customer> getAllCustomer();
 
-  Mono<Customer> saveCustomer(Product product);
+  Customer saveCustomer(Customer customer);
 
-  Mono<Customer> updateCustomer(Product product);
+  Customer updateCustomer(Customer customer);
 }

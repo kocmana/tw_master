@@ -1,78 +1,66 @@
 package at.technikum.masterproject.integrationservice.client.customerservice;
 
-import static org.springframework.http.HttpMethod.PATCH;
+import static org.springframework.http.HttpMethod.GET;
 
 import at.technikum.masterproject.integrationservice.model.customer.Customer;
-import at.technikum.masterproject.integrationservice.model.product.Product;
-import java.util.function.Consumer;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
 public class CustomerInformationClientImpl implements CustomerInformationClient {
 
-  private static final String CUSTOMER_ENDPOINT = "customer";
+  private static final String CUSTOMER_ENDPOINT = "/customer";
+  private static final String CUSTOMER_BY_CUSTOMER_ID_ENDPOINT = "/customer/{customerId}";
 
-  private final WebClient webClient;
-  private final Consumer<? super Throwable> handleError = exception -> log.info("Product service call failed: {}",
-      exception.getMessage());
+  private final RestTemplate restTemplate;
 
-  @Autowired
-  public CustomerInformationClientImpl(@Qualifier("customerServiceWebClient") WebClient webClient) {
-    this.webClient = webClient;
+  public CustomerInformationClientImpl(
+      @Qualifier("customerServiceRestTemplate") RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
   }
 
   @Override
-  public Mono<Customer> getCustomerById(int id) {
-    return webClient.get()
-        .uri(uriBuilder -> uriBuilder
-            .path(CUSTOMER_ENDPOINT)
-            .pathSegment("{id}")
-            .build(id))
-        .retrieve()
-        .bodyToMono(Customer.class)
-        .doOnError(handleError);
+  public Customer getCustomerById(int customerId) {
+    return restTemplate.getForObject(
+        CUSTOMER_BY_CUSTOMER_ID_ENDPOINT,
+        Customer.class,
+        customerId);
   }
 
   @Override
-  public Flux<Customer> getAllCustomer() {
-    return webClient.get()
-        .uri(uriBuilder -> uriBuilder
-            .path(CUSTOMER_ENDPOINT)
-            .build())
-        .retrieve()
-        .bodyToFlux(Customer.class)
-        .doOnError(handleError);
+  public List<Customer> getAllCustomer() {
+    ResponseEntity<List<Customer>> response = restTemplate.exchange(
+        CUSTOMER_ENDPOINT,
+        GET,
+        HttpEntity.EMPTY,
+        new ParameterizedTypeReference<List<Customer>>() {
+        });
+
+    return Optional.ofNullable(response.getBody())
+        .orElse(Collections.emptyList());
   }
 
   @Override
-  public Mono<Customer> saveCustomer(Product product) {
-    return webClient.post()
-        .uri(uriBuilder -> uriBuilder
-            .path(CUSTOMER_ENDPOINT)
-            .build())
-        .bodyValue(product)
-        .retrieve()
-        .bodyToMono(Customer.class)
-        .doOnError(handleError);
+  public Customer saveCustomer(Customer customer) {
+    return restTemplate.postForObject(CUSTOMER_ENDPOINT,
+        customer,
+        Customer.class);
   }
 
   @Override
-  public Mono<Customer> updateCustomer(Product product) {
-    return webClient.method(PATCH)
-        .uri(uriBuilder -> uriBuilder
-            .path(CUSTOMER_ENDPOINT)
-            .build())
-        .bodyValue(product)
-        .retrieve()
-        .bodyToMono(Customer.class)
-        .doOnError(handleError);
+  public Customer updateCustomer(Customer customer) {
+    return restTemplate.postForObject(CUSTOMER_ENDPOINT,
+        customer,
+        Customer.class);
   }
 
 }

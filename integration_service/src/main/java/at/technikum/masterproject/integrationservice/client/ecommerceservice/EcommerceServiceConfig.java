@@ -1,9 +1,10 @@
 package at.technikum.masterproject.integrationservice.client.ecommerceservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
@@ -16,13 +17,12 @@ public class EcommerceServiceConfig {
     this.ecommerceServiceProperties = ecommerceServiceProperties;
   }
 
-  @Bean("ecommerceServiceWebClient")
-  WebClient ecommerceServiceWebclient() {
-    return WebClient.builder()
-        .baseUrl(setRootUri())
-        .defaultHeaders(header -> header.setBasicAuth(
-            ecommerceServiceProperties.getUsername(),
-            ecommerceServiceProperties.getPassword()))
+  @Bean("ecommerceServiceRestTemplate")
+  RestTemplate ecommerceServiceWebclient(RestTemplateBuilder restTemplateBuilder) {
+    return restTemplateBuilder
+        .rootUri(setRootUri())
+        .basicAuthentication(ecommerceServiceProperties.getUsername(),
+            ecommerceServiceProperties.getPassword())
         .build();
   }
 

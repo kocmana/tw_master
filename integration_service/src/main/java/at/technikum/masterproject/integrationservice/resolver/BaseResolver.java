@@ -77,8 +77,7 @@ public class BaseResolver implements GraphQLQueryResolver {
 
   public Purchase purchase(Integer purchaseId) {
     log.info("Retrieved purchase query for purchaseId {}", purchaseId);
-    Mono<Purchase> purchase = purchaseClient.getPurchase(purchaseId);
-    return purchase.block();
+    return purchaseClient.getPurchase(purchaseId);
   }
 
 }

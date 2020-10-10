@@ -36,8 +36,7 @@ public class CustomerNetworkClientImpl implements CustomerNetworkClient {
         NETWORK_BY_CUSTOMER_ENDPOINT,
         HttpMethod.GET,
         HttpEntity.EMPTY,
-        new ParameterizedTypeReference<List<CustomerNetwork>>() {
-        },
+        new ParameterizedTypeReference<List<CustomerNetwork>>() {},
         customerId);
 
     return Optional.ofNullable(response.getBody())

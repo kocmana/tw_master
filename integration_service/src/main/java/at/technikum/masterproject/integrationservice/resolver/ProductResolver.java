@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @Component
 @Slf4j
@@ -30,20 +29,19 @@ public class ProductResolver implements GraphQLResolver<Product> {
 
   public List<ProductReview> getReviews(Product product) {
     log.info("Retrieving all product reviews for product {} query", product.getName());
-    Flux<ProductReview> productReviews = productReviewClient.getAllProductReviewsForProduct(product.getId());
+    Flux<ProductReview> productReviews = productReviewClient
+        .getAllProductReviewsForProduct(product.getId());
     return productReviews.collectList().block();
   }
 
   public Price getPrice(Product product) {
-    log.info("Retrieving current prices for product {} query", product.getName());
-    Mono<Price> price = priceClient.getCurrentPriceForProduct(product.getId());
-    return price.block();
+    log.info("Retrieving current price for product {} query", product.getName());
+    return priceClient.getCurrentPriceForProduct(product.getId());
   }
 
   public List<Price> getPrices(Product product) {
     log.info("Retrieving all prices for product {} query", product.getName());
-    Flux<Price> prices = priceClient.getAllPricesForProduct(product.getId());
-    return prices.collectList().block();
+    return priceClient.getAllPricesForProduct(product.getId());
   }
 
 }

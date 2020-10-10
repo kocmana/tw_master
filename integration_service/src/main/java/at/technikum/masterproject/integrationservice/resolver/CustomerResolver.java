@@ -40,7 +40,6 @@ public class CustomerResolver implements GraphQLResolver<Customer> {
   }
 
   public List<Purchase> getPurchases(Customer customer) {
-    Flux<Purchase> purchases = purchaseClient.getPurchasesForCustomer(customer.getCustomerId());
-    return purchases.collectList().block();
+    return purchaseClient.getPurchasesForCustomer(customer.getCustomerId());
   }
 }

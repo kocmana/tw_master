@@ -31,6 +31,7 @@ public class RequestIdInterceptor<T> extends HandlerInterceptorAdapter {
   public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
       Object handler, Exception ex) {
     request.removeAttribute(REQUEST_ID_KEY);
+    MDC.remove(REQUEST_ID_KEY);
   }
 
   private void setIdInMdcContext(T requestId) {

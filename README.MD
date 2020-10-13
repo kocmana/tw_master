@@ -42,8 +42,8 @@ Results should focus on these three core aspects:
 | **Customer Service** | Customer Information, Customer Networks | REST | API Key | Request Epoch as Request ID | constant, low | Random probabilisticFailure of API (1% of calls) to trigger Retry Logic |
 | **Product Service** | Product Information, Product Reviews | REST | Basic Auth | UUID | normally distributed, medium to high, dependent on endpoint | Pagination in API response |
 | **ECommerce Service** | Purchases, Price Information | REST | Basic Auth | UID | Spikes of unpredictable high latency (i.e. service warm up behavior) | N+1 issue inducing API design (data only represented by IDs)  |
+| **Monolithic Service** | All services above | REST | Basic Auth | UUID | - |
 | **Integration Service** | GraphQL Server integrating the three services | GraphQL/REST | Basic Auth | UUID | - | - |
-
 ### Service Description
 
 #### Customer Service
@@ -60,6 +60,9 @@ Product Service also provides services on two distinct domains:
 Again, eCommerce Service provides services for two interacting domains:
 * **Price Information:** Information on current and historic pricing can be managed.
 * **Purchase Information:** Past purchases can be retrieved and new purchases can be made.
+
+#### Monolithic Service
+In addition to the three microservices discussed above, the Monolitic Service provides all functionality in a regular monolithic architecture: All services are provided by one application accessing the same database.
 
 ### Simulation Support
 In order to support simulation, two additional functionalities are provided:
@@ -99,13 +102,14 @@ When using the `local` profile services will expose their APIs as follows:
 | Customer Service | http://localhost | 8082 | - | - | - |
 | eCommerce Service | http://localhost | 8083 |  `ecommerceservice_$role` | `ecommerceservice_$role_password` | - |
 | Product Service | http://localhost | 8081 | `productservice_$role` | `productservice_$role_password` | - |
+| Monolithic Service | http://localhost | 8084 | `monolithicservice_$role` | `monolithicservice_$role_password` | - |
 | Integration Service | http://localhost | 8080 | `integrationservice_$role` | `integrationservice_$role_password` |
 
 
 ### API Reference
 * A complete postman collection as well as a postman environment for the local setup is available as part of this repository.
 It can be found [here](https://github.com/kocmana/tw_master/tree/master/documents/postman).
-* Additionally, Springfox generated Swagger documentation is available for each service, with exception of the Integration Service under `/swagger`
+* Additionally, Springfox generated Swagger documentation is available for each service, except for the Integration Service under `/swagger`
 
 ### Additional Support for Tinkering
 * **H2 Consoles** are exposed for `local` profile under `/h2-console` for all services except the Integration Service

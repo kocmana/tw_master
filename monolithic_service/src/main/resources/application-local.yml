@@ -1,0 +1,39 @@
+spring:
+  jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+    data: classpath*:/sql/testdata-*.sql
+  resources:
+    add-mappings: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+logging:
+  level:
+    org.hibernate.SQL: warn
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: swagger
+
+security:
+  whitelist:
+    - /h2-console/**
+    - /swagger
+
+service:
+  delay:
+    enable-endpoint-delays: true
+    enable-service-delays: true
+    service-delay-mean: 1000
+    service-delay-standard-deviation: 100
+    log-delays: true

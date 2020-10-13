@@ -27,3 +27,5 @@ security:
   whitelist:
     - /graphiql
     - /vendor/graphiql/**
+    - /voyager
+    - /vendor/voyager/**

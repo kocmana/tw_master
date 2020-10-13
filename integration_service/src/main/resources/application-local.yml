@@ -5,6 +5,13 @@ spring:
 
 graphiql:
   enabled: true
+  props:
+    variables:
+      editorTheme: idea
+  pageTitle: "Integration Service"
+
+voyager:
+  enabled: true
 
 services:
   productservice:
@@ -27,3 +34,5 @@ security:
   whitelist:
     - /graphiql
     - /vendor/graphiql/**
+    - /voyager
+    - /vendor/voyager/**

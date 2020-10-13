@@ -1,4 +1,4 @@
-CREATE TABLE customer
+CREATE TABLE IF NOT EXISTS customer
 (
     customer_id      INTEGER     NOT NULL AUTO_INCREMENT,
     gender           VARCHAR(6),
@@ -14,7 +14,7 @@ CREATE TABLE customer
     PRIMARY KEY (customer_id)
 );
 
-CREATE TABLE customer_interaction
+CREATE TABLE IF NOT EXISTS customer_interaction
 (
     source_customer   INTEGER     NOT NULL,
     relationship_type VARCHAR(20) NOT NULL,

@@ -1,15 +1,15 @@
 -- Default spring security schema: https://docs.spring.io/spring-security/site/docs/current/reference/html5/#user-schema
-create table users
+create table if not exists users
 (
     username varchar_ignorecase(50) not null primary key,
     password varchar_ignorecase(100) not null,
     enabled  boolean                not null
 );
 
-create table authorities
+create table if not exists authorities
 (
     username  varchar_ignorecase(50) not null,
     authority varchar_ignorecase(50) not null,
     constraint fk_authorities_users foreign key (username) references users (username)
 );
-create unique index ix_auth_username on authorities (username, authority);
+create unique index if not exists ix_auth_username on authorities (username, authority);

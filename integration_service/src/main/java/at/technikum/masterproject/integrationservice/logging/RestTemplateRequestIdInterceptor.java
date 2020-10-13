@@ -15,7 +15,8 @@ public class RestTemplateRequestIdInterceptor implements ClientHttpRequestInterc
   private static final String LOG_KEY_PATTERN = "%s %s (%d)";
 
   @Override
-  public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
+  public ClientHttpResponse intercept(HttpRequest request, byte[] body,
+      ClientHttpRequestExecution execution)
       throws IOException {
     ClientHttpResponse response = execution.execute(request, body);
     HttpHeaders headers = response.getHeaders();

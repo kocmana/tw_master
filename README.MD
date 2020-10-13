@@ -44,6 +44,7 @@ Results should focus on these three core aspects:
 | **ECommerce Service** | Purchases, Price Information | REST | Basic Auth | UID | Spikes of unpredictable high latency (i.e. service warm up behavior) | N+1 issue inducing API design (data only represented by IDs)  |
 | **Monolithic Service** | All services above | REST | Basic Auth | UUID | - |
 | **Integration Service** | GraphQL Server integrating the three services | GraphQL/REST | Basic Auth | UUID | - | - |
+
 ### Service Description
 
 #### Customer Service
@@ -62,7 +63,8 @@ Again, eCommerce Service provides services for two interacting domains:
 * **Purchase Information:** Past purchases can be retrieved and new purchases can be made.
 
 #### Monolithic Service
-In addition to the three microservices discussed above, the Monolitic Service provides all functionality in a regular monolithic architecture: All services are provided by one application accessing the same database.
+In addition to the three microservices discussed above, the Monolithic Service provides all functionality in a regular monolithic architecture: All services are provided by one application accessing the same database.
+Its purpose is to contrast findings from the heterogeneous architecture.
 
 ### Simulation Support
 In order to support simulation, two additional functionalities are provided:

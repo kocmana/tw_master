@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
+import org.jboss.logging.MDC;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -24,6 +25,11 @@ public class RestTemplateRequestIdInterceptor implements ClientHttpRequestInterc
         .get(0);
 
     log.info("Request ID: {}", requestId);
+    String logKey = String.format("%s %s | %d",
+        request.getMethodValue(), request.getURI(),
+        response.getRawStatusCode());
+
+    MDC.put(logKey, requestId);
     return response;
   }
 }

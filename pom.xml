@@ -22,8 +22,8 @@
     <module>customer_service</module>
     <module>ecommerce_service</module>
     <module>product_service</module>
-    <module>integration_service</module>
     <module>monolithic_service</module>
+    <module>integration_service</module>
   </modules>
 
   <properties>

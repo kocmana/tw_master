@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.config;
+package at.technikum.masterproject.integrationservice.logging;
 
 import graphql.execution.instrumentation.SimpleInstrumentation;
 import org.springframework.context.annotation.Bean;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class InstrumentationConfiguration {
 
   @Bean
-  SimpleInstrumentation loggingInstrumentation(){
+  SimpleInstrumentation loggingInstrumentation() {
     return new LoggingInstrumentation();
   }
 }

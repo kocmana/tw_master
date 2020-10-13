@@ -1,7 +1,6 @@
 package at.technikum.masterproject.integrationservice.config;
 
 import java.security.SecureRandom;
-import java.util.Arrays;
 import java.util.List;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
@@ -37,13 +36,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     auth.jdbcAuthentication()
         .dataSource(dataSource)
         .passwordEncoder(passwordEncoder());
-
-    List<String> passwords = Arrays
-        .asList("productservice_user_password", "productservice_admin_password",
-            "ecommerceservice_user_password", "ecommerceservice_admin_password",
-            "integrationservice_user_password", "integrationservice_admin_password");
-    passwords.stream()
-        .forEach(password -> log.info("{}: {}", password, passwordEncoder().encode(password)));
   }
 
   @Override

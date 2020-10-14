@@ -1,7 +1,9 @@
 package at.technikum.masterproject.productservice.productreview.model.mapper;
 
 import at.technikum.masterproject.productservice.productreview.model.ProductReview;
-import at.technikum.masterproject.productservice.productreview.model.dto.ProductReviewDto;
+import at.technikum.masterproject.productservice.productreview.model.dto.ProductReviewCreationRequest;
+import at.technikum.masterproject.productservice.productreview.model.dto.ProductReviewResponse;
+import at.technikum.masterproject.productservice.productreview.model.dto.ProductReviewUpdateRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -9,7 +11,9 @@ import org.mapstruct.Mapping;
 public interface ProductReviewMapper {
 
   @Mapping(source = "product.id", target = "productId")
-  ProductReviewDto productReviewToProductReviewDto(ProductReview productReview);
+  ProductReviewResponse productReviewToProductReviewResponse(ProductReview productReview);
 
-  ProductReview productReviewDtoToProductReview(ProductReviewDto productReviewDto);
+  ProductReview productReviewCreationRequestToProductReview(ProductReviewCreationRequest productReviewCreationRequest);
+
+  ProductReview productReviewUpdateRequestToProductReview(ProductReviewUpdateRequest productReviewUpdateRequest);
 }

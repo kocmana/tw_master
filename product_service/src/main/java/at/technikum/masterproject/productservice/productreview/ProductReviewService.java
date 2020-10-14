@@ -45,8 +45,14 @@ class ProductReviewService {
     productReviewRepository.save(productReview);
   }
 
+  void deleteReviewById(Integer id) {
+    if (!productReviewRepository.existsById(id)) {
+      throw generateReviewNotFoundException(id);
+    }
+    productReviewRepository.deleteById(id);
+  }
+
   private ProductReviewNotFoundException generateReviewNotFoundException(int reviewId) {
     return new ProductReviewNotFoundException(reviewId);
   }
-
 }

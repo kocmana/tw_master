@@ -1,24 +1,17 @@
 package at.technikum.masterproject.productservice.productreview.model.dto;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProductReviewDto {
+public class ProductReviewResponse {
 
   private int id;
-  @NotNull
   private int customerId;
   private int productId;
-  @Min(value = 0) @Max(value = 5)
   private int stars;
-  @Length(max = 500)
   private String review;
 }

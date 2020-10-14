@@ -1,13 +1,17 @@
 package at.technikum.masterproject.productservice.productinformation.model.mapper;
 
 import at.technikum.masterproject.productservice.productinformation.model.Product;
-import at.technikum.masterproject.productservice.productinformation.model.dto.ProductDto;
+import at.technikum.masterproject.productservice.productinformation.model.dto.ProductCreationRequest;
+import at.technikum.masterproject.productservice.productinformation.model.dto.ProductResponse;
+import at.technikum.masterproject.productservice.productinformation.model.dto.ProductUpdateRequest;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
 
-  ProductDto productToProductDto(Product product);
+  ProductResponse productToProductResponse(Product product);
 
-  Product productDtoToProduct(ProductDto productDto);
+  Product productCreationRequestToProduct(ProductCreationRequest productCreationRequest);
+
+  Product productUpdateRequestToProduct(ProductUpdateRequest productUpdateRequest);
 }

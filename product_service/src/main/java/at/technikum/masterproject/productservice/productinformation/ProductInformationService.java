@@ -43,6 +43,13 @@ public class ProductInformationService {
     productInformationRepository.save(product);
   }
 
+  void deleteProductById(Integer id) {
+    if(productDoesNotExist(id)){
+      throw generateNotFoundException(id);
+    }
+    productInformationRepository.deleteById(id);
+  }
+
   public boolean productDoesNotExist(Integer productId) {
     return !productInformationRepository.existsById(productId);
   }
@@ -50,5 +57,4 @@ public class ProductInformationService {
   private ProductInformationNotFoundException generateNotFoundException(int productId) {
     return new ProductInformationNotFoundException(productId);
   }
-
 }

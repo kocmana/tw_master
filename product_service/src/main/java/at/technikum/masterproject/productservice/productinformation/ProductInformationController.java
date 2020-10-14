@@ -1,22 +1,28 @@
 package at.technikum.masterproject.productservice.productinformation;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelaySimulation;
 import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelaySimulation;
 import at.technikum.masterproject.commons.delay.annotation.ProbabilisticEndpointDelaySimulation;
 import at.technikum.masterproject.productservice.model.ElementCreationResponse;
 import at.technikum.masterproject.productservice.productinformation.model.Product;
-import at.technikum.masterproject.productservice.productinformation.model.dto.ProductDto;
+import at.technikum.masterproject.productservice.productinformation.model.dto.ProductCreationRequest;
+import at.technikum.masterproject.productservice.productinformation.model.dto.ProductResponse;
+import at.technikum.masterproject.productservice.productinformation.model.dto.ProductUpdateRequest;
 import at.technikum.masterproject.productservice.productinformation.model.mapper.ProductMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,32 +44,38 @@ public class ProductInformationController {
 
   @GetMapping
   @NormallyDistributedEndpointDelaySimulation(mean = 1000, standardDeviation = 500)
-  public ResponseEntity<List<ProductDto>> getAllProducts(Pageable pageable) {
+  public ResponseEntity<List<ProductResponse>> getAllProducts(Pageable pageable) {
     List<Product> products = productInformationService.retrieveAllProductsWithPagination(pageable);
-    List<ProductDto> productDtos = products.stream()
-        .map(productMapper::productToProductDto)
+    List<ProductResponse> productResponses = products.stream()
+        .map(productMapper::productToProductResponse)
         .collect(Collectors.toUnmodifiableList());
-    return ResponseEntity.ok(productDtos);
+    return ok(productResponses);
   }
 
   @GetMapping(value = "/{id}")
   @ProbabilisticEndpointDelaySimulation(probability = 0.5f, delayInMs = 3000)
-  public ResponseEntity<ProductDto> getProductById(@PathVariable int id) {
+  public ResponseEntity<ProductResponse> getProductById(@PathVariable int id) {
     Product product = productInformationService.retrieveProductById(id);
-    return ResponseEntity.ok(productMapper.productToProductDto(product));
+    return ok(productMapper.productToProductResponse(product));
+  }
+
+  @DeleteMapping(value = "/{id}")
+  public void deleteProductById(@PathVariable @NotNull Integer id) {
+    productInformationService.deleteProductById(id);
   }
 
   @PostMapping
   @FixedEndpointDelaySimulation(delayInMs = 100)
-  public ResponseEntity<ElementCreationResponse> saveProduct(@RequestBody @Valid ProductDto productDto) {
-    Product productToSave = productMapper.productDtoToProduct(productDto);
-    int idOfNewProduct = productInformationService.saveNewProduct(productToSave);
-    return ResponseEntity.ok(new ElementCreationResponse(idOfNewProduct));
+  public ResponseEntity<ElementCreationResponse> saveProduct(@RequestBody @Valid ProductCreationRequest product) {
+    Product productToSave = productMapper.productCreationRequestToProduct(product);
+    Integer idOfNewProduct = productInformationService.saveNewProduct(productToSave);
+    return ok(new ElementCreationResponse(idOfNewProduct));
   }
 
-  @PatchMapping
+  @PutMapping
   @FixedEndpointDelaySimulation(delayInMs = 100)
-  public void updateProductInformation(@RequestBody @Valid ProductDto productDto) {
-    productInformationService.updateProduct(productMapper.productDtoToProduct(productDto));
+  public void updateProductInformation(@RequestBody @Valid ProductUpdateRequest product) {
+    Product productToUpdate = productMapper.productUpdateRequestToProduct(product);
+    productInformationService.updateProduct(productToUpdate);
   }
 }

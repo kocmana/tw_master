@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import at.technikum.masterproject.productservice.model.error.ErrorResponse;
 import at.technikum.masterproject.productservice.productinformation.model.ProductInformationNotFoundException;
+import at.technikum.masterproject.productservice.productreview.model.ProductReviewNotFoundException;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public class CommonControllerAdvice {
 
-  private static final String UUID_ATTRIBUTE = "uuid";
+  private static final String UUID_ATTRIBUTE = "request-id";
   private static final String GENERIC_ERROR_MESSAGE = "An error has occured.";
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -53,7 +54,7 @@ public class CommonControllerAdvice {
         .body(new ErrorResponse(retrieveRequestUuid(request), ex.getMessage()));
   }
 
-  @ExceptionHandler(ProductInformationNotFoundException.class)
+  @ExceptionHandler({ProductInformationNotFoundException.class, ProductReviewNotFoundException.class})
   ResponseEntity<ErrorResponse> handleProductInformationNotFoundException(final ProductInformationNotFoundException ex,
       final HttpServletRequest request) {
     log.warn(ex.getMessage());

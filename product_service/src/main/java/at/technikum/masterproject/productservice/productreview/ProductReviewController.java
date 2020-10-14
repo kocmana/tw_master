@@ -7,7 +7,9 @@ import at.technikum.masterproject.productservice.productinformation.ProductInfor
 import at.technikum.masterproject.productservice.productinformation.model.Product;
 import at.technikum.masterproject.productservice.productinformation.model.ProductInformationNotFoundException;
 import at.technikum.masterproject.productservice.productreview.model.ProductReview;
-import at.technikum.masterproject.productservice.productreview.model.dto.ProductReviewDto;
+import at.technikum.masterproject.productservice.productreview.model.dto.ProductReviewCreationRequest;
+import at.technikum.masterproject.productservice.productreview.model.dto.ProductReviewResponse;
+import at.technikum.masterproject.productservice.productreview.model.dto.ProductReviewUpdateRequest;
 import at.technikum.masterproject.productservice.productreview.model.mapper.ProductReviewMapper;
 import java.util.List;
 import javax.validation.Valid;
@@ -15,10 +17,11 @@ import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,13 +44,18 @@ public class ProductReviewController {
   }
 
   @GetMapping
-  public ResponseEntity<List<ProductReviewDto>> getAllReviews(Pageable pageable) {
+  public ResponseEntity<List<ProductReviewResponse>> getAllReviews(Pageable pageable) {
     List<ProductReview> productReviews = productReviewService.getAllReviews(pageable);
     return toProductReviewResponse(productReviews);
   }
 
+  @DeleteMapping("/{id}")
+  public void deleteReview(@PathVariable @NotNull Integer id) {
+    productReviewService.deleteReviewById(id);
+  }
+
   @GetMapping("/product/{productId}")
-  public ResponseEntity<List<ProductReviewDto>> getReviewsForProduct(
+  public ResponseEntity<List<ProductReviewResponse>> getReviewsForProduct(
       @PathVariable @Valid @NotNull int productId) {
     if (productInformationService.productDoesNotExist(productId)) {
       throw new ProductInformationNotFoundException(productId);
@@ -58,7 +66,7 @@ public class ProductReviewController {
   }
 
   @GetMapping("/customer/{customerId}")
-  public ResponseEntity<List<ProductReviewDto>> getReviewsForCustomer(
+  public ResponseEntity<List<ProductReviewResponse>> getReviewsForCustomer(
       @PathVariable @Valid @NotNull int customerId) {
     List<ProductReview> productReviews = productReviewService.getReviewsForCustomer(customerId);
     return toProductReviewResponse(productReviews);
@@ -67,28 +75,29 @@ public class ProductReviewController {
   @PostMapping("/product/{productId}")
   public ResponseEntity<ElementCreationResponse> postReview(
       @PathVariable @Valid @NotNull Integer productId,
-      @RequestBody @Valid ProductReviewDto productReviewDto) {
+      @RequestBody @Valid ProductReviewCreationRequest productReviewCreationRequest) {
     ProductReview productReview = productReviewMapper
-        .productReviewDtoToProductReview(productReviewDto);
+        .productReviewCreationRequestToProductReview(productReviewCreationRequest);
     Product reviewedProduct = productInformationService.retrieveProductById(productId);
     productReview.setProduct(reviewedProduct);
-    int reviewId = productReviewService.saveReview(productReview);
+    Integer reviewId = productReviewService.saveReview(productReview);
     return ResponseEntity.ok(new ElementCreationResponse(reviewId));
   }
 
-  @PatchMapping()
-  public void updateReview(@RequestBody @Valid ProductReviewDto productReviewDto) {
+  @PutMapping
+  public void updateReview(
+      @RequestBody @Valid ProductReviewUpdateRequest productReviewUpdateRequest) {
     ProductReview productReview = productReviewMapper
-        .productReviewDtoToProductReview(productReviewDto);
+        .productReviewUpdateRequestToProductReview(productReviewUpdateRequest);
     productReviewService.updateReview(productReview);
   }
 
-  private ResponseEntity<List<ProductReviewDto>> toProductReviewResponse(
+  private ResponseEntity<List<ProductReviewResponse>> toProductReviewResponse(
       List<ProductReview> productReviews) {
-    List<ProductReviewDto> productReviewDtos = productReviews.stream()
-        .map(productReviewMapper::productReviewToProductReviewDto)
+    List<ProductReviewResponse> productReviewResponses = productReviews.stream()
+        .map(productReviewMapper::productReviewToProductReviewResponse)
         .collect(toUnmodifiableList());
-    return ResponseEntity.ok(productReviewDtos);
+    return ResponseEntity.ok(productReviewResponses);
   }
 
 }

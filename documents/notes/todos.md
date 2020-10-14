@@ -12,6 +12,10 @@
 * ~~add global api delay on service level by adding some "LatencySimulatorInterceptor" annotated with the regular Delay 
 annotations~~ - done
 * ~~add probability based probabilisticFailure on API and endpoint level~~ - done
+* Resolve base resolvers asynchronously by providing completable futures
+* Add deletion mutation for product service
+* Add deletion endpoints to other services
+* Review current handling of PUT for data changes in integration service.
 
 # Issues
 * Pagination on GET /products endpoint seems to not work correctly

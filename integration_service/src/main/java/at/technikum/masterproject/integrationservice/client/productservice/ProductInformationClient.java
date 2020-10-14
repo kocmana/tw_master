@@ -1,6 +1,8 @@
 package at.technikum.masterproject.integrationservice.client.productservice;
 
 import at.technikum.masterproject.integrationservice.model.product.Product;
+import at.technikum.masterproject.integrationservice.model.product.dto.CreateProductInput;
+import at.technikum.masterproject.integrationservice.model.product.dto.UpdateProductInput;
 import java.util.List;
 
 public interface ProductInformationClient {
@@ -9,7 +11,7 @@ public interface ProductInformationClient {
 
   List<Product> getAllProducts();
 
-  Product saveProduct(Product product);
+  Integer saveProduct(CreateProductInput product);
 
-  Product updateProduct(Product product);
+  void updateProduct(UpdateProductInput product);
 }

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class BaseResolver implements GraphQLQueryResolver {
+public class BaseQueryResolver implements GraphQLQueryResolver {
 
   private final ProductInformationClient productInformationClient;
   private final ProductReviewClient productReviewClient;
@@ -27,7 +27,7 @@ public class BaseResolver implements GraphQLQueryResolver {
   private final PurchaseClient purchaseClient;
 
   @Autowired
-  public BaseResolver(
+  public BaseQueryResolver(
       ProductInformationClient productInformationClient,
       ProductReviewClient productReviewClient,
       CustomerInformationClient customerInformationClient,

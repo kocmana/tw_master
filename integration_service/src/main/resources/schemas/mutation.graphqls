@@ -1,0 +1,6 @@
+type Mutation {
+    createProduct(input: CreateProductInput): ID
+    updateProduct(input: UpdateProductInput): Boolean
+    createProductReview(input: CreateProductReviewInput): ID
+    updateProductReview(input: UpdateProductReviewInput): Boolean
+}

@@ -1,6 +1,10 @@
 package at.technikum.masterproject.integrationservice.client.productservice;
 
 import at.technikum.masterproject.integrationservice.model.product.ProductReview;
+import at.technikum.masterproject.integrationservice.model.product.dto.CreateProductReviewInput;
+import at.technikum.masterproject.integrationservice.model.product.dto.ElementCreationResponse;
+import at.technikum.masterproject.integrationservice.model.product.dto.UpdateProductReviewInput;
+import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -75,12 +79,21 @@ public class ProductReviewClientImpl implements ProductReviewClient {
   }
 
   @Override
-  public ProductReview saveProductReview(int productId, ProductReview productReview) {
-    return restTemplate.postForObject(
+  public Integer saveProductReview(CreateProductReviewInput productReview) {
+    ElementCreationResponse response = restTemplate.postForObject(
         REVIEW_BY_PRODUCT_ENDPOINT,
         productReview,
-        ProductReview.class,
-        productId
+        ElementCreationResponse.class,
+        productReview.getProductId()
+    );
+    return response.getId();
+  }
+
+  @Override
+  public void updateProductReview(UpdateProductReviewInput productReview) {
+    restTemplate.put(
+        URI.create(REVIEW_ENDPOINT),
+        productReview
     );
   }
 

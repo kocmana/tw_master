@@ -3,6 +3,10 @@ package at.technikum.masterproject.integrationservice.client.productservice;
 import static org.springframework.http.HttpMethod.GET;
 
 import at.technikum.masterproject.integrationservice.model.product.Product;
+import at.technikum.masterproject.integrationservice.model.product.dto.CreateProductInput;
+import at.technikum.masterproject.integrationservice.model.product.dto.ElementCreationResponse;
+import at.technikum.masterproject.integrationservice.model.product.dto.UpdateProductInput;
+import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -54,20 +58,21 @@ public class ProductInformationClientImpl implements ProductInformationClient {
   }
 
   @Override
-  public Product saveProduct(Product product) {
-    return restTemplate.postForObject(
+  public Integer saveProduct(CreateProductInput product) {
+    ElementCreationResponse response = restTemplate.postForObject(
         PRODUCT_ENDPOINT,
         product,
-        Product.class
+        ElementCreationResponse.class
     );
+
+    return response.getId();
   }
 
   @Override
-  public Product updateProduct(Product product) {
-    return restTemplate.patchForObject(
-        PRODUCT_ENDPOINT,
-        product,
-        Product.class
+  public void updateProduct(UpdateProductInput product) {
+    restTemplate.put(
+        URI.create(PRODUCT_ENDPOINT),
+        product
     );
   }
 

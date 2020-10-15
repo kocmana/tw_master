@@ -4,16 +4,18 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 
 import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelaySimulation;
 import at.technikum.masterproject.customerservice.customerinformation.model.Customer;
-import at.technikum.masterproject.customerservice.customerinformation.model.dto.CustomerDto;
+import at.technikum.masterproject.customerservice.customerinformation.model.dto.CustomerRegistrationRequest;
+import at.technikum.masterproject.customerservice.customerinformation.model.dto.CustomerResponse;
+import at.technikum.masterproject.customerservice.customerinformation.model.dto.CustomerUpdateRequest;
 import at.technikum.masterproject.customerservice.customerinformation.model.mapper.CustomerMapper;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,36 +36,33 @@ class CustomerInformationController {
 
   @GetMapping
   @FixedEndpointDelaySimulation(delayInMs = 100)
-  public ResponseEntity<List<CustomerDto>> getAllCustomers() {
+  public ResponseEntity<List<CustomerResponse>> getAllCustomers() {
     List<Customer> allCustomers = customerInformationService.retrieveAllCustomers();
-    List<CustomerDto> customerDtos = allCustomers.stream()
-        .map(customerMapper::customerToCustomerDto)
+    List<CustomerResponse> customerResponses = allCustomers.stream()
+        .map(customerMapper::customerToCustomerResponse)
         .collect(toUnmodifiableList());
-    return ResponseEntity.ok(customerDtos);
+    return ResponseEntity.ok(customerResponses);
   }
 
   @GetMapping(path = "/{customerId}")
-  public ResponseEntity<CustomerDto> getCustomerById(@PathVariable int customerId) {
+  public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable int customerId) {
     Customer customer = customerInformationService.retrieveCustomerById(customerId);
-    CustomerDto customerDto = customerMapper.customerToCustomerDto(customer);
-    return ResponseEntity.ok(customerDto);
+    CustomerResponse customerResponse = customerMapper.customerToCustomerResponse(customer);
+    return ResponseEntity.ok(customerResponse);
   }
 
   @PostMapping
-  public ResponseEntity<CustomerDto> saveCustomer(@RequestBody @Valid CustomerDto customerDto) {
-    customerDto.setCustomerId(null);
-    Customer customer = customerMapper.customerDtoToCustomer(customerDto);
+  public ResponseEntity<CustomerResponse> saveCustomer(@RequestBody @Valid CustomerRegistrationRequest customerRegistrationRequest) {
+    Customer customer = customerMapper.customerRegistrationRequestToCustomer(customerRegistrationRequest);
     Customer savedCustomer = customerInformationService.saveCustomer(customer);
-    customerDto = customerMapper.customerToCustomerDto(savedCustomer);
-    return ResponseEntity.ok(customerDto);
+    CustomerResponse customerResponse = customerMapper.customerToCustomerResponse(savedCustomer);
+    return ResponseEntity.ok(customerResponse);
   }
 
-  @PatchMapping
-  public ResponseEntity<CustomerDto> updateCustomer(@RequestBody @Valid CustomerDto customerDto) {
-    Customer customer = customerMapper.customerDtoToCustomer(customerDto);
-    Customer savedCustomer = customerInformationService.updateCustomer(customer);
-    customerDto = customerMapper.customerToCustomerDto(savedCustomer);
-    return ResponseEntity.ok(customerDto);
+  @PutMapping
+  public void updateCustomer(@RequestBody @Valid CustomerUpdateRequest customerUpdateRequest) {
+    Customer customer = customerMapper.customerUpdateRequestToCustomer(customerUpdateRequest);
+    customerInformationService.updateCustomer(customer);
   }
 
 }

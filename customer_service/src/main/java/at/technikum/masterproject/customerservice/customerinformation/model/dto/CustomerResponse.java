@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CustomerDto {
+public class CustomerResponse {
 
   private Integer customerId;
   private Gender gender;

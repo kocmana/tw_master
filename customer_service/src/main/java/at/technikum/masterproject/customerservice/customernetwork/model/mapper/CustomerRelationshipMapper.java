@@ -11,13 +11,13 @@ public interface CustomerRelationshipMapper {
   @Mapping(source = "id.sourceCustomerId", target = "sourceCustomerId")
   @Mapping(source = "id.targetCustomerId", target = "targetCustomerId")
   @Mapping(source = "id.interactionType", target = "interactionType")
-  CustomerInteractionDto customerRelationshipToCustomerRelationshipDto(
+  CustomerInteractionDto customerInteractionToCustomerInteractionDto(
       CustomerInteraction customerInteraction);
 
   @Mapping(source = "sourceCustomerId", target = "id.sourceCustomerId")
   @Mapping(source = "targetCustomerId", target = "id.targetCustomerId")
   @Mapping(source = "interactionType", target = "id.interactionType")
-  CustomerInteraction customerRelationshipDtoToCustomerRelationship(
+  CustomerInteraction customerInteractionDtoToCustomerInteraction(
       CustomerInteractionDto customerInteractionDto);
 
 }

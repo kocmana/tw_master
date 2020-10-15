@@ -40,10 +40,10 @@ public class CustomerNetworkController {
   public ResponseEntity<CustomerInteractionDto> postNewCustomerRelationship(
       @RequestBody @Valid CustomerInteractionDto relationshipDto) {
     CustomerInteraction relationship = customerRelationshipMapper
-        .customerRelationshipDtoToCustomerRelationship(relationshipDto);
+        .customerInteractionDtoToCustomerInteraction(relationshipDto);
     relationship = customerNetworkService.saveCustomerRelationship(relationship);
     relationshipDto = customerRelationshipMapper
-        .customerRelationshipToCustomerRelationshipDto(relationship);
+        .customerInteractionToCustomerInteractionDto(relationship);
     return ResponseEntity.ok(relationshipDto);
   }
 

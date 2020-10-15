@@ -25,19 +25,18 @@ public class CustomerInformationService {
   }
 
   public Customer retrieveCustomerById(int customerId) {
-    return customerInformationRepository.findById(customerId).orElseThrow(
-        () -> generateCustomerNotFoundException(customerId));
+    return customerInformationRepository.findById(customerId)
+        .orElseThrow(() -> generateCustomerNotFoundException(customerId));
   }
 
   Customer saveCustomer(Customer customer) {
     return customerInformationRepository.save(customer);
   }
 
-  Customer updateCustomer(Customer customer) {
+  void updateCustomer(Customer customer) {
     if (!customerDoesNotExist(customer.getCustomerId())) {
       throw generateCustomerNotFoundException(customer.getCustomerId());
     }
-    return customerInformationRepository.save(customer);
   }
 
   private boolean customerDoesNotExist(int customerId) {

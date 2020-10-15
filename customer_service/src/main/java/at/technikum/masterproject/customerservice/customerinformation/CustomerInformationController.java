@@ -12,13 +12,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customer")
@@ -63,6 +57,11 @@ class CustomerInformationController {
   public void updateCustomer(@RequestBody @Valid CustomerUpdateRequest customerUpdateRequest) {
     Customer customer = customerMapper.customerUpdateRequestToCustomer(customerUpdateRequest);
     customerInformationService.updateCustomer(customer);
+  }
+
+  @DeleteMapping(path = "/{customerId}")
+  public void deleteCustomer(@PathVariable int customerId) {
+    customerInformationService.deleteCustomer(customerId);
   }
 
 }

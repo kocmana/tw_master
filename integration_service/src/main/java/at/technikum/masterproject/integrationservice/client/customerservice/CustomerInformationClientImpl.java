@@ -3,6 +3,10 @@ package at.technikum.masterproject.integrationservice.client.customerservice;
 import static org.springframework.http.HttpMethod.GET;
 
 import at.technikum.masterproject.integrationservice.model.customer.Customer;
+import at.technikum.masterproject.integrationservice.model.customer.CustomerServiceException;
+import at.technikum.masterproject.integrationservice.model.customer.dto.CreateCustomerInput;
+import at.technikum.masterproject.integrationservice.model.customer.dto.UpdateCustomerInput;
+import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -50,17 +54,26 @@ public class CustomerInformationClientImpl implements CustomerInformationClient 
   }
 
   @Override
-  public Customer saveCustomer(Customer customer) {
-    return restTemplate.postForObject(CUSTOMER_ENDPOINT,
+  public int saveCustomer(CreateCustomerInput customer) {
+    Customer response = restTemplate.postForObject(CUSTOMER_ENDPOINT,
         customer,
         Customer.class);
+    return Optional.ofNullable(response)
+        .orElseThrow(() -> new CustomerServiceException("Could not extract customer Id."))
+        .getCustomerId();
   }
 
   @Override
-  public Customer updateCustomer(Customer customer) {
-    return restTemplate.postForObject(CUSTOMER_ENDPOINT,
-        customer,
-        Customer.class);
+  public void updateCustomer(UpdateCustomerInput customer) {
+    restTemplate.put(
+        URI.create(CUSTOMER_ENDPOINT),
+        customer);
   }
 
+  @Override
+  public void deleteCustomer(int customerId) {
+    restTemplate.delete(
+        CUSTOMER_BY_CUSTOMER_ID_ENDPOINT,
+        customerId);
+  }
 }

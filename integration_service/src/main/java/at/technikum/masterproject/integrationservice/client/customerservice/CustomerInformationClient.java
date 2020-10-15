@@ -1,6 +1,8 @@
 package at.technikum.masterproject.integrationservice.client.customerservice;
 
 import at.technikum.masterproject.integrationservice.model.customer.Customer;
+import at.technikum.masterproject.integrationservice.model.customer.dto.CreateCustomerInput;
+import at.technikum.masterproject.integrationservice.model.customer.dto.UpdateCustomerInput;
 import java.util.List;
 
 public interface CustomerInformationClient {
@@ -9,7 +11,9 @@ public interface CustomerInformationClient {
 
   List<Customer> getAllCustomer();
 
-  Customer saveCustomer(Customer customer);
+   int saveCustomer(CreateCustomerInput customer);
 
-  Customer updateCustomer(Customer customer);
+  void updateCustomer(UpdateCustomerInput customer);
+
+  void deleteCustomer(int customerId);
 }

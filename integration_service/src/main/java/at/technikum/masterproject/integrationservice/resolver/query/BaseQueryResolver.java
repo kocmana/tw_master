@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.resolver;
+package at.technikum.masterproject.integrationservice.resolver.query;
 
 import at.technikum.masterproject.integrationservice.client.customerservice.CustomerInformationClient;
 import at.technikum.masterproject.integrationservice.client.customerservice.CustomerNetworkClient;
@@ -45,7 +45,7 @@ public class BaseQueryResolver implements GraphQLQueryResolver {
     return productInformationClient.getAllProducts();
   }
 
-  public Product product(Integer id) {
+  public Product product(int id) {
     log.info("Retrieved product query for id {}", id);
     return productInformationClient.getProductById(id);
   }
@@ -60,12 +60,12 @@ public class BaseQueryResolver implements GraphQLQueryResolver {
     return customerInformationClient.getAllCustomer();
   }
 
-  public Customer customer(Integer customerId) {
+  public Customer customer(int customerId) {
     log.info("Retrieved customer query for customerId {}", customerId);
     return customerInformationClient.getCustomerById(customerId);
   }
 
-  public List<CustomerNetwork> customerNetwork(Integer customerId) {
+  public List<CustomerNetwork> customerNetwork(int customerId) {
     log.info("Retrieved customer network query for customerId {}", customerId);
     return customerNetworkClient.getNetworkById(customerId);
   }

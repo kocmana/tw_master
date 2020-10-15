@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.context.annotation.Bean;
 
 
 @Slf4j
@@ -19,6 +20,7 @@ public class LoggingInstrumentation extends SimpleInstrumentation {
   private static final String DOWNSTREAM_LOG_ENTRY_PATTERN = "\t%s - ID: %s\n";
 
   @Override
+  @Bean
   public InstrumentationState createState() {
     return new LoggingInstrumentationState();
   }

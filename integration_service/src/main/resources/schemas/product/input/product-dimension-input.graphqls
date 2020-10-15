@@ -1,0 +1,5 @@
+input ProductDimensionInput {
+    width: Float
+    height: Float
+    depth: Float
+}

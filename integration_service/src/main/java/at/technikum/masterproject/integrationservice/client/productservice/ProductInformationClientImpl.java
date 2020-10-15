@@ -3,6 +3,7 @@ package at.technikum.masterproject.integrationservice.client.productservice;
 import static org.springframework.http.HttpMethod.GET;
 
 import at.technikum.masterproject.integrationservice.model.product.Product;
+import at.technikum.masterproject.integrationservice.model.product.ProductServiceException;
 import at.technikum.masterproject.integrationservice.model.product.dto.CreateProductInput;
 import at.technikum.masterproject.integrationservice.model.product.dto.ElementCreationResponse;
 import at.technikum.masterproject.integrationservice.model.product.dto.UpdateProductInput;
@@ -65,7 +66,9 @@ public class ProductInformationClientImpl implements ProductInformationClient {
         ElementCreationResponse.class
     );
 
-    return response.getId();
+    return Optional.ofNullable(response)
+        .orElseThrow(() -> new ProductServiceException("Could not retrieve element id from response."))
+        .getId();
   }
 
   @Override
@@ -76,4 +79,11 @@ public class ProductInformationClientImpl implements ProductInformationClient {
     );
   }
 
+  @Override
+  public void deleteProduct(int productId) {
+    restTemplate.delete(
+        PRODUCT_BY_ID_ENDPOINT,
+        productId
+    );
+  }
 }

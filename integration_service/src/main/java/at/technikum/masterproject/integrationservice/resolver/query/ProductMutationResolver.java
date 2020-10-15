@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.resolver;
+package at.technikum.masterproject.integrationservice.resolver.query;
 
 import at.technikum.masterproject.integrationservice.client.productservice.ProductInformationClient;
 import at.technikum.masterproject.integrationservice.client.productservice.ProductReviewClient;
@@ -7,21 +7,23 @@ import at.technikum.masterproject.integrationservice.model.product.dto.CreatePro
 import at.technikum.masterproject.integrationservice.model.product.dto.UpdateProductInput;
 import at.technikum.masterproject.integrationservice.model.product.dto.UpdateProductReviewInput;
 import graphql.kickstart.tools.GraphQLMutationResolver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BaseMutationResolver implements GraphQLMutationResolver {
+public class ProductMutationResolver implements GraphQLMutationResolver {
 
   private final ProductInformationClient productInformationClient;
   private final ProductReviewClient productReviewClient;
 
-  public BaseMutationResolver(ProductInformationClient productInformationClient,
+  @Autowired
+  public ProductMutationResolver(ProductInformationClient productInformationClient,
       ProductReviewClient productReviewClient) {
     this.productInformationClient = productInformationClient;
     this.productReviewClient = productReviewClient;
   }
 
-  public Integer createProduct(CreateProductInput product) {
+  public int createProduct(CreateProductInput product) {
     return productInformationClient.saveProduct(product);
   }
 
@@ -29,7 +31,11 @@ public class BaseMutationResolver implements GraphQLMutationResolver {
     productInformationClient.updateProduct(product);
   }
 
-  public Integer createProductReview(CreateProductReviewInput review) {
+  public void deleteProduct(int productId) {
+    productInformationClient.deleteProduct(productId);
+  }
+
+  public int createProductReview(CreateProductReviewInput review) {
     return productReviewClient.saveProductReview(review);
   }
 
@@ -37,5 +43,8 @@ public class BaseMutationResolver implements GraphQLMutationResolver {
     productReviewClient.updateProductReview(review);
   }
 
+  public void deleteProductReview(int productId) {
+    productReviewClient.deleteProductReview(productId);
+  }
 
 }

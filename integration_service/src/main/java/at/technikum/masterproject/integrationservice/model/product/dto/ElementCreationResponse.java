@@ -1,11 +1,9 @@
 package at.technikum.masterproject.integrationservice.model.product.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Value;
 
-@AllArgsConstructor
-@Getter
+@Value
 public class ElementCreationResponse {
 
-  private final Integer id;
+  Integer id;
 }

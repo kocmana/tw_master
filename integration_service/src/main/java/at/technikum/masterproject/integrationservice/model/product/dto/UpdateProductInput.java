@@ -1,15 +1,14 @@
 package at.technikum.masterproject.integrationservice.model.product.dto;
 
-import lombok.Data;
+import at.technikum.masterproject.integrationservice.model.product.ProductDimension;
+import lombok.Value;
 
-@Data
+@Value
 public class UpdateProductInput {
 
   Integer id;
   String name;
   String description;
   Float weight;
-  Float width;
-  Float height;
-  Float depth;
+  ProductDimension dimension;
 }

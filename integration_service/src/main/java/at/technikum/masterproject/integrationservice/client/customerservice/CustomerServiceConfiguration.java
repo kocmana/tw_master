@@ -8,12 +8,12 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
-public class CustomerServiceConfig {
+public class CustomerServiceConfiguration {
 
   private final CustomerServiceProperties customerServiceProperties;
 
   @Autowired
-  CustomerServiceConfig(CustomerServiceProperties customerServiceProperties) {
+  CustomerServiceConfiguration(CustomerServiceProperties customerServiceProperties) {
     this.customerServiceProperties = customerServiceProperties;
   }
 

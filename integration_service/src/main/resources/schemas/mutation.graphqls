@@ -1,6 +1,15 @@
 type Mutation {
-    createProduct(input: CreateProductInput): ID
-    updateProduct(input: UpdateProductInput): Boolean
-    createProductReview(input: CreateProductReviewInput): ID
-    updateProductReview(input: UpdateProductReviewInput): Boolean
+    createProduct(input: CreateProductInput!): ID
+    updateProduct(input: UpdateProductInput!): Boolean
+    deleteProduct(input: ID!): Boolean
+
+    createProductReview(input: CreateProductReviewInput!): ID
+    updateProductReview(input: UpdateProductReviewInput!): Boolean
+    deleteProductReview(input: ID!): Boolean
+
+    createCustomer(input: CreateCustomerInput!): ID
+    updateCustomer(input: UpdateCustomerInput!): Boolean
+    deleteCustomer(input: ID!): Boolean
+
+    createCustomerInteraction(input: CreateCustomerInteraction!): CustomerInteraction
 }

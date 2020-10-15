@@ -2,6 +2,8 @@ package at.technikum.masterproject.integrationservice.client.customerservice;
 
 import at.technikum.masterproject.integrationservice.model.customer.CustomerInteraction;
 import at.technikum.masterproject.integrationservice.model.customer.CustomerNetwork;
+import at.technikum.masterproject.integrationservice.model.customer.CustomerServiceException;
+import at.technikum.masterproject.integrationservice.model.customer.dto.CreateCustomerInteractionInput;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +38,8 @@ public class CustomerNetworkClientImpl implements CustomerNetworkClient {
         NETWORK_BY_CUSTOMER_ENDPOINT,
         HttpMethod.GET,
         HttpEntity.EMPTY,
-        new ParameterizedTypeReference<List<CustomerNetwork>>() {},
+        new ParameterizedTypeReference<List<CustomerNetwork>>() {
+        },
         customerId);
 
     return Optional.ofNullable(response.getBody())
@@ -44,11 +47,14 @@ public class CustomerNetworkClientImpl implements CustomerNetworkClient {
   }
 
   @Override
-  public CustomerInteraction saveCustomerRelationship(CustomerInteraction customerInteraction) {
-    return restTemplate.postForObject(
+  public CustomerInteraction saveCustomerInteraction(CreateCustomerInteractionInput customerInteraction) {
+    CustomerInteraction response = restTemplate.postForObject(
         NETWORK_ENDPOINT,
         customerInteraction,
         CustomerInteraction.class);
+
+    return Optional.ofNullable(response)
+        .orElseThrow(() -> new CustomerServiceException("Could not extract response."));
   }
 
 }

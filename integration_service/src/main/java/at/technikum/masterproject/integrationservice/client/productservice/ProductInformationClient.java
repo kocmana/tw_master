@@ -7,11 +7,14 @@ import java.util.List;
 
 public interface ProductInformationClient {
 
-  Product getProductById(int id);
+  Product getProductById(int productId);
 
   List<Product> getAllProducts();
 
   Integer saveProduct(CreateProductInput product);
 
   void updateProduct(UpdateProductInput product);
+
+  void deleteProduct(int id);
+
 }

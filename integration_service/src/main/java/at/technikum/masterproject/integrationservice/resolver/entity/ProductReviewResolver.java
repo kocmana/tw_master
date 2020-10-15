@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.resolver;
+package at.technikum.masterproject.integrationservice.resolver.entity;
 
 import at.technikum.masterproject.integrationservice.client.customerservice.CustomerInformationClient;
 import at.technikum.masterproject.integrationservice.client.productservice.ProductInformationClient;

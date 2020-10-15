@@ -13,7 +13,9 @@ public interface ProductReviewClient {
 
   List<ProductReview> getAllProductReviewsByCustomer(int customerId);
 
-  Integer saveProductReview(CreateProductReviewInput productReview);
+  int saveProductReview(CreateProductReviewInput productReview);
 
   void updateProductReview(UpdateProductReviewInput productReview);
+
+  void deleteProductReview(int productId);
 }

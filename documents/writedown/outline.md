@@ -50,6 +50,7 @@
 #### Problem definition
   * Definition of the N+1 problem
   * Effect on response times
+  * SelctionSet Problem: In heterogeneous architectures, selection of fields is likely only limiting direct transmission to end devices, not load on backend services
   * N+1 Problem and Managing of Response Times are tightly connected, aggravated by heterogeneous architecture
 
 #### Evaluation of the problem

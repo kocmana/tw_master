@@ -16,6 +16,7 @@ annotations~~ - done
 * Add deletion mutation for product service
 * Add deletion endpoints to other services
 * Review current handling of PUT for data changes in integration service.
+* Add exception handlers for integration system
 
 # Issues
 * Pagination on GET /products endpoint seems to not work correctly

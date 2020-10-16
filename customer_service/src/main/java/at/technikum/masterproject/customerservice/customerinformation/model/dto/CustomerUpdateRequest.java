@@ -6,26 +6,25 @@ import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Value;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Value
 public class CustomerUpdateRequest {
 
-  private Integer customerId;
-  private Gender gender;
+  Integer customerId;
+  Gender gender;
   @NotBlank
-  private String firstName;
+  String firstName;
   @NotBlank
-  private String lastName;
-  private String street;
-  private String houseNumber;
-  private String top;
-  private String postalCode;
+  String lastName;
+  String street;
+  String houseNumber;
+  String top;
+  String postalCode;
   @NotBlank
-  private String country;
-  private String telephoneNumber;
+  String country;
+  String telephoneNumber;
   @NotBlank
   @Email
-  private String emailAddress;
+  String emailAddress;
 }

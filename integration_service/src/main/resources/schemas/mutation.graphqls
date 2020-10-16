@@ -12,4 +12,7 @@ type Mutation {
     deleteCustomer(input: ID!): Boolean
 
     createCustomerInteraction(input: CreateCustomerInteraction!): CustomerInteraction
+
+    createPrice(input: CreatePriceInput): ID
+    createPurchase(input: CreatePurchaseInput): ID
 }

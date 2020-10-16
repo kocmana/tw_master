@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.resolver.entity;
+package at.technikum.masterproject.integrationservice.resolver.query.entity;
 
 import at.technikum.masterproject.integrationservice.client.customerservice.CustomerNetworkClient;
 import at.technikum.masterproject.integrationservice.client.ecommerceservice.PurchaseClient;
@@ -33,7 +33,7 @@ public class CustomerResolver implements GraphQLResolver<Customer> {
   }
 
   public List<CustomerNetwork> getNetwork(Customer customer) {
-    return customerNetworkClient.getNetworkById(customer.getCustomerId());
+    return customerNetworkClient.getNetworkByCustomerId(customer.getCustomerId());
   }
 
   public List<Purchase> getPurchases(Customer customer) {

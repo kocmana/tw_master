@@ -67,7 +67,7 @@ public class BaseQueryResolver implements GraphQLQueryResolver {
 
   public List<CustomerNetwork> customerNetwork(int customerId) {
     log.info("Retrieved customer network query for customerId {}", customerId);
-    return customerNetworkClient.getNetworkById(customerId);
+    return customerNetworkClient.getNetworkByCustomerId(customerId);
   }
 
   public Purchase purchase(Integer purchaseId) {

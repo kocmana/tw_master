@@ -33,7 +33,7 @@ public class CustomerNetworkClientImpl implements CustomerNetworkClient {
   }
 
   @Override
-  public List<CustomerNetwork> getNetworkById(int customerId) {
+  public List<CustomerNetwork> getNetworkByCustomerId(int customerId) {
     ResponseEntity<List<CustomerNetwork>> response = restTemplate.exchange(
         NETWORK_BY_CUSTOMER_ENDPOINT,
         HttpMethod.GET,

@@ -1,6 +1,8 @@
 package at.technikum.masterproject.integrationservice.client.ecommerceservice;
 
+import at.technikum.masterproject.integrationservice.model.ecommerce.EcommerceServiceException;
 import at.technikum.masterproject.integrationservice.model.ecommerce.Purchase;
+import at.technikum.masterproject.integrationservice.model.ecommerce.dto.CreatePurchaseInput;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -54,12 +56,15 @@ public class PurchaseClientImpl implements PurchaseClient {
   }
 
   @Override
-  public Purchase savePurchase(Purchase purchase) {
-    return restTemplate.postForObject(
+  public long savePurchase(CreatePurchaseInput purchase) {
+    Purchase response = restTemplate.postForObject(
         PURCHASE_ENDPOINT,
         purchase,
         Purchase.class
     );
+    return Optional.ofNullable(response)
+        .orElseThrow(() -> new EcommerceServiceException("Could not retrieve element id from response."))
+        .getId();
   }
 
 }

@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.resolver.entity;
+package at.technikum.masterproject.integrationservice.resolver.query.entity;
 
 import at.technikum.masterproject.integrationservice.client.ecommerceservice.PriceClient;
 import at.technikum.masterproject.integrationservice.client.productservice.ProductReviewClient;

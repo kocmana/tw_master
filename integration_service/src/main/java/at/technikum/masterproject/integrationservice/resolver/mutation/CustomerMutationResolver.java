@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.resolver.query;
+package at.technikum.masterproject.integrationservice.resolver.mutation;
 
 import at.technikum.masterproject.integrationservice.client.customerservice.CustomerInformationClient;
 import at.technikum.masterproject.integrationservice.client.customerservice.CustomerNetworkClient;

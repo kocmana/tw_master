@@ -1,6 +1,8 @@
 package at.technikum.masterproject.integrationservice.client.ecommerceservice;
 
+import at.technikum.masterproject.integrationservice.model.ecommerce.EcommerceServiceException;
 import at.technikum.masterproject.integrationservice.model.ecommerce.Price;
+import at.technikum.masterproject.integrationservice.model.ecommerce.dto.CreatePriceInput;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -54,12 +56,14 @@ public class PriceClientImpl implements PriceClient {
   }
 
   @Override
-  public Price savePrice(Price price) {
-    return restTemplate.postForObject(
+  public Price savePrice(CreatePriceInput price) {
+    Price response = restTemplate.postForObject(
         PRICE_ENDPOINT,
         price,
         Price.class
     );
+    return Optional.ofNullable(response)
+        .orElseThrow(() -> new EcommerceServiceException("Could not retrieve element id from response."));
   }
 
 }

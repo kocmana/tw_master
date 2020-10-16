@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CustomerNetworkClient {
 
-  List<CustomerNetwork> getNetworkById(int customerId);
+  List<CustomerNetwork> getNetworkByCustomerId(int customerId);
 
   CustomerInteraction saveCustomerInteraction(CreateCustomerInteractionInput customerInteraction);
 }

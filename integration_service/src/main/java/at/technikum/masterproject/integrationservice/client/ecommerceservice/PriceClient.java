@@ -1,6 +1,7 @@
 package at.technikum.masterproject.integrationservice.client.ecommerceservice;
 
 import at.technikum.masterproject.integrationservice.model.ecommerce.Price;
+import at.technikum.masterproject.integrationservice.model.ecommerce.dto.CreatePriceInput;
 import java.util.List;
 
 public interface PriceClient {
@@ -9,5 +10,5 @@ public interface PriceClient {
 
   List<Price> getAllPricesForProduct(int productId);
 
-  Price savePrice(Price price);
+  Price savePrice(CreatePriceInput price);
 }

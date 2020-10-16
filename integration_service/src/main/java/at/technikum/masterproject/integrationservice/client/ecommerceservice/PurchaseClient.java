@@ -1,6 +1,7 @@
 package at.technikum.masterproject.integrationservice.client.ecommerceservice;
 
 import at.technikum.masterproject.integrationservice.model.ecommerce.Purchase;
+import at.technikum.masterproject.integrationservice.model.ecommerce.dto.CreatePurchaseInput;
 import java.util.List;
 
 public interface PurchaseClient {
@@ -9,5 +10,5 @@ public interface PurchaseClient {
 
   List<Purchase> getPurchasesForCustomer(int customerId);
 
-  Purchase savePurchase(Purchase purchase);
+  long savePurchase(CreatePurchaseInput purchase);
 }

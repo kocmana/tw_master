@@ -20,7 +20,7 @@ public class Purchase implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Integer id;
   @Column(name = "customer_id")
   private Integer customerId;
   @OneToMany(mappedBy = "purchase")

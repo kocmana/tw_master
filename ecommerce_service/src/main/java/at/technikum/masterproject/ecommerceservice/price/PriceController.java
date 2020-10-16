@@ -60,11 +60,11 @@ public class PriceController {
 
   @PostMapping
   @FixedEndpointDelaySimulation(delayInMs = 200)
-  public ResponseEntity<Void> savePrice(@RequestBody @Valid PriceDto priceDto) {
+  public ResponseEntity<PriceDto> savePrice(@RequestBody @Valid PriceDto priceDto) {
     Price price = priceMapper.priceDtoToPrice(priceDto);
-    priceService.savePriceForProduct(price);
-
-    return ResponseEntity.noContent().build();
+    Price savedPrice = priceService.savePriceForProduct(price);
+    PriceDto response = priceMapper.priceToPriceDto(savedPrice);
+    return ResponseEntity.ok().body(response);
   }
 
   private List<PriceDto> toDtos(List<Price> prices) {

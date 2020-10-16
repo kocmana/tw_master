@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS price
 
 CREATE TABLE IF NOT EXISTS purchase
 (
-    ID           BIGINT AUTO_INCREMENT,
+    id           INTEGER AUTO_INCREMENT,
     customer_id  INTEGER,
     payment_type VARCHAR(255),
     PRIMARY KEY (id)
@@ -18,12 +18,12 @@ CREATE TABLE IF NOT EXISTS purchase
 
 CREATE TABLE IF NOT EXISTS purchase_item
 (
-    id             BIGINT AUTO_INCREMENT,
+    id             INTEGER AUTO_INCREMENT,
     amount         INTEGER,
     currency       VARCHAR(255),
     price_per_unit FLOAT,
     product_id     INTEGER,
-    purchase_id    BIGINT,
+    purchase_id    INTEGER,
     PRIMARY KEY (id)
 );
 

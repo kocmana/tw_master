@@ -2,21 +2,23 @@ package at.technikum.masterproject.ecommerceservice.purchase.model.mapper;
 
 import at.technikum.masterproject.ecommerceservice.purchase.model.Purchase;
 import at.technikum.masterproject.ecommerceservice.purchase.model.PurchaseItem;
-import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseDto;
-import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseItemDto;
+import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseCreationRequest;
+import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseItemCreationRequest;
+import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseItemResponse;
+import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface PurchaseMapper {
 
-  PurchaseDto purchaseToPurchaseDto(Purchase purchase);
+  PurchaseResponse purchaseToPurchaseResponse(Purchase purchase);
 
-  Purchase purchaseDtoToPurchase(PurchaseDto purchase);
+  Purchase purchaseCreationRequestDtoToPurchase(PurchaseCreationRequest purchase);
 
   @Mapping(source = "purchase.id", target = "purchaseId")
-  PurchaseItemDto purchaseItemToPurchaseItemDto(PurchaseItem purchaseItem);
+  PurchaseItemResponse purchaseItemToPurchaseItemDto(PurchaseItem purchaseItem);
 
-  PurchaseItem purchaseItemDtoToPurchaseItem(PurchaseItemDto purchase);
+  PurchaseItem purchaseItemCreationRequestToPurchaseItem(PurchaseItemCreationRequest purchaseItem);
 
 }

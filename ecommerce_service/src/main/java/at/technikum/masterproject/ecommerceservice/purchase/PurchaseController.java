@@ -3,7 +3,8 @@ package at.technikum.masterproject.ecommerceservice.purchase;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 import at.technikum.masterproject.ecommerceservice.purchase.model.Purchase;
-import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseDto;
+import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseCreationRequest;
+import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseResponse;
 import at.technikum.masterproject.ecommerceservice.purchase.model.mapper.PurchaseMapper;
 import java.util.List;
 import javax.validation.Valid;
@@ -32,26 +33,25 @@ public class PurchaseController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<PurchaseDto> retrievePurchaseById(@PathVariable @Valid @NotNull long id) {
+  public ResponseEntity<PurchaseResponse> retrievePurchaseById(@PathVariable int id) {
     Purchase purchase = purchaseService.getPurchaseById(id);
-    return ResponseEntity.ok(purchaseMapper.purchaseToPurchaseDto(purchase));
+    return ResponseEntity.ok(purchaseMapper.purchaseToPurchaseResponse(purchase));
   }
 
   @GetMapping("/customer/{customerId}")
-  public ResponseEntity<List<PurchaseDto>> retrievePurchasesByCustomerId(
+  public ResponseEntity<List<PurchaseResponse>> retrievePurchasesByCustomerId(
       @PathVariable @Valid @NotNull Integer customerId) {
-    List<PurchaseDto> purchaseDtos = purchaseService.getPurchasesForCustomer(customerId)
+    List<PurchaseResponse> purchaseResponses = purchaseService.getPurchasesForCustomer(customerId)
         .stream()
-        .map(purchaseMapper::purchaseToPurchaseDto)
+        .map(purchaseMapper::purchaseToPurchaseResponse)
         .collect(toUnmodifiableList());
-    return ResponseEntity.ok(purchaseDtos);
+    return ResponseEntity.ok(purchaseResponses);
   }
 
   @PostMapping
-  public ResponseEntity<Long> savePurchase(@RequestBody @Valid PurchaseDto purchaseDto) {
-    purchaseDto.setId(null);
-    Long newPurchaseId = purchaseService
-        .savePurchase(purchaseMapper.purchaseDtoToPurchase(purchaseDto));
+  public ResponseEntity<Integer> savePurchase(@RequestBody @Valid PurchaseCreationRequest purchase) {
+    int newPurchaseId = purchaseService
+        .savePurchase(purchaseMapper.purchaseCreationRequestDtoToPurchase(purchase));
     return ResponseEntity.ok(newPurchaseId);
   }
 }

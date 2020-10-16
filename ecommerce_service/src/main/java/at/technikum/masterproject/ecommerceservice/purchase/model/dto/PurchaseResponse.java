@@ -9,10 +9,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PurchaseDto {
+public class PurchaseResponse {
 
-  private Long id;
+  private Integer id;
   private Integer customerId;
-  private List<PurchaseItemDto> items;
+  private List<PurchaseItemResponse> items;
   private PaymentType paymentType;
 }

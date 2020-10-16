@@ -27,12 +27,12 @@ class PurchaseService {
     return purchaseRepository.findPurchasesByCustomerId(customerId);
   }
 
-  Purchase getPurchaseById(long purchaseId) {
+  Purchase getPurchaseById(int purchaseId) {
     return purchaseRepository.findById(purchaseId)
         .orElseThrow(() -> generatePurchaseNotFoundException(purchaseId));
   }
 
-  Long savePurchase(Purchase purchase) {
+  int savePurchase(Purchase purchase) {
     Purchase updatedPurchaseInformation = updatePurchaseItemInformation(purchase);
     purchaseItemRepository.saveAll(updatedPurchaseInformation.getItems());
     Purchase savedPurchase = purchaseRepository.save(updatedPurchaseInformation);
@@ -50,7 +50,7 @@ class PurchaseService {
     return purchase;
   }
 
-  PurchaseNotFoundException generatePurchaseNotFoundException(long purchaseId) {
+  PurchaseNotFoundException generatePurchaseNotFoundException(int purchaseId) {
     return new PurchaseNotFoundException(purchaseId);
   }
 }

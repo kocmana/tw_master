@@ -19,7 +19,7 @@ public class PurchaseItem implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Integer id;
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "purchase_id")
   private Purchase purchase;

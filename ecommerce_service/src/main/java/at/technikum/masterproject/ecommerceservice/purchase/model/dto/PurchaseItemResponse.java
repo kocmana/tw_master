@@ -7,9 +7,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PurchaseItemDto {
+public class PurchaseItemResponse {
 
-  private Long id;
+  private Integer id;
   private Integer purchaseId;
   private Integer productId;
   private Integer amount;

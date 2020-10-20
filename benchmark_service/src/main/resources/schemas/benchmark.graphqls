@@ -1,0 +1,6 @@
+query someQuery{
+    customer(customerId: 1){
+        firstName
+        lastName
+    }
+}

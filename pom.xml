@@ -24,6 +24,7 @@
     <module>product_service</module>
     <module>monolithic_service</module>
     <module>integration_service</module>
+    <module>benchmark_service</module>
   </modules>
 
   <properties>

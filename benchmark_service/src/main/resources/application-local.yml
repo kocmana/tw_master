@@ -1,0 +1,6 @@
+service:
+  url: localhost
+  port: 8080
+  endpoint: /graphql
+  username: integrationservice_user
+  password: integrationservice_user_password

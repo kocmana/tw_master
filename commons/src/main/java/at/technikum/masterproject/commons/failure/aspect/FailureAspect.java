@@ -18,10 +18,12 @@ public class FailureAspect {
 
   @Around("@annotation(at.technikum.masterproject.commons.failure.annotation.ProbabilisticFailureSimulation)")
   public Object failWithProbability(ProceedingJoinPoint joinPoint) throws Throwable {
-    ProbabilisticFailureSimulation annotation = extractAnnotation(joinPoint, ProbabilisticFailureSimulation.class);
-    ProbabilisticFailure probabilisticFailure = new ProbabilisticFailure(annotation.probability(), annotation.errorCode());
+    ProbabilisticFailureSimulation annotation = extractAnnotation(joinPoint,
+        ProbabilisticFailureSimulation.class);
+    ProbabilisticFailure probabilisticFailure = new ProbabilisticFailure(annotation.probability(),
+        annotation.errorCode());
 
-    if (probabilisticFailure.shouldCallFall()) {
+    if (probabilisticFailure.shouldCallFail()) {
       log.warn("Call failed with error code {} due to simulated probabilistic error.",
           probabilisticFailure.getHttpStatus());
       return ResponseEntity.status(probabilisticFailure.getHttpStatus()).build();

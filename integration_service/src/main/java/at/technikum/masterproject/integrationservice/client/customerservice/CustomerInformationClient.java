@@ -11,7 +11,7 @@ public interface CustomerInformationClient {
 
   List<Customer> getAllCustomer();
 
-   int saveCustomer(CreateCustomerInput customer);
+  int saveCustomer(CreateCustomerInput customer);
 
   void updateCustomer(UpdateCustomerInput customer);
 

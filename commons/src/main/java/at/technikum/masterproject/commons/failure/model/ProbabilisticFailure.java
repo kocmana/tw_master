@@ -10,7 +10,7 @@ public class ProbabilisticFailure {
   int httpStatus;
   Random random = new Random();
 
-  public boolean shouldCallFall() {
+  public boolean shouldCallFail() {
     return (random.nextInt() * 100) > probability;
   }
 

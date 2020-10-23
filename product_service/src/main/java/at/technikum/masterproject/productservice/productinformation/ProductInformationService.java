@@ -44,7 +44,7 @@ public class ProductInformationService {
   }
 
   void deleteProductById(Integer id) {
-    if(productDoesNotExist(id)){
+    if (productDoesNotExist(id)) {
       throw generateNotFoundException(id);
     }
     productInformationRepository.deleteById(id);

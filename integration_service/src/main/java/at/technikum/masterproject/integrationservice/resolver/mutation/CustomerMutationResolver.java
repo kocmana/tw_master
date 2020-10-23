@@ -36,7 +36,8 @@ public class CustomerMutationResolver implements GraphQLMutationResolver {
     customerInformationClient.deleteCustomer(customerId);
   }
 
-  public CustomerInteraction createCustomerInteraction(CreateCustomerInteractionInput customerInteraction){
+  public CustomerInteraction createCustomerInteraction(
+      CreateCustomerInteractionInput customerInteraction) {
     return customerNetworkClient.saveCustomerInteraction(customerInteraction);
   }
 }

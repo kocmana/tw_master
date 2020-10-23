@@ -40,8 +40,8 @@ public class CustomerInformationService {
     saveCustomer(customer);
   }
 
-  void deleteCustomer(int customerId){
-    if(customerDoesNotExist(customerId)){
+  void deleteCustomer(int customerId) {
+    if (customerDoesNotExist(customerId)) {
       throw generateCustomerNotFoundException(customerId);
     }
     customerInformationRepository.deleteById(customerId);

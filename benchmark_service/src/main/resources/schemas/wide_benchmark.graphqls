@@ -1,0 +1,29 @@
+query wideBenchmark{
+    customers {
+        firstName
+        lastName
+        reviews {
+            stars
+            review
+        }
+        purchases {
+            paymentType
+            items {
+                product {
+                    id
+                    name
+                    description
+                }
+                amount
+                pricePerUnit
+            }
+        }
+        network {
+            interactionType
+            targetCustomer {
+                firstName
+                lastName
+            }
+        }
+    }
+}

@@ -1,2 +1,14 @@
 server:
   port: 9000
+  http2:
+    enabled: true
+
+spring:
+  application:
+    name: BenchmarkService
+  jpa:
+    open-in-view: true
+    #hibernate:
+      #ddl-auto: none
+  resources:
+    add-mappings: true

@@ -11,20 +11,20 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
 @ConfigurationPropertiesScan(basePackageClasses = ServiceProperties.class)
-public class GraphQLClientConfig {
+public class GraphQlClientConfig {
 
   private final ObjectMapper objectMapper;
   private final ServiceProperties serviceProperties;
 
   @Autowired
-  public GraphQLClientConfig(ObjectMapper objectMapper,
+  public GraphQlClientConfig(ObjectMapper objectMapper,
       ServiceProperties serviceProperties) {
     this.objectMapper = objectMapper;
     this.serviceProperties = serviceProperties;
   }
 
   @Bean
-  public GraphQLWebClient callSomeEndpoint() {
+  public GraphQLWebClient graphQlWebClient() {
     WebClient webClient = WebClient.builder()
         .baseUrl(setRootUri())
         .defaultHeaders(httpHeaders -> httpHeaders

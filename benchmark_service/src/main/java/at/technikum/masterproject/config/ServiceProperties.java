@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 @Value
 public class ServiceProperties {
 
-  String url;
+  String url = "localhost";
   int port = 8080;
   String endpoint = "/graphql";
   String username;

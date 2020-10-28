@@ -1,4 +1,4 @@
-package at.technikum.masterproject.model;
+package at.technikum.masterproject.benchmarkservice.model;
 
 import lombok.Value;
 

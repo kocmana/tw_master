@@ -1,6 +1,6 @@
-package at.technikum.masterproject.repository;
+package at.technikum.masterproject.benchmarkservice.repository;
 
-import at.technikum.masterproject.model.QueryStatistic;
+import at.technikum.masterproject.benchmarkservice.model.QueryStatistic;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

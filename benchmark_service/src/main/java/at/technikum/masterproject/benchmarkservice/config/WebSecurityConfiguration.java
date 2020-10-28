@@ -1,4 +1,4 @@
-package at.technikum.masterproject.config;
+package at.technikum.masterproject.benchmarkservice.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

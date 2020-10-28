@@ -1,4 +1,4 @@
-package at.technikum.masterproject.config;
+package at.technikum.masterproject.benchmarkservice.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import graphql.kickstart.spring.webclient.boot.GraphQLWebClient;

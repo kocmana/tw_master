@@ -1,4 +1,4 @@
-package at.technikum.masterproject;
+package at.technikum.masterproject.benchmarkservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

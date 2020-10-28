@@ -1,4 +1,4 @@
-package at.technikum.masterproject.config;
+package at.technikum.masterproject.benchmarkservice.config;
 
 import lombok.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,6 +1,5 @@
 package at.technikum.masterproject.benchmarkservice.service;
 
-import at.technikum.masterproject.benchmarkservice.model.Customer;
 import at.technikum.masterproject.benchmarkservice.model.QueryStatistic;
 import at.technikum.masterproject.benchmarkservice.repository.QueryStatisticsRepository;
 import graphql.kickstart.spring.webclient.boot.GraphQLWebClient;
@@ -27,7 +26,7 @@ public class GraphQlService {
 
   public QueryStatistic doBenchmarkCall(String schema) {
     Instant beforeCall = Instant.now();
-    query(schema, Customer.class);
+    query(schema, Object.class);
     Instant afterCall = Instant.now();
 
     return QueryStatistic.builder()

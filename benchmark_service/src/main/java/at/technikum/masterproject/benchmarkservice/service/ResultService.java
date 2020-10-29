@@ -6,6 +6,7 @@ import at.technikum.masterproject.benchmarkservice.repository.QueryStatisticsRep
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,18 +38,19 @@ public class ResultService {
         .min(statistics.getMin())
         .max(statistics.getMax())
         .total(statistics.getSum())
-        .responseTimeDistribution(calculateResponseTimeDistribution(results, bucketSize, statistics.getMax()))
+        .responseTimeDistribution(calculateResponseTimeDistribution(results, bucketSize, statistics.getMin(), statistics.getMax()))
         .singleCallResults(results)
         .build();
   }
 
   private Map<Long, Long> calculateResponseTimeDistribution(List<QueryStatistic> results, long bucketSize,
-      double max) {
-    Map<Long, Long> groupedResults = results.stream()
+      double min, double max) {
+    TreeMap<Long, Long> groupedResults = results.stream()
         .collect(Collectors
             .groupingBy(queryResult -> (queryResult.getResponseTimeInMillis() / bucketSize),
+                TreeMap::new,
                 Collectors.counting()));
-    LongStream.rangeClosed(0, (long)(max/bucketSize))
+    LongStream.rangeClosed((long)(min/bucketSize), (long)(max/bucketSize))
         .forEach(x -> groupedResults.computeIfAbsent(x, key -> (0L)));
     return groupedResults;
   }

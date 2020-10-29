@@ -19,7 +19,7 @@ public class BenchmarkRunner implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     CompletableFuture.runAsync(() ->
-        doBenchmark("schemas/benchmark.graphqls", 100));
+        doBenchmark("schemas/benchmark.graphqls", 20));
   }
 
   public void doBenchmark(String schema, int numberOfCalls) {

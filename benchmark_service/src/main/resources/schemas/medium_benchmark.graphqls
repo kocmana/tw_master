@@ -1,0 +1,22 @@
+query mediumQuery{
+    customers {
+        firstName
+        lastName
+        purchases {
+            paymentType
+            items {
+                product {
+                    id
+                    name
+                    description
+                    reviews {
+                        stars
+                        review
+                    }
+                }
+                amount
+                pricePerUnit
+            }
+        }
+    }
+}

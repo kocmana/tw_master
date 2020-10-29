@@ -118,4 +118,4 @@ It can be found [here](https://github.com/kocmana/tw_master/tree/master/document
 
 ## Benchmarking
 A tool providing very limited benchmarking capabilities can be found [here](https://github.com/kocmana/tw_master/tree/master/benchmark_service).
-Documentation on how to use this tool is provided there as well.
+Documentation on how to use this tool is provided [here](https://github.com/kocmana/tw_master/blob/master/benchmark_service/README.MD).

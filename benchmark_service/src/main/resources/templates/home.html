@@ -30,9 +30,13 @@
         <h5 class="card-text" th:text="${benchmarkStatistics.numberOfCalls}">0</h5>
       </div>
     </div>
+    <div class="card mb-3" th:classappend="${benchmarkStatistics.finished} ? bg-success : bg-warning">
+      <div class="card-header">Status</div>
+      <div class="card-body">
+        <h5 class="card-text" th:text="${benchmarkStatistics.finished} ? Finished : Running">Running</h5>
+      </div>
+    </div>
   </div>
-
-
 </div>
 
 <div class="container">
@@ -114,15 +118,13 @@
     <thead>
     <tr>
       <th>ID</th>
-      <th>Response Time</th>
-      <th>Schema</th>
+      <th>Response Time in Ms</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="queryStatistic: ${benchmarkStatistics.singleCallResults}">
       <td th:text="${queryStatistic.id}"></td>
       <td th:text="${queryStatistic.responseTimeInMillis}"></td>
-      <td th:text="${queryStatistic.schema}"></td>
     </tr>
     </tbody>
   </table>

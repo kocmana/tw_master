@@ -1,5 +1,6 @@
-package at.technikum.masterproject.benchmarkservice.model;
+package at.technikum.masterproject.benchmarkservice.model.dto;
 
+import at.technikum.masterproject.benchmarkservice.model.QueryStatistic;
 import java.util.List;
 import java.util.Map;
 import lombok.Builder;
@@ -10,6 +11,7 @@ import lombok.Value;
 public class BenchmarkResult {
 
   String schema;
+  boolean finished;
   long numberOfCalls;
   double average;
   double min;

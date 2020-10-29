@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+  <springProperty scope="context" name="rootLogLevel" source="logging.level.root"
+    defaultValue="warn"/>
+
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <charset>utf-8</charset>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} | %thread | %highlight(%-5level) | %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <springProfile name="local, test">
+    <logger name="at.technikum.masterproject" level="info" additivity="false">
+      <appender-ref ref="CONSOLE"/>
+    </logger>
+    <root level="${rootLogLevel:-debug}">
+      <appender-ref ref="CONSOLE"/>
+    </root>
+  </springProfile>
+
+</configuration>

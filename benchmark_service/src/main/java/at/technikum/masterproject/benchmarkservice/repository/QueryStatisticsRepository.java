@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface QueryStatisticsRepository extends JpaRepository<QueryStatistic, Integer> {
 
-  List<QueryStatistic> findAllBySchema(String schema);
+  List<QueryStatistic> findAllByBenchmarkUuid(String uuid);
 
 }

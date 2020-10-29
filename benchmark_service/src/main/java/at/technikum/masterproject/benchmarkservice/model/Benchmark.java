@@ -1,27 +1,27 @@
 package at.technikum.masterproject.benchmarkservice.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
 @Entity
-public class QueryStatistic {
+public class Benchmark {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
-  @ManyToOne
-  private Benchmark benchmark;
-  private Long responseTimeInMillis;
+  String uuid;
+  String schema;
+  @Column(name = "number_of_calls")
+  int numberOfCalls;
+  @Setter
+  boolean finished;
 }
 

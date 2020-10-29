@@ -1,5 +1,6 @@
 package at.technikum.masterproject.benchmarkservice.service;
 
+import at.technikum.masterproject.benchmarkservice.model.Benchmark;
 import at.technikum.masterproject.benchmarkservice.model.QueryStatistic;
 import at.technikum.masterproject.benchmarkservice.repository.QueryStatisticsRepository;
 import graphql.kickstart.spring.webclient.boot.GraphQLWebClient;
@@ -13,24 +14,21 @@ public class GraphQlService {
 
   private final GraphQLWebClient graphQlWebClient;
   private final QueryStatisticsRepository queryStatisticsRepository;
-  //private final Class<T> responseClass;
 
 
   public GraphQlService(GraphQLWebClient graphQlWebClient,
       QueryStatisticsRepository queryStatisticsRepository) {
     this.graphQlWebClient = graphQlWebClient;
     this.queryStatisticsRepository = queryStatisticsRepository;
-    //this.responseClass = ((Class<T>) ((ParameterizedType) getClass()
-    //    .getGenericSuperclass()).getActualTypeArguments()[0]);
   }
 
-  public QueryStatistic doBenchmarkCall(String schema) {
+  public QueryStatistic doBenchmarkCall(Benchmark benchmark) {
     Instant beforeCall = Instant.now();
-    query(schema, Object.class);
+    query(benchmark.getSchema(), Object.class);
     Instant afterCall = Instant.now();
 
     return QueryStatistic.builder()
-        .schema(schema)
+        .benchmark(benchmark)
         .responseTimeInMillis(afterCall.toEpochMilli() - beforeCall.toEpochMilli())
         .build();
   }
@@ -43,6 +41,5 @@ public class GraphQlService {
 
   public void saveResult(QueryStatistic queryStatistic) {
     queryStatisticsRepository.save(queryStatistic);
-    log.info(String.valueOf(queryStatisticsRepository.count()));
   }
 }

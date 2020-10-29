@@ -4,8 +4,7 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password:
-    #data: classpath*:sql/testdata.sql
-    #schema: classpath*:sql/schema.sql
+    schema: classpath*:sql/schema.sql
   resources:
     add-mappings: true
   h2:
@@ -16,6 +15,7 @@ spring:
 logging:
   level:
     org.hibernate.SQL: warn
+    at.technikum: debug
 
 springfox:
   documentation:

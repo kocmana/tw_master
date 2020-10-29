@@ -17,7 +17,7 @@ public class RestTemplateLoggingInterceptorCustomizer implements RestTemplateCus
     List<ClientHttpRequestInterceptor> interceptors = restTemplate
         .getInterceptors();
     if (interceptors.isEmpty()) {
-      interceptors = new ArrayList<ClientHttpRequestInterceptor>();
+      interceptors = new ArrayList<>();
     }
     interceptors.add(new RestTemplateRequestIdInterceptor());
     restTemplate.setInterceptors(interceptors);

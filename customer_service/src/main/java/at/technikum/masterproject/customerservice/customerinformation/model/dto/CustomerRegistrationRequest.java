@@ -3,9 +3,6 @@ package at.technikum.masterproject.customerservice.customerinformation.model.dto
 import at.technikum.masterproject.customerservice.customerinformation.model.Gender;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.Value;
 
 @Value

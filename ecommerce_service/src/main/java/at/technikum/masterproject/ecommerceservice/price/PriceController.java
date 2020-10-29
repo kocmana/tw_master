@@ -2,7 +2,6 @@ package at.technikum.masterproject.ecommerceservice.price;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
-import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelaySimulation;
 import at.technikum.masterproject.ecommerceservice.price.model.Price;
 import at.technikum.masterproject.ecommerceservice.price.model.dto.PriceDto;
 import at.technikum.masterproject.ecommerceservice.price.model.mapper.PriceMapper;
@@ -59,7 +58,6 @@ public class PriceController {
   }
 
   @PostMapping
-  @FixedEndpointDelaySimulation(delayInMs = 200)
   public ResponseEntity<PriceDto> savePrice(@RequestBody @Valid PriceDto priceDto) {
     Price price = priceMapper.priceDtoToPrice(priceDto);
     Price savedPrice = priceService.savePriceForProduct(price);

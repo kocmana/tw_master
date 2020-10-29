@@ -2,9 +2,6 @@ package at.technikum.masterproject.productservice.productinformation;
 
 import static org.springframework.http.ResponseEntity.ok;
 
-import at.technikum.masterproject.commons.delay.annotation.FixedEndpointDelaySimulation;
-import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelaySimulation;
-import at.technikum.masterproject.commons.delay.annotation.ProbabilisticEndpointDelaySimulation;
 import at.technikum.masterproject.productservice.model.ElementCreationResponse;
 import at.technikum.masterproject.productservice.productinformation.model.Product;
 import at.technikum.masterproject.productservice.productinformation.model.dto.ProductCreationRequest;
@@ -43,7 +40,6 @@ public class ProductInformationController {
   }
 
   @GetMapping
-  @NormallyDistributedEndpointDelaySimulation(mean = 1000, standardDeviation = 500)
   public ResponseEntity<List<ProductResponse>> getAllProducts(Pageable pageable) {
     List<Product> products = productInformationService.retrieveAllProductsWithPagination(pageable);
     List<ProductResponse> productResponses = products.stream()
@@ -53,7 +49,6 @@ public class ProductInformationController {
   }
 
   @GetMapping(value = "/{id}")
-  @ProbabilisticEndpointDelaySimulation(probability = 0.5f, delayInMs = 3000)
   public ResponseEntity<ProductResponse> getProductById(@PathVariable int id) {
     Product product = productInformationService.retrieveProductById(id);
     return ok(productMapper.productToProductResponse(product));
@@ -65,7 +60,6 @@ public class ProductInformationController {
   }
 
   @PostMapping
-  @FixedEndpointDelaySimulation(delayInMs = 100)
   public ResponseEntity<ElementCreationResponse> saveProduct(@RequestBody @Valid ProductCreationRequest product) {
     Product productToSave = productMapper.productCreationRequestToProduct(product);
     Integer idOfNewProduct = productInformationService.saveNewProduct(productToSave);
@@ -73,7 +67,6 @@ public class ProductInformationController {
   }
 
   @PutMapping
-  @FixedEndpointDelaySimulation(delayInMs = 100)
   public void updateProductInformation(@RequestBody @Valid ProductUpdateRequest product) {
     Product productToUpdate = productMapper.productUpdateRequestToProduct(product);
     productInformationService.updateProduct(productToUpdate);

@@ -16,6 +16,13 @@
   * [Official GraphQL Documentation: Best Practices](https://graphql.org/learn/best-practices/) 
   * [Blog Post Series: GraphQL in Paypal](https://medium.com/paypal-engineering/tagged/graphql)
     * [Best Practices](https://medium.com/paypal-engineering/graphql-resolvers-best-practices-cd36fdbcef55)
+
+* Graph QL Client Implementations Libraries
+  * [GraphQL Java Kickstart Webclient](https://github.com/graphql-java-kickstart/graphql-spring-webclient)
+  * [American Express Node Library](https://github.com/americanexpress/nodes)
+  * [Shopify Java Generator](https://github.com/Shopify/graphql_java_gen)
+  * [Graph QL Maven Client Code Generator](https://github.com/graphql-java-generator/GraphQL-Forum-Maven-Tutorial-client )
+
 ## Issues in Scope of the Thesis
 
 ### N+1 Problem

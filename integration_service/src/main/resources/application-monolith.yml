@@ -8,20 +8,23 @@ graphiql:
 
 services:
   productservice:
+    authentication-type: BASIC_AUTH
     url: localhost
     port: 8084
-    username: monolithicservice_user
-    password: monolithicservice_user_password
+    username: monolithicservice_admin
+    password: monolithicservice_admin_password
   customerservice:
+    authentication-type: BASIC_AUTH
     url: localhost
     port: 8084
-    username: monolithicservice_user
-    password: monolithicservice_user_password
+    username: monolithicservice_admin
+    password: monolithicservice_admin_password
   ecommerceService:
+    authentication-type: BASIC_AUTH
     url: localhost
     port: 8084
-    username: monolithicservice_user
-    password: monolithicservice_user_password
+    username: monolithicservice_admin
+    password: monolithicservice_admin_password
 
 security:
   whitelist:

@@ -1,18 +1,15 @@
 package at.technikum.masterproject.integrationservice.client.ecommerceservice;
 
+import at.technikum.masterproject.integrationservice.client.ServiceProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.ConstructorBinding;
 
-@ConfigurationProperties(value = "services.ecommerceservice")
-@ConstructorBinding
-@AllArgsConstructor
+@ConfigurationProperties(value = "services.ecommerceservice", ignoreInvalidFields = true)
 @Getter
-public class EcommerceServiceProperties {
+@Setter
+@AllArgsConstructor
+public class EcommerceServiceProperties extends ServiceProperties {
 
-  private final String url;
-  private final int port;
-  private final String username;
-  private final String password;
 }

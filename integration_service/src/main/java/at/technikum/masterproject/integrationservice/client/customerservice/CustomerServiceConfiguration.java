@@ -1,37 +1,27 @@
 package at.technikum.masterproject.integrationservice.client.customerservice;
 
+import at.technikum.masterproject.integrationservice.client.RestTemplateFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
 public class CustomerServiceConfiguration {
 
   private final CustomerServiceProperties customerServiceProperties;
+  private final RestTemplateFactory restTemplateFactory;
 
   @Autowired
-  CustomerServiceConfiguration(CustomerServiceProperties customerServiceProperties) {
+  CustomerServiceConfiguration(CustomerServiceProperties customerServiceProperties,
+      RestTemplateFactory restTemplateFactory) {
     this.customerServiceProperties = customerServiceProperties;
+    this.restTemplateFactory = restTemplateFactory;
   }
 
   @Bean("customerServiceRestTemplate")
   RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
-    return restTemplateBuilder
-        .defaultHeader(customerServiceProperties.getApiKeyHeader(),
-            customerServiceProperties.getApiKey())
-        .rootUri(setRootUri())
-        .build();
-  }
-
-  private String setRootUri() {
-    return UriComponentsBuilder.newInstance()
-        .scheme("http")
-        .host(customerServiceProperties.getUrl())
-        .port(customerServiceProperties.getPort())
-        .build()
-        .toUriString();
+    return restTemplateFactory.createFrom(customerServiceProperties);
   }
 }

@@ -1,18 +1,15 @@
 package at.technikum.masterproject.integrationservice.client.productservice;
 
+import at.technikum.masterproject.integrationservice.client.ServiceProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
-@ConfigurationProperties(value = "services.productservice")
+@ConfigurationProperties(value = "services.productservice", ignoreInvalidFields = true)
 @ConstructorBinding
 @AllArgsConstructor
 @Getter
-public class ProductServiceProperties {
+public class ProductServiceProperties extends ServiceProperties {
 
-  private final String url;
-  private final int port;
-  private final String username;
-  private final String password;
 }

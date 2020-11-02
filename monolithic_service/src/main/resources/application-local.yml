@@ -7,7 +7,8 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password:
-    data: classpath*:/sql/testdata-*.sql
+    schema: classpath*:sql/schema.sql
+    data: classpath*:/sql/monolith/testdata-*.sql
   resources:
     add-mappings: true
   h2:
@@ -32,8 +33,8 @@ security:
 
 service:
   delay:
-    enable-endpoint-delays: true
-    enable-service-delays: true
+    enable-endpoint-delays: false
+    enable-service-delays: false
     service-delay-mean: 1000
     service-delay-standard-deviation: 100
     log-delays: true

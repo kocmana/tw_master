@@ -1,4 +1,4 @@
-query mediumQuery{
+query mediumQuery {
     customers {
         firstName
         lastName

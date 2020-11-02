@@ -15,16 +15,19 @@ voyager:
 
 services:
   productservice:
+    authentication-type: BASIC_AUTH
     url: localhost
     port: 8081
     username: productservice_admin
     password: productservice_admin_password
   customerservice:
+    authentication-type: API_KEY
     url: localhost
     port: 8082
     api-key-header: x-api-key
     api-key: supersecret
   ecommerceService:
+    authentication-type: BASIC_AUTH
     url: localhost
     port: 8083
     username: ecommerceservice_admin

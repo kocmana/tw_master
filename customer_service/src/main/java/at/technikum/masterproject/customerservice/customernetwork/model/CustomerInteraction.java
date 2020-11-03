@@ -9,10 +9,15 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "customer_interaction")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class CustomerInteraction {
 
   @EmbeddedId

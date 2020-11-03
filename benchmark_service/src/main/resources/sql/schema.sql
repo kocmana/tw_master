@@ -1,3 +1,5 @@
+CREATE SEQUENCE IF NOT EXISTS query_seq START WITH 1 INCREMENT BY 1;
+
 CREATE TABLE IF NOT EXISTS query_statistic
 (
     id                      INTEGER     NOT NULL AUTO_INCREMENT,

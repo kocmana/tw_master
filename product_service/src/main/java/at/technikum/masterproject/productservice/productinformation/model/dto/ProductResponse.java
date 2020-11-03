@@ -1,6 +1,5 @@
 package at.technikum.masterproject.productservice.productinformation.model.dto;
 
-import at.technikum.masterproject.productservice.productinformation.model.ProductDimension;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,5 +13,5 @@ public class ProductResponse {
   private String name;
   private String description;
   private float weight;
-  private ProductDimension dimension;
+  private ProductDimensionDto dimension;
 }

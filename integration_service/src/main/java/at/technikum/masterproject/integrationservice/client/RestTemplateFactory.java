@@ -51,8 +51,8 @@ public class RestTemplateFactory {
     }
   }
 
-  private void assertNonNullForProperties(Object... credentials){
-    if(Arrays.stream(credentials).anyMatch(Objects::isNull)) {
+  private void assertNonNullForProperties(Object... credentials) {
+    if (Arrays.stream(credentials).anyMatch(Objects::isNull)) {
       throw new IllegalArgumentException("Missing credentials for service properties.");
     }
   }

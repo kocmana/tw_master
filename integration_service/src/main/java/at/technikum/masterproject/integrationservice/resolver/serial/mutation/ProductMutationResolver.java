@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.resolver.mutation;
+package at.technikum.masterproject.integrationservice.resolver.serial.mutation;
 
 import at.technikum.masterproject.integrationservice.client.productservice.ProductInformationClient;
 import at.technikum.masterproject.integrationservice.client.productservice.ProductReviewClient;
@@ -7,21 +7,17 @@ import at.technikum.masterproject.integrationservice.model.product.dto.CreatePro
 import at.technikum.masterproject.integrationservice.model.product.dto.UpdateProductInput;
 import at.technikum.masterproject.integrationservice.model.product.dto.UpdateProductReviewInput;
 import graphql.kickstart.tools.GraphQLMutationResolver;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConditionalOnProperty(prefix = "services", name = "resolver-mode", havingValue = "SERIAL", matchIfMissing = true)
+@RequiredArgsConstructor
 public class ProductMutationResolver implements GraphQLMutationResolver {
 
   private final ProductInformationClient productInformationClient;
   private final ProductReviewClient productReviewClient;
-
-  @Autowired
-  public ProductMutationResolver(ProductInformationClient productInformationClient,
-      ProductReviewClient productReviewClient) {
-    this.productInformationClient = productInformationClient;
-    this.productReviewClient = productReviewClient;
-  }
 
   public int createProduct(CreateProductInput product) {
     return productInformationClient.saveProduct(product);

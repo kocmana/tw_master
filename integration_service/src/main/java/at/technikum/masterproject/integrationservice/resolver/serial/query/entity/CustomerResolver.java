@@ -1,4 +1,4 @@
-package at.technikum.masterproject.integrationservice.resolver.query.entity;
+package at.technikum.masterproject.integrationservice.resolver.serial.query.entity;
 
 import at.technikum.masterproject.integrationservice.client.customerservice.CustomerNetworkClient;
 import at.technikum.masterproject.integrationservice.client.ecommerceservice.PurchaseClient;
@@ -10,9 +10,11 @@ import at.technikum.masterproject.integrationservice.model.product.ProductReview
 import graphql.kickstart.tools.GraphQLResolver;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConditionalOnProperty(prefix = "services", name = "resolver-mode", havingValue = "SERIAL", matchIfMissing = true)
 public class CustomerResolver implements GraphQLResolver<Customer> {
 
   private final ProductReviewClient productReviewClient;

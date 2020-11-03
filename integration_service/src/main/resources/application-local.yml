@@ -14,6 +14,7 @@ voyager:
   enabled: true
 
 services:
+  resolver-mode: ASYNC #ASYNC or SERIAL
   productservice:
     authentication-type: BASIC_AUTH
     url: localhost

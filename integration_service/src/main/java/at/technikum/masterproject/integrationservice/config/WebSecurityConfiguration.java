@@ -3,8 +3,8 @@ package at.technikum.masterproject.integrationservice.config;
 import java.security.SecureRandom;
 import java.util.List;
 import javax.sql.DataSource;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,19 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @Slf4j
+@RequiredArgsConstructor
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private final BasicAuthEntryPoint authenticationEntryPoint;
   private final SecurityWhitelistProperties securityWhitelistProperties;
   private final DataSource dataSource;
-
-  @Autowired
-  public WebSecurityConfiguration(BasicAuthEntryPoint authenticationEntryPoint,
-      SecurityWhitelistProperties securityWhitelistProperties, DataSource dataSource) {
-    this.authenticationEntryPoint = authenticationEntryPoint;
-    this.securityWhitelistProperties = securityWhitelistProperties;
-    this.dataSource = dataSource;
-  }
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {

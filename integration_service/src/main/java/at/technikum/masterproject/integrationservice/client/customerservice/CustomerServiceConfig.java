@@ -1,21 +1,20 @@
 package at.technikum.masterproject.integrationservice.client.customerservice;
 
-import at.technikum.masterproject.integrationservice.client.RestTemplateFactory;
+import at.technikum.masterproject.integrationservice.client.WebClientFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 @RequiredArgsConstructor
 public class CustomerServiceConfig {
 
   private final CustomerServiceProperties customerServiceProperties;
-  private final RestTemplateFactory restTemplateFactory;
+  private final WebClientFactory webClientFactory;
 
-  @Bean("customerServiceRestTemplate")
-  RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
-    return restTemplateFactory.createFrom(customerServiceProperties);
+  @Bean("customerServiceWebClient")
+  WebClient webClient() {
+    return webClientFactory.createFrom(customerServiceProperties);
   }
 }

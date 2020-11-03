@@ -1,79 +1,90 @@
 package at.technikum.masterproject.integrationservice.client.customerservice;
 
-import static org.springframework.http.HttpMethod.GET;
-
 import at.technikum.masterproject.integrationservice.model.customer.Customer;
-import at.technikum.masterproject.integrationservice.model.customer.CustomerServiceException;
 import at.technikum.masterproject.integrationservice.model.customer.dto.CreateCustomerInput;
 import at.technikum.masterproject.integrationservice.model.customer.dto.UpdateCustomerInput;
-import java.net.URI;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.List;
 
 @Service
 @Slf4j
 public class CustomerInformationClientImpl implements CustomerInformationClient {
 
   private static final String CUSTOMER_ENDPOINT = "/customer";
-  private static final String CUSTOMER_BY_CUSTOMER_ID_ENDPOINT = "/customer/{customerId}";
 
-  private final RestTemplate restTemplate;
+  private final WebClient webClient;
 
-  public CustomerInformationClientImpl(
-      @Qualifier("customerServiceRestTemplate") RestTemplate restTemplate) {
-    this.restTemplate = restTemplate;
+  public CustomerInformationClientImpl(@Qualifier("customerServiceWebClient") WebClient webClient) {
+    this.webClient = webClient;
   }
 
   @Override
   public Customer getCustomerById(int customerId) {
-    return restTemplate.getForObject(
-        CUSTOMER_BY_CUSTOMER_ID_ENDPOINT,
-        Customer.class,
-        customerId);
+    return webClient.get()
+            .uri(uriBuilder -> uriBuilder
+                    .path(CUSTOMER_ENDPOINT)
+                    .pathSegment("{customerId}")
+                    .build(customerId))
+            .retrieve()
+            .bodyToMono(Customer.class)
+            .retry(2)
+            .block();
   }
 
   @Override
   public List<Customer> getAllCustomer() {
-    ResponseEntity<List<Customer>> response = restTemplate.exchange(
-        CUSTOMER_ENDPOINT,
-        GET,
-        HttpEntity.EMPTY,
-        new ParameterizedTypeReference<List<Customer>>() {
-        });
-
-    return Optional.ofNullable(response.getBody())
-        .orElse(Collections.emptyList());
+    return webClient.get()
+            .uri(uriBuilder -> uriBuilder
+                    .path(CUSTOMER_ENDPOINT)
+                    .build())
+            .retrieve()
+            .bodyToFlux(Customer.class)
+            .retry(2)
+            .collectList()
+            .block();
   }
 
   @Override
   public int saveCustomer(CreateCustomerInput customer) {
-    Customer response = restTemplate.postForObject(CUSTOMER_ENDPOINT,
-        customer,
-        Customer.class);
-    return Optional.ofNullable(response)
-        .orElseThrow(() -> new CustomerServiceException("Could not extract customer Id."))
-        .getCustomerId();
+    return webClient.post()
+            .uri(uriBuilder -> uriBuilder
+                    .path(CUSTOMER_ENDPOINT)
+                    .build())
+            .bodyValue(customer)
+            .retrieve()
+            .bodyToMono(Customer.class)
+            .retry(2)
+            .map(Customer::getCustomerId)
+            .block();
   }
 
   @Override
   public void updateCustomer(UpdateCustomerInput customer) {
-    restTemplate.put(
-        URI.create(CUSTOMER_ENDPOINT),
-        customer);
+    webClient.put()
+            .uri(uriBuilder -> uriBuilder
+                    .path(CUSTOMER_ENDPOINT)
+                    .build())
+            .bodyValue(customer)
+            .retrieve()
+            .toBodilessEntity()
+            .retry(2)
+            .block();
   }
 
   @Override
   public void deleteCustomer(int customerId) {
-    restTemplate.delete(
-        CUSTOMER_BY_CUSTOMER_ID_ENDPOINT,
-        customerId);
+    webClient.put()
+            .uri(uriBuilder -> uriBuilder
+                    .path(CUSTOMER_ENDPOINT)
+                    .pathSegment("{customerId}")
+                    .build(customerId))
+            .retrieve()
+            .toBodilessEntity()
+            .retry(2)
+            .block();
   }
 }

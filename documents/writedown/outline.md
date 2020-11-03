@@ -62,8 +62,8 @@
 ##### Approaches on Reducing Response Time Based Effects
 * Solution: Introduction of asynchronous resolvers
   * Description of the approach: Reduces ratio of RTTs to overall response time by parallel requests
-  * *Simulation:* Effect of introducing asynchronous `GraphQLQueryResolver`s
-  * (optional: *Simulation:* Additional effect of introducing asynchronous `GraphQLResolver<>`s
+  * *Simulation:* Effect of introducing asynchronous `GraphQLQueryResolver`s - done
+  * (optional: *Simulation:* Additional effect of introducing asynchronous `GraphQLResolver<>`s - done
     * Number of Worker Threads and implications on hosting on virtual infrastructure)
 * Solution: Introduction of reactive patterns
   * Description of the approach: Reactive programming reduces/eliminates blocking behaviour, thus similar approach to asynchronous resolver resolution

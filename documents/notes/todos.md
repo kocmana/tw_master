@@ -1,5 +1,6 @@
 # TODOs
 * add spring security regression tests to fake services
+* add spring jpa tests
 * ~~differentiate on domain object level rather than on functionality for at least one service~~ - done
 * ~~create service overview in readme.md and more in detail as separate document~~ - done
 * ~~create aspect for delaying responses~~ - done
@@ -13,12 +14,14 @@
 annotations~~ - done
 * ~~add probability based probabilisticFailure on API and endpoint level~~ - done
 * Resolve base resolvers asynchronously by providing completable futures
-* Add deletion mutation for product service
-* Add deletion endpoints to other services
+~~* Add deletion mutation for product service~~ - done
+~~* Add deletion endpoints to other services~~ - done
 * Review current handling of PUT for data changes in integration service.
 * Add exception handlers for integration system
+* Switch configuration of sync/async resolver handling from class level conditional on property to Config based solution
 
 # Issues
 * Pagination on GET /products endpoint seems to not work correctly
 * ~~Base package naming is different for ecommerce: ecommerce instead of ecommerceservice~~ - done
-* Config based integration of monotlithic service requires a more streamlined integration based on the properties (API Key or Basic Auth should be decided at startup)
+~~* Config based integration of monotlithic service requires a more streamlined integration based on the properties (API Key or Basic Auth should be decided at startup)~~
+* Monolithic service needs integration on resolver level, not REST API level. This needs to be written and can't be reused/imported.

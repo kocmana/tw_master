@@ -1,20 +1,13 @@
 package at.technikum.masterproject.integrationservice.client.ecommerceservice;
 
-import at.technikum.masterproject.integrationservice.model.ecommerce.EcommerceServiceException;
 import at.technikum.masterproject.integrationservice.model.ecommerce.Purchase;
 import at.technikum.masterproject.integrationservice.model.ecommerce.dto.CreatePurchaseInput;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 @Slf4j
@@ -24,47 +17,52 @@ public class PurchaseClientImpl implements PurchaseClient {
   private static final String PURCHASE_BY_PURCHASE_ID_ENDPOINT = "/purchase/{purchaseId}";
   private static final String PURCHASE_BY_CUSTOMER_ENDPOINT = "/purchase/customer/{customerId}";
 
-  private final RestTemplate restTemplate;
+  private final WebClient webClient;
 
   @Autowired
-  public PurchaseClientImpl(@Qualifier("ecommerceServiceRestTemplate") RestTemplate restTemplate) {
-    this.restTemplate = restTemplate;
+  public PurchaseClientImpl(@Qualifier("ecommerceServiceWebClient") WebClient webClient) {
+    this.webClient = webClient;
   }
 
   @Override
   public Purchase getPurchase(int purchaseId) {
-    return restTemplate.getForObject(
-        PURCHASE_BY_PURCHASE_ID_ENDPOINT,
-        Purchase.class,
-        purchaseId
-    );
+    return webClient.get()
+        .uri(uriBuilder -> uriBuilder
+            .pathSegment(PURCHASE_ENDPOINT)
+            .pathSegment("{purchaseId}")
+            .build(purchaseId))
+        .retrieve()
+        .bodyToMono(Purchase.class)
+        .retry(2)
+        .block();
   }
 
   @Override
   public List<Purchase> getPurchasesForCustomer(int customerId) {
-    ResponseEntity<List<Purchase>> response = restTemplate.exchange(
-        PURCHASE_BY_CUSTOMER_ENDPOINT,
-        HttpMethod.GET,
-        HttpEntity.EMPTY,
-        new ParameterizedTypeReference<List<Purchase>>() {
-        },
-        customerId
-    );
-
-    return Optional.ofNullable(response.getBody())
-        .orElse(Collections.emptyList());
+    return webClient.get()
+        .uri(uriBuilder -> uriBuilder
+            .pathSegment(PURCHASE_ENDPOINT)
+            .pathSegment("/customer")
+            .pathSegment("{customerId}")
+            .build(customerId))
+        .retrieve()
+        .bodyToFlux(Purchase.class)
+        .retry(2)
+        .collectList()
+        .block();
   }
 
   @Override
   public long savePurchase(CreatePurchaseInput purchase) {
-    Purchase response = restTemplate.postForObject(
-        PURCHASE_ENDPOINT,
-        purchase,
-        Purchase.class
-    );
-    return Optional.ofNullable(response)
-        .orElseThrow(() -> new EcommerceServiceException("Could not retrieve element id from response."))
-        .getId();
+    return webClient.post()
+        .uri(uriBuilder -> uriBuilder
+            .pathSegment(PURCHASE_ENDPOINT)
+            .build())
+        .bodyValue(purchase)
+        .retrieve()
+        .bodyToMono(Purchase.class)
+        .map(Purchase::getId)
+        .block();
   }
 
 }

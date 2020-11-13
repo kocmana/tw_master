@@ -20,6 +20,7 @@ public class PurchaseItemResolver implements GraphQLResolver<PurchaseItem> {
   }
 
   public Product getProduct(PurchaseItem purchaseItem) {
-    return productInformationClient.getProductById(purchaseItem.getProductId());
+    return productInformationClient.getProductById(purchaseItem.getProductId())
+        .block();
   }
 }

@@ -22,11 +22,11 @@ public class AsyncEcommerceMutationResolver implements GraphQLMutationResolver {
   private final ResolverExecutor resolverExecutor;
 
   public CompletableFuture<Price> createPrice(CreatePriceInput price) {
-    return resolverExecutor.resolve(() -> priceClient.savePrice(price));
+    return priceClient.savePrice(price).toFuture();
   }
 
   public CompletableFuture<Long> createPurchase(CreatePurchaseInput purchase) {
-    return resolverExecutor.resolve(() -> purchaseClient.savePurchase(purchase));
+    return purchaseClient.savePurchase(purchase).toFuture();
   }
 
 }

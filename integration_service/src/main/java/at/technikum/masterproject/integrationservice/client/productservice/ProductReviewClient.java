@@ -4,16 +4,17 @@ import at.technikum.masterproject.integrationservice.model.product.ProductReview
 import at.technikum.masterproject.integrationservice.model.product.dto.CreateProductReviewInput;
 import at.technikum.masterproject.integrationservice.model.product.dto.UpdateProductReviewInput;
 import java.util.List;
+import reactor.core.publisher.Mono;
 
 public interface ProductReviewClient {
 
-  List<ProductReview> getAllProductReviews();
+  Mono<List<ProductReview>> getAllProductReviews();
 
-  List<ProductReview> getAllProductReviewsForProduct(int productId);
+  Mono<List<ProductReview>> getAllProductReviewsForProduct(int productId);
 
-  List<ProductReview> getAllProductReviewsByCustomer(int customerId);
+  Mono<List<ProductReview>> getAllProductReviewsByCustomer(int customerId);
 
-  int saveProductReview(CreateProductReviewInput productReview);
+  Mono<Integer> saveProductReview(CreateProductReviewInput productReview);
 
   void updateProductReview(UpdateProductReviewInput productReview);
 

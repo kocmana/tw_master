@@ -20,7 +20,8 @@ public class CustomerMutationResolver implements GraphQLMutationResolver {
   private final CustomerNetworkClient customerNetworkClient;
 
   public int createCustomer(CreateCustomerInput customer) {
-    return customerInformationClient.saveCustomer(customer);
+    return customerInformationClient.saveCustomer(customer)
+        .block();
   }
 
   public void updateCustomer(UpdateCustomerInput customer) {
@@ -33,6 +34,7 @@ public class CustomerMutationResolver implements GraphQLMutationResolver {
 
   public CustomerInteraction createCustomerInteraction(
       CreateCustomerInteractionInput customerInteraction) {
-    return customerNetworkClient.saveCustomerInteraction(customerInteraction);
+    return customerNetworkClient.saveCustomerInteraction(customerInteraction)
+        .block();
   }
 }

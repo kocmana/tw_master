@@ -21,7 +21,8 @@ public class AsyncEcommerceQueryResolver implements GraphQLQueryResolver {
 
   public CompletableFuture<Purchase> purchase(Integer purchaseId) {
     log.info("Retrieved purchase query for purchaseId {}, resolving asynchronously", purchaseId);
-    return resolverExecutor.resolve(() -> purchaseClient.getPurchase(purchaseId));
+    return purchaseClient.getPurchase(purchaseId)
+        .toFuture();
   }
 
 }

@@ -5,7 +5,6 @@ import at.technikum.masterproject.integrationservice.client.productservice.Produ
 import at.technikum.masterproject.integrationservice.model.ecommerce.Price;
 import at.technikum.masterproject.integrationservice.model.product.Product;
 import at.technikum.masterproject.integrationservice.model.product.ProductReview;
-import at.technikum.masterproject.integrationservice.resolver.async.ResolverExecutor;
 import graphql.kickstart.tools.GraphQLResolver;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -22,21 +21,23 @@ public class AsyncProductResolver implements GraphQLResolver<Product> {
 
   private final ProductReviewClient productReviewClient;
   private final PriceClient priceClient;
-  private final ResolverExecutor resolverExecutor;
 
   public CompletableFuture<List<ProductReview>> getReviews(Product product) {
     log.info("Retrieving all product reviews for product {} query", product.getName());
-    return resolverExecutor.resolve(() -> productReviewClient.getAllProductReviewsForProduct(product.getId()));
+    return productReviewClient.getAllProductReviewsForProduct(product.getId())
+        .toFuture();
   }
 
   public CompletableFuture<Price> getPrice(Product product) {
     log.info("Retrieving current price for product {} query", product.getName());
-    return resolverExecutor.resolve(() -> priceClient.getCurrentPriceForProduct(product.getId()));
+    return priceClient.getCurrentPriceForProduct(product.getId())
+        .toFuture();
   }
 
   public CompletableFuture<List<Price>> getPrices(Product product) {
     log.info("Retrieving all prices for product {} query", product.getName());
-    return resolverExecutor.resolve(() -> priceClient.getAllPricesForProduct(product.getId()));
+    return priceClient.getAllPricesForProduct(product.getId())
+        .toFuture();
   }
 
 }

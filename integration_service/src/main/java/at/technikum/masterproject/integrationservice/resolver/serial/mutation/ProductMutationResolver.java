@@ -20,7 +20,8 @@ public class ProductMutationResolver implements GraphQLMutationResolver {
   private final ProductReviewClient productReviewClient;
 
   public int createProduct(CreateProductInput product) {
-    return productInformationClient.saveProduct(product);
+    return productInformationClient.saveProduct(product)
+        .block();
   }
 
   public void updateProduct(UpdateProductInput product) {
@@ -32,7 +33,8 @@ public class ProductMutationResolver implements GraphQLMutationResolver {
   }
 
   public int createProductReview(CreateProductReviewInput review) {
-    return productReviewClient.saveProductReview(review);
+    return productReviewClient.saveProductReview(review)
+        .block();
   }
 
   public void updateProductReview(UpdateProductReviewInput review) {

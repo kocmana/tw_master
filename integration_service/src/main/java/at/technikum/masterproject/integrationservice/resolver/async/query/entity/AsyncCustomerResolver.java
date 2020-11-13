@@ -7,7 +7,6 @@ import at.technikum.masterproject.integrationservice.model.customer.Customer;
 import at.technikum.masterproject.integrationservice.model.customer.CustomerNetwork;
 import at.technikum.masterproject.integrationservice.model.ecommerce.Purchase;
 import at.technikum.masterproject.integrationservice.model.product.ProductReview;
-import at.technikum.masterproject.integrationservice.resolver.async.ResolverExecutor;
 import graphql.kickstart.tools.GraphQLResolver;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -25,20 +24,22 @@ public class AsyncCustomerResolver implements GraphQLResolver<Customer> {
   private final ProductReviewClient productReviewClient;
   private final CustomerNetworkClient customerNetworkClient;
   private final PurchaseClient purchaseClient;
-  private final ResolverExecutor resolverExecutor;
 
   public CompletableFuture<List<ProductReview>> getReviews(Customer customer) {
     log.info("Retrieving reviews for customer {}, resolving asynchronously", customer.getCustomerId());
-    return resolverExecutor.resolve(() -> productReviewClient.getAllProductReviewsByCustomer(customer.getCustomerId()));
+    return productReviewClient.getAllProductReviewsByCustomer(customer.getCustomerId())
+        .toFuture();
   }
 
   public CompletableFuture<List<CustomerNetwork>> getNetwork(Customer customer) {
     log.info("Retrieving network for customer {}, resolving asynchronously", customer.getCustomerId());
-    return resolverExecutor.resolve(() -> customerNetworkClient.getNetworkByCustomerId(customer.getCustomerId()));
+    return customerNetworkClient.getNetworkByCustomerId(customer.getCustomerId())
+        .toFuture();
   }
 
   public CompletableFuture<List<Purchase>> getPurchases(Customer customer) {
     log.info("Retrieving purchases for customer {}, resolving asynchronously", customer.getCustomerId());
-    return resolverExecutor.resolve(() -> purchaseClient.getPurchasesForCustomer(customer.getCustomerId()));
+    return purchaseClient.getPurchasesForCustomer(customer.getCustomerId())
+        .toFuture();
   }
 }

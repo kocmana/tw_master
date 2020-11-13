@@ -25,17 +25,20 @@ public class AsyncProductQueryResolver implements GraphQLQueryResolver {
 
   public CompletableFuture<List<Product>> products() {
     log.info("Retrieving all products query, resolving asynchronously");
-    return resolverExecutor.resolve(productInformationClient::getAllProducts);
+    return productInformationClient.getAllProducts()
+        .toFuture();
   }
 
   public CompletableFuture<Product> product(int id) {
     log.info("Retrieved product query for id {}, resolving asynchronously", id);
-    return resolverExecutor.resolve(() -> productInformationClient.getProductById(id));
+    return productInformationClient.getProductById(id)
+        .toFuture();
   }
 
   public CompletableFuture<List<ProductReview>> reviews() {
     log.info("Retrieving all product reviews query, resolving asynchronously");
-    return resolverExecutor.resolve(productReviewClient::getAllProductReviews);
+    return productReviewClient.getAllProductReviews()
+        .toFuture();
   }
 
 }

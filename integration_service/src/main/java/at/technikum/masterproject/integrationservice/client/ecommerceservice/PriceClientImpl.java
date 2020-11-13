@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
 public class PriceClientImpl implements PriceClient {
 
-  private static final String PRICE_ENDPOINT = "/price";
+  private static final String PRICE_ENDPOINT = "price";
 
   private final WebClient webClient;
 
@@ -23,7 +24,7 @@ public class PriceClientImpl implements PriceClient {
   }
 
   @Override
-  public Price getCurrentPriceForProduct(int productId) {
+  public Mono<Price> getCurrentPriceForProduct(int productId) {
     return webClient.get()
         .uri(uriBuilder -> uriBuilder
             .path(PRICE_ENDPOINT)
@@ -32,12 +33,11 @@ public class PriceClientImpl implements PriceClient {
             .build(productId))
         .retrieve()
         .bodyToMono(Price.class)
-        .retry(2)
-        .block();
+        .retry(2);
   }
 
   @Override
-  public List<Price> getAllPricesForProduct(int productId) {
+  public Mono<List<Price>> getAllPricesForProduct(int productId) {
     return webClient.get()
         .uri(uriBuilder -> uriBuilder
             .path(PRICE_ENDPOINT)
@@ -48,20 +48,18 @@ public class PriceClientImpl implements PriceClient {
         .retrieve()
         .bodyToFlux(Price.class)
         .retry(2)
-        .collectList()
-        .block();
+        .collectList();
   }
 
   @Override
-  public Price savePrice(CreatePriceInput price) {
+  public Mono<Price> savePrice(CreatePriceInput price) {
     return webClient.post()
         .uri(uriBuilder -> uriBuilder
             .path(PRICE_ENDPOINT)
             .build())
         .bodyValue(price)
         .retrieve()
-        .bodyToMono(Price.class)
-        .block();
+        .bodyToMono(Price.class);
   }
 
 }

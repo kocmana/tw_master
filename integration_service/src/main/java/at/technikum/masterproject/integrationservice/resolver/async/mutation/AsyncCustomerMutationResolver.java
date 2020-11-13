@@ -6,7 +6,6 @@ import at.technikum.masterproject.integrationservice.model.customer.CustomerInte
 import at.technikum.masterproject.integrationservice.model.customer.dto.CreateCustomerInput;
 import at.technikum.masterproject.integrationservice.model.customer.dto.CreateCustomerInteractionInput;
 import at.technikum.masterproject.integrationservice.model.customer.dto.UpdateCustomerInput;
-import at.technikum.masterproject.integrationservice.resolver.async.ResolverExecutor;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
@@ -20,22 +19,21 @@ public class AsyncCustomerMutationResolver implements GraphQLMutationResolver {
 
   private final CustomerInformationClient customerInformationClient;
   private final CustomerNetworkClient customerNetworkClient;
-  private final ResolverExecutor resolverExecutor;
 
   public CompletableFuture<Integer> createCustomer(CreateCustomerInput customer) {
-    return resolverExecutor.resolve(() -> customerInformationClient.saveCustomer(customer));
+    return customerInformationClient.saveCustomer(customer).toFuture();
   }
 
   public void updateCustomer(UpdateCustomerInput customer) {
-    resolverExecutor.run(() -> customerInformationClient.updateCustomer(customer));
+    customerInformationClient.updateCustomer(customer);
   }
 
   public void deleteCustomer(int customerId) {
-    resolverExecutor.run(() -> customerInformationClient.deleteCustomer(customerId));
+    customerInformationClient.deleteCustomer(customerId);
   }
 
   public CompletableFuture<CustomerInteraction> createCustomerInteraction(
       CreateCustomerInteractionInput customerInteraction) {
-    return resolverExecutor.resolve(() -> customerNetworkClient.saveCustomerInteraction(customerInteraction));
+    return customerNetworkClient.saveCustomerInteraction(customerInteraction).toFuture();
   }
 }

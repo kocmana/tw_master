@@ -19,11 +19,11 @@ public class EcommerceMutationResolver implements GraphQLMutationResolver {
   private final PurchaseClient purchaseClient;
 
   public Price createPrice(CreatePriceInput price) {
-    return priceClient.savePrice(price);
+    return priceClient.savePrice(price).block();
   }
 
   public long createPurchase(CreatePurchaseInput purchase) {
-    return purchaseClient.savePurchase(purchase);
+    return purchaseClient.savePurchase(purchase).block();
   }
 
 }

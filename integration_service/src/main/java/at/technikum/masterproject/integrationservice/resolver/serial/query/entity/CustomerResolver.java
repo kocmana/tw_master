@@ -9,36 +9,31 @@ import at.technikum.masterproject.integrationservice.model.ecommerce.Purchase;
 import at.technikum.masterproject.integrationservice.model.product.ProductReview;
 import graphql.kickstart.tools.GraphQLResolver;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConditionalOnProperty(prefix = "services", name = "resolver-mode", havingValue = "SERIAL", matchIfMissing = true)
+@RequiredArgsConstructor
 public class CustomerResolver implements GraphQLResolver<Customer> {
 
   private final ProductReviewClient productReviewClient;
   private final CustomerNetworkClient customerNetworkClient;
   private final PurchaseClient purchaseClient;
 
-  @Autowired
-  public CustomerResolver(ProductReviewClient productReviewClient,
-      CustomerNetworkClient customerNetworkClient,
-      PurchaseClient purchaseClient) {
-    this.productReviewClient = productReviewClient;
-    this.customerNetworkClient = customerNetworkClient;
-    this.purchaseClient = purchaseClient;
-  }
-
   public List<ProductReview> getReviews(Customer customer) {
-    return productReviewClient.getAllProductReviewsByCustomer(customer.getCustomerId());
+    return productReviewClient.getAllProductReviewsByCustomer(customer.getCustomerId())
+        .block();
   }
 
   public List<CustomerNetwork> getNetwork(Customer customer) {
-    return customerNetworkClient.getNetworkByCustomerId(customer.getCustomerId());
+    return customerNetworkClient.getNetworkByCustomerId(customer.getCustomerId())
+        .block();
   }
 
   public List<Purchase> getPurchases(Customer customer) {
-    return purchaseClient.getPurchasesForCustomer(customer.getCustomerId());
+    return purchaseClient.getPurchasesForCustomer(customer.getCustomerId())
+        .block();
   }
 }

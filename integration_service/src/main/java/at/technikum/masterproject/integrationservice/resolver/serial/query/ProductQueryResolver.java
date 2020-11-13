@@ -22,17 +22,20 @@ public class ProductQueryResolver implements GraphQLQueryResolver {
 
   public List<Product> products() {
     log.info("Retrieving all products query");
-    return productInformationClient.getAllProducts();
+    return productInformationClient.getAllProducts()
+        .block();
   }
 
   public Product product(int id) {
     log.info("Retrieved product query for id {}", id);
-    return productInformationClient.getProductById(id);
+    return productInformationClient.getProductById(id)
+        .block();
   }
 
   public List<ProductReview> reviews() {
     log.info("Retrieving all product reviews query");
-    return productReviewClient.getAllProductReviews();
+    return productReviewClient.getAllProductReviews()
+        .block();
   }
 
 }

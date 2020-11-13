@@ -6,7 +6,6 @@ import at.technikum.masterproject.integrationservice.model.product.dto.CreatePro
 import at.technikum.masterproject.integrationservice.model.product.dto.CreateProductReviewInput;
 import at.technikum.masterproject.integrationservice.model.product.dto.UpdateProductInput;
 import at.technikum.masterproject.integrationservice.model.product.dto.UpdateProductReviewInput;
-import at.technikum.masterproject.integrationservice.resolver.async.ResolverExecutor;
 import graphql.kickstart.tools.GraphQLMutationResolver;
 import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
@@ -20,30 +19,31 @@ public class AsyncProductMutationResolver implements GraphQLMutationResolver {
 
   private final ProductInformationClient productInformationClient;
   private final ProductReviewClient productReviewClient;
-  private final ResolverExecutor resolverExecutor;
 
   public CompletableFuture<Integer> createProduct(CreateProductInput product) {
-    return resolverExecutor.resolve(() -> productInformationClient.saveProduct(product));
+    return productInformationClient.saveProduct(product)
+        .toFuture();
   }
 
   public void updateProduct(UpdateProductInput product) {
-    resolverExecutor.run(() -> productInformationClient.updateProduct(product));
+    productInformationClient.updateProduct(product);
   }
 
   public void deleteProduct(int productId) {
-    resolverExecutor.run(() -> productInformationClient.deleteProduct(productId));
+    productInformationClient.deleteProduct(productId);
   }
 
   public CompletableFuture<Integer> createProductReview(CreateProductReviewInput review) {
-    return resolverExecutor.resolve(() -> productReviewClient.saveProductReview(review));
+    return productReviewClient.saveProductReview(review)
+        .toFuture();
   }
 
   public void updateProductReview(UpdateProductReviewInput review) {
-    resolverExecutor.run(() -> productReviewClient.updateProductReview(review));
+    productReviewClient.updateProductReview(review);
   }
 
   public void deleteProductReview(int productId) {
-    resolverExecutor.run(() -> productReviewClient.deleteProductReview(productId));
+    productReviewClient.deleteProductReview(productId);
   }
 
 }

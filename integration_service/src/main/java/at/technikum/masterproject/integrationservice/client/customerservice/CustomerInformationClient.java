@@ -4,14 +4,15 @@ import at.technikum.masterproject.integrationservice.model.customer.Customer;
 import at.technikum.masterproject.integrationservice.model.customer.dto.CreateCustomerInput;
 import at.technikum.masterproject.integrationservice.model.customer.dto.UpdateCustomerInput;
 import java.util.List;
+import reactor.core.publisher.Mono;
 
 public interface CustomerInformationClient {
 
-  Customer getCustomerById(int id);
+  Mono<Customer> getCustomerById(int id);
 
-  List<Customer> getAllCustomer();
+  Mono<List<Customer>> getAllCustomer();
 
-  int saveCustomer(CreateCustomerInput customer);
+  Mono<Integer> saveCustomer(CreateCustomerInput customer);
 
   void updateCustomer(UpdateCustomerInput customer);
 

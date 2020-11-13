@@ -4,10 +4,11 @@ import at.technikum.masterproject.integrationservice.model.customer.CustomerInte
 import at.technikum.masterproject.integrationservice.model.customer.CustomerNetwork;
 import at.technikum.masterproject.integrationservice.model.customer.dto.CreateCustomerInteractionInput;
 import java.util.List;
+import reactor.core.publisher.Mono;
 
 public interface CustomerNetworkClient {
 
-  List<CustomerNetwork> getNetworkByCustomerId(int customerId);
+  Mono<List<CustomerNetwork>> getNetworkByCustomerId(int customerId);
 
-  CustomerInteraction saveCustomerInteraction(CreateCustomerInteractionInput customerInteraction);
+  Mono<CustomerInteraction> saveCustomerInteraction(CreateCustomerInteractionInput customerInteraction);
 }

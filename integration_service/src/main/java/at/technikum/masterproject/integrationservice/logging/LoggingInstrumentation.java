@@ -59,7 +59,7 @@ public class LoggingInstrumentation extends SimpleInstrumentation {
 
   private String createRequestLogFromContextMap(Map<String, String> contextMap) {
     StringBuilder sb = new StringBuilder();
-    contextMap.forEach((key, value) -> sb.append(String.format(DOWNSTREAM_LOG_ENTRY_PATTERN, key, value)));
+//    contextMap.forEach((key, value) -> sb.append(String.format(DOWNSTREAM_LOG_ENTRY_PATTERN, key, value)));
     return sb.toString();
   }
 }

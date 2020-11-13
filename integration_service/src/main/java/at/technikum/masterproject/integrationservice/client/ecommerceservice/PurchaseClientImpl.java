@@ -8,14 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
 public class PurchaseClientImpl implements PurchaseClient {
 
-  private static final String PURCHASE_ENDPOINT = "/purchase";
-  private static final String PURCHASE_BY_PURCHASE_ID_ENDPOINT = "/purchase/{purchaseId}";
-  private static final String PURCHASE_BY_CUSTOMER_ENDPOINT = "/purchase/customer/{customerId}";
+  private static final String PURCHASE_ENDPOINT = "purchase";
 
   private final WebClient webClient;
 
@@ -25,7 +24,7 @@ public class PurchaseClientImpl implements PurchaseClient {
   }
 
   @Override
-  public Purchase getPurchase(int purchaseId) {
+  public Mono<Purchase> getPurchase(int purchaseId) {
     return webClient.get()
         .uri(uriBuilder -> uriBuilder
             .pathSegment(PURCHASE_ENDPOINT)
@@ -33,27 +32,25 @@ public class PurchaseClientImpl implements PurchaseClient {
             .build(purchaseId))
         .retrieve()
         .bodyToMono(Purchase.class)
-        .retry(2)
-        .block();
+        .retry(2);
   }
 
   @Override
-  public List<Purchase> getPurchasesForCustomer(int customerId) {
+  public Mono<List<Purchase>> getPurchasesForCustomer(int customerId) {
     return webClient.get()
         .uri(uriBuilder -> uriBuilder
             .pathSegment(PURCHASE_ENDPOINT)
-            .pathSegment("/customer")
+            .pathSegment("customer")
             .pathSegment("{customerId}")
             .build(customerId))
         .retrieve()
         .bodyToFlux(Purchase.class)
         .retry(2)
-        .collectList()
-        .block();
+        .collectList();
   }
 
   @Override
-  public long savePurchase(CreatePurchaseInput purchase) {
+  public Mono<Long> savePurchase(CreatePurchaseInput purchase) {
     return webClient.post()
         .uri(uriBuilder -> uriBuilder
             .pathSegment(PURCHASE_ENDPOINT)
@@ -61,8 +58,7 @@ public class PurchaseClientImpl implements PurchaseClient {
         .bodyValue(purchase)
         .retrieve()
         .bodyToMono(Purchase.class)
-        .map(Purchase::getId)
-        .block();
+        .map(Purchase::getId);
   }
 
 }

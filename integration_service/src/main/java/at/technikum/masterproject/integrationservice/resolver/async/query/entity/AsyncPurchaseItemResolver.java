@@ -3,7 +3,6 @@ package at.technikum.masterproject.integrationservice.resolver.async.query.entit
 import at.technikum.masterproject.integrationservice.client.productservice.ProductInformationClient;
 import at.technikum.masterproject.integrationservice.model.ecommerce.PurchaseItem;
 import at.technikum.masterproject.integrationservice.model.product.Product;
-import at.technikum.masterproject.integrationservice.resolver.async.ResolverExecutor;
 import graphql.kickstart.tools.GraphQLResolver;
 import java.util.concurrent.CompletableFuture;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +17,10 @@ import org.springframework.stereotype.Component;
 public class AsyncPurchaseItemResolver implements GraphQLResolver<PurchaseItem> {
 
   private final ProductInformationClient productInformationClient;
-  private final ResolverExecutor resolverExecutor;
 
   public CompletableFuture<Product> getProduct(PurchaseItem purchaseItem) {
     log.info("Retrieving product for purchaseItem {}, resolving asynchronously", purchaseItem.getId());
-    return resolverExecutor.resolve(() -> productInformationClient.getProductById(purchaseItem.getProductId()));
+    return productInformationClient.getProductById(purchaseItem.getProductId())
+        .toFuture();
   }
 }

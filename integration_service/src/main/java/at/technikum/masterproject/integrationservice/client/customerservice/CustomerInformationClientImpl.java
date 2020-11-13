@@ -3,18 +3,18 @@ package at.technikum.masterproject.integrationservice.client.customerservice;
 import at.technikum.masterproject.integrationservice.model.customer.Customer;
 import at.technikum.masterproject.integrationservice.model.customer.dto.CreateCustomerInput;
 import at.technikum.masterproject.integrationservice.model.customer.dto.UpdateCustomerInput;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.List;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
 public class CustomerInformationClientImpl implements CustomerInformationClient {
 
-  private static final String CUSTOMER_ENDPOINT = "/customer";
+  private static final String CUSTOMER_ENDPOINT = "customer";
 
   private final WebClient webClient;
 
@@ -23,7 +23,7 @@ public class CustomerInformationClientImpl implements CustomerInformationClient 
   }
 
   @Override
-  public Customer getCustomerById(int customerId) {
+  public Mono<Customer> getCustomerById(int customerId) {
     return webClient.get()
             .uri(uriBuilder -> uriBuilder
                     .path(CUSTOMER_ENDPOINT)
@@ -31,12 +31,11 @@ public class CustomerInformationClientImpl implements CustomerInformationClient 
                     .build(customerId))
             .retrieve()
             .bodyToMono(Customer.class)
-            .retry(2)
-            .block();
+            .retry(2);
   }
 
   @Override
-  public List<Customer> getAllCustomer() {
+  public Mono<List<Customer>> getAllCustomer() {
     return webClient.get()
             .uri(uriBuilder -> uriBuilder
                     .path(CUSTOMER_ENDPOINT)
@@ -44,12 +43,11 @@ public class CustomerInformationClientImpl implements CustomerInformationClient 
             .retrieve()
             .bodyToFlux(Customer.class)
             .retry(2)
-            .collectList()
-            .block();
+        .collectList();
   }
 
   @Override
-  public int saveCustomer(CreateCustomerInput customer) {
+  public Mono<Integer> saveCustomer(CreateCustomerInput customer) {
     return webClient.post()
             .uri(uriBuilder -> uriBuilder
                     .path(CUSTOMER_ENDPOINT)
@@ -58,8 +56,7 @@ public class CustomerInformationClientImpl implements CustomerInformationClient 
             .retrieve()
             .bodyToMono(Customer.class)
             .retry(2)
-            .map(Customer::getCustomerId)
-            .block();
+            .map(Customer::getCustomerId);
   }
 
   @Override
@@ -71,8 +68,7 @@ public class CustomerInformationClientImpl implements CustomerInformationClient 
             .bodyValue(customer)
             .retrieve()
             .toBodilessEntity()
-            .retry(2)
-            .block();
+            .retry(2);
   }
 
   @Override
@@ -84,7 +80,6 @@ public class CustomerInformationClientImpl implements CustomerInformationClient 
                     .build(customerId))
             .retrieve()
             .toBodilessEntity()
-            .retry(2)
-            .block();
+            .retry(2);
   }
 }

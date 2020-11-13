@@ -22,17 +22,20 @@ public class CustomerQueryResolver implements GraphQLQueryResolver {
 
   public List<Customer> customers() {
     log.info("Retrieving all customers query");
-    return customerInformationClient.getAllCustomer();
+    return customerInformationClient.getAllCustomer()
+        .block();
   }
 
   public Customer customer(int customerId) {
     log.info("Retrieved customer query for customerId {}", customerId);
-    return customerInformationClient.getCustomerById(customerId);
+    return customerInformationClient.getCustomerById(customerId)
+        .block();
   }
 
   public List<CustomerNetwork> customerNetwork(int customerId) {
     log.info("Retrieved customer network query for customerId {}", customerId);
-    return customerNetworkClient.getNetworkByCustomerId(customerId);
+    return customerNetworkClient.getNetworkByCustomerId(customerId)
+        .block();
   }
 
 }

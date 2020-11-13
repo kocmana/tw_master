@@ -1,89 +1,84 @@
 package at.technikum.masterproject.integrationservice.client.productservice;
 
-import static org.springframework.http.HttpMethod.GET;
-
 import at.technikum.masterproject.integrationservice.model.product.Product;
-import at.technikum.masterproject.integrationservice.model.product.ProductServiceException;
 import at.technikum.masterproject.integrationservice.model.product.dto.CreateProductInput;
-import at.technikum.masterproject.integrationservice.model.product.dto.ElementCreationResponse;
 import at.technikum.masterproject.integrationservice.model.product.dto.UpdateProductInput;
-import java.net.URI;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
 public class ProductInformationClientImpl implements ProductInformationClient {
 
-  private static final String PRODUCT_ENDPOINT = "/product";
-  private static final String PRODUCT_BY_ID_ENDPOINT = "/product/{productId}";
+  private static final String PRODUCT_ENDPOINT = "product";
 
-  private final RestTemplate restTemplate;
+  private final WebClient webClient;
 
   @Autowired
   public ProductInformationClientImpl(
-      @Qualifier("productServiceRestTemplate") RestTemplate restTemplate) {
-    this.restTemplate = restTemplate;
+      @Qualifier("productServiceWebClient") WebClient webClient) {
+    this.webClient = webClient;
   }
 
   @Override
-  public Product getProductById(int productId) {
-    return restTemplate.getForObject(
-        PRODUCT_BY_ID_ENDPOINT,
-        Product.class,
-        productId
-    );
+  public Mono<Product> getProductById(int productId) {
+    return webClient.get()
+        .uri(uriBuilder -> uriBuilder
+            .pathSegment(PRODUCT_ENDPOINT)
+            .pathSegment("{productId}")
+            .build(productId))
+        .retrieve()
+        .bodyToMono(Product.class)
+        .retry(2);
   }
 
   @Override
-  public List<Product> getAllProducts() {
-    ResponseEntity<List<Product>> response = restTemplate.exchange(
-        PRODUCT_ENDPOINT,
-        GET,
-        HttpEntity.EMPTY,
-        new ParameterizedTypeReference<List<Product>>() {
-        }
-    );
-
-    return Optional.ofNullable(response.getBody())
-        .orElse(Collections.emptyList());
+  public Mono<List<Product>> getAllProducts() {
+    return webClient.get()
+        .uri(uriBuilder -> uriBuilder
+            .pathSegment(PRODUCT_ENDPOINT)
+            .build())
+        .retrieve()
+        .bodyToFlux(Product.class)
+        .retry(2)
+        .collectList();
   }
 
   @Override
-  public Integer saveProduct(CreateProductInput product) {
-    ElementCreationResponse response = restTemplate.postForObject(
-        PRODUCT_ENDPOINT,
-        product,
-        ElementCreationResponse.class
-    );
-
-    return Optional.ofNullable(response)
-        .orElseThrow(() -> new ProductServiceException("Could not retrieve element id from response."))
-        .getId();
+  public Mono<Integer> saveProduct(CreateProductInput product) {
+    return webClient.post()
+        .uri(uriBuilder -> uriBuilder
+            .pathSegment(PRODUCT_ENDPOINT)
+            .build())
+        .bodyValue(product)
+        .retrieve()
+        .bodyToMono(Product.class)
+        .retry(2)
+        .map(Product::getId);
   }
 
   @Override
   public void updateProduct(UpdateProductInput product) {
-    restTemplate.put(
-        URI.create(PRODUCT_ENDPOINT),
-        product
-    );
+    webClient.put()
+        .uri(uriBuilder -> uriBuilder
+            .pathSegment(PRODUCT_ENDPOINT)
+            .build())
+        .bodyValue(product)
+        .retrieve();
   }
 
   @Override
   public void deleteProduct(int productId) {
-    restTemplate.delete(
-        PRODUCT_BY_ID_ENDPOINT,
-        productId
-    );
+    webClient.delete()
+        .uri(uriBuilder -> uriBuilder
+            .pathSegment(PRODUCT_ENDPOINT)
+            .pathSegment("{productId}")
+            .build(productId))
+        .retrieve();
   }
 }

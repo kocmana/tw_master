@@ -18,7 +18,8 @@ public class EcommerceQueryResolver implements GraphQLQueryResolver {
 
   public Purchase purchase(Integer purchaseId) {
     log.info("Retrieved purchase query for purchaseId {}", purchaseId);
-    return purchaseClient.getPurchase(purchaseId);
+    return purchaseClient.getPurchase(purchaseId)
+        .block();
   }
 
 }

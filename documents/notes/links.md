@@ -17,11 +17,23 @@
   * [Blog Post Series: GraphQL in Paypal](https://medium.com/paypal-engineering/tagged/graphql)
     * [Best Practices](https://medium.com/paypal-engineering/graphql-resolvers-best-practices-cd36fdbcef55)
 
+* Graph QL Server Implementation Libraries
+  * [Overview of Available Libraries](https://github.com/mkczyk/graphql-examples)
+  * Schema First Approach
+    * [GraphQL Java](https://www.graphql-java.com/)
+    * [GraphQL Java Kickstart](https://www.graphql-java-kickstart.com/)
+  * Code First Approach
+    * [GraphQL SPQR Spring Boot Starter](https://github.com/leangen/graphql-spqr-spring-boot-starter)
+
 * Graph QL Client Implementations Libraries
   * [GraphQL Java Kickstart Webclient](https://github.com/graphql-java-kickstart/graphql-spring-webclient)
   * [American Express Node Library](https://github.com/americanexpress/nodes)
   * [Shopify Java Generator](https://github.com/Shopify/graphql_java_gen)
   * [Graph QL Maven Client Code Generator](https://github.com/graphql-java-generator/GraphQL-Forum-Maven-Tutorial-client )
+
+### Reactive Implementation
+* [Spring Reactive Stack](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html)
+* [Reactive Web Service with Postgres](https://medium.com/@dassum/building-a-reactive-restful-web-service-using-spring-boot-and-postgres-c8e157dbc81d)
 
 ## Issues in Scope of the Thesis
 

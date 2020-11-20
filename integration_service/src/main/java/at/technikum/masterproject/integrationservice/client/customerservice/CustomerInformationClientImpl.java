@@ -25,61 +25,61 @@ public class CustomerInformationClientImpl implements CustomerInformationClient 
   @Override
   public Mono<Customer> getCustomerById(int customerId) {
     return webClient.get()
-            .uri(uriBuilder -> uriBuilder
-                    .path(CUSTOMER_ENDPOINT)
-                    .pathSegment("{customerId}")
-                    .build(customerId))
-            .retrieve()
-            .bodyToMono(Customer.class)
-            .retry(2);
+        .uri(uriBuilder -> uriBuilder
+            .path(CUSTOMER_ENDPOINT)
+            .pathSegment("{customerId}")
+            .build(customerId))
+        .retrieve()
+        .bodyToMono(Customer.class)
+        .retry(2);
   }
 
   @Override
   public Mono<List<Customer>> getAllCustomer() {
     return webClient.get()
-            .uri(uriBuilder -> uriBuilder
-                    .path(CUSTOMER_ENDPOINT)
-                    .build())
-            .retrieve()
-            .bodyToFlux(Customer.class)
-            .retry(2)
+        .uri(uriBuilder -> uriBuilder
+            .path(CUSTOMER_ENDPOINT)
+            .build())
+        .retrieve()
+        .bodyToFlux(Customer.class)
+        .retry(2)
         .collectList();
   }
 
   @Override
   public Mono<Integer> saveCustomer(CreateCustomerInput customer) {
     return webClient.post()
-            .uri(uriBuilder -> uriBuilder
-                    .path(CUSTOMER_ENDPOINT)
-                    .build())
-            .bodyValue(customer)
-            .retrieve()
-            .bodyToMono(Customer.class)
-            .retry(2)
-            .map(Customer::getCustomerId);
+        .uri(uriBuilder -> uriBuilder
+            .path(CUSTOMER_ENDPOINT)
+            .build())
+        .bodyValue(customer)
+        .retrieve()
+        .bodyToMono(Customer.class)
+        .retry(2)
+        .map(Customer::getCustomerId);
   }
 
   @Override
   public void updateCustomer(UpdateCustomerInput customer) {
     webClient.put()
-            .uri(uriBuilder -> uriBuilder
-                    .path(CUSTOMER_ENDPOINT)
-                    .build())
-            .bodyValue(customer)
-            .retrieve()
-            .toBodilessEntity()
-            .retry(2);
+        .uri(uriBuilder -> uriBuilder
+            .path(CUSTOMER_ENDPOINT)
+            .build())
+        .bodyValue(customer)
+        .retrieve()
+        .toBodilessEntity()
+        .retry(2);
   }
 
   @Override
   public void deleteCustomer(int customerId) {
     webClient.put()
-            .uri(uriBuilder -> uriBuilder
-                    .path(CUSTOMER_ENDPOINT)
-                    .pathSegment("{customerId}")
-                    .build(customerId))
-            .retrieve()
-            .toBodilessEntity()
-            .retry(2);
+        .uri(uriBuilder -> uriBuilder
+            .path(CUSTOMER_ENDPOINT)
+            .pathSegment("{customerId}")
+            .build(customerId))
+        .retrieve()
+        .toBodilessEntity()
+        .retry(2);
   }
 }

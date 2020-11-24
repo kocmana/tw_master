@@ -33,3 +33,7 @@ services:
     port: ${ECOMMERCESERVICE_PORT}
     username: ${ECOMMERCESERVICE_USERNAME}
     password: ${ECOMMERCESERVICE_USERNAME}
+
+logging:
+  level:
+    graphql.kickstart: debug

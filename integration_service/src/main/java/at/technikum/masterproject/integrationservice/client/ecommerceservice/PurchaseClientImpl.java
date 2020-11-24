@@ -32,7 +32,7 @@ public class PurchaseClientImpl implements PurchaseClient {
   }
 
   @Override
-  public Purchase getPurchase(int purchaseId) {
+  public Purchase getPurchase(long purchaseId) {
     return restTemplate.getForObject(
         PURCHASE_BY_PURCHASE_ID_ENDPOINT,
         Purchase.class,

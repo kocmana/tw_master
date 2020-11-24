@@ -41,7 +41,7 @@ public class CommonExceptionHandler {
   @ExceptionHandler(Exception.class)
   public ThrowableGraphQLError handleGenericException(Exception exception) {
     log.warn("Uncaught exception {} occurred during handling of request: {}",
-        exception.getClass().getCanonicalName(), exception.getMessage());
+        exception.getClass().getCanonicalName(), exception.getMessage(), exception);
     return new ThrowableGraphQLError(exception, "An error occurred.");
   }
 

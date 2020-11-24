@@ -6,6 +6,7 @@ import lombok.Value;
 @Value
 public class CustomerNetwork {
 
+  Integer customerId;
   InteractionType interactionType;
   List<Customer> targetCustomer;
 }

@@ -10,6 +10,7 @@
 * create annotation based random object creation
 * switch to existsById queries where applicable, especially for getPricesForProductAndTimeframe in ecommerce service
 * switch to JSR354 representation/Java Money/Currency API for price service
+* switch from Double to BigDecimal for currency/payment related information in ecom service
 * ~~add global api delay on service level by adding some "LatencySimulatorInterceptor" annotated with the regular Delay 
 annotations~~ - done
 * ~~add probability based probabilisticFailure on API and endpoint level~~ - done
@@ -17,7 +18,7 @@ annotations~~ - done
 ~~* Add deletion mutation for product service~~ - done
 ~~* Add deletion endpoints to other services~~ - done
 * Review current handling of PUT for data changes in integration service.
-* Add exception handlers for integration system
+~~* Add exception handlers for integration system~~ - partly done
 * Switch configuration of sync/async resolver handling from class level conditional on property to Config based solution
 
 # Issues

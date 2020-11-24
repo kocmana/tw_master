@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PurchaseClient {
 
-  Purchase getPurchase(int purchaseId);
+  Purchase getPurchase(long purchaseId);
 
   List<Purchase> getPurchasesForCustomer(int customerId);
 

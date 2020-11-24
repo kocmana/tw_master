@@ -32,8 +32,8 @@ service:
   delay:
     enable-endpoint-delays: true
     enable-service-delays: true
-    service-delay-mean: 100
-    service-delay-standard-deviation: 100
+    service-delay-mean: 2000
+    service-delay-standard-deviation: 0
     log-delays: true
 
 customerservice:

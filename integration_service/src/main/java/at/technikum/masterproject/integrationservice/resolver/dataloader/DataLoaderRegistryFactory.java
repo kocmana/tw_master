@@ -6,6 +6,7 @@ import static at.technikum.masterproject.integrationservice.resolver.dataloader.
 import static at.technikum.masterproject.integrationservice.resolver.dataloader.configuration.DataloaderConstants.PRODUCT_REVIEW_DATALOADER;
 import static at.technikum.masterproject.integrationservice.resolver.dataloader.configuration.DataloaderConstants.PURCHASE_DATALOADER;
 import static java.util.stream.Collectors.toConcurrentMap;
+import static java.util.stream.Collectors.toMap;
 
 import at.technikum.masterproject.integrationservice.client.customerservice.CustomerInformationClient;
 import at.technikum.masterproject.integrationservice.client.customerservice.CustomerNetworkClient;
@@ -24,7 +25,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.dataloader.DataLoader;
 import org.dataloader.DataLoaderRegistry;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -33,6 +36,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConditionalOnProperty(prefix = "services", name = "resolver-mode", havingValue = "DATALOADER")
 @RequiredArgsConstructor
+@Slf4j
 public class DataLoaderRegistryFactory {
 
   private static final ExecutorService executorService = Executors.newCachedThreadPool();
@@ -55,20 +59,20 @@ public class DataLoaderRegistryFactory {
   }
 
   private DataLoader<Long, Purchase> createPurchaseDataLoader() {
-    return DataLoader.newMappedDataLoader((Set<Long> purchaseIds) ->
-        CompletableFuture.supplyAsync(() -> purchaseIds.parallelStream()
-                .map(purchaseClient::getPurchase)
-                .collect(toConcurrentMap(Purchase::getId, Function.identity()))
-            , executorService));
+    return DataLoader.newMappedDataLoader((Set<Long> purchaseIds) -> {
+      return CompletableFuture.supplyAsync(() -> purchaseIds.parallelStream()
+              .map(purchaseClient::getPurchase)
+              .collect(toConcurrentMap(Purchase::getId, Function.identity()))
+          , executorService);
+    });
   }
 
   private DataLoader<Integer, List<ProductReview>> createProductReviewDataLoader() {
     return DataLoader.newMappedDataLoader((Set<Integer> productIds) ->
-        CompletableFuture.supplyAsync(() -> productIds.parallelStream()
-                .map(productId -> new SimpleImmutableEntry<>(productId,
-                    productReviewClient.getAllProductReviewsForProduct(productId)))
-                .collect(toConcurrentMap(SimpleImmutableEntry::getKey, SimpleImmutableEntry::getValue))
-            , executorService));
+        CompletableFuture.supplyAsync(() -> executorService.submit(() -> productIds.parallelStream()
+            .map(productId -> new SimpleImmutableEntry<>(productId,
+                productReviewClient.getAllProductReviewsForProduct(productId)))
+            .collect(Collectors.toMap((s)->(s.getKey()),(t)->(t.getValue())))), executorService));
   }
 
   private DataLoader<Integer, Product> createProductInformationDataLoader() {
@@ -80,18 +84,28 @@ public class DataLoaderRegistryFactory {
   }
 
   private DataLoader<Integer, Customer> createCustomerInformationDataLoader() {
-    return DataLoader.newMappedDataLoader((Set<Integer> customerIds) ->
-        CompletableFuture.supplyAsync(() -> customerIds.parallelStream()
-                .map(customerInformationClient::getCustomerById)
-                .collect(toConcurrentMap(Customer::getCustomerId, Function.identity()))
-            , executorService));
+    return DataLoader.newMappedDataLoader((Set<Integer> customerIds) -> {
+      log.warn("Fetching information for the following customerIds: {}", customerIds.toString());
+
+      List<CompletableFuture<Customer>> results = customerIds.stream()
+          .map(customerId -> CompletableFuture
+              .supplyAsync(() -> customerInformationClient.getCustomerById(customerId),
+                  executorService))
+          .collect(Collectors.toList());
+
+      return CompletableFuture.allOf(results.toArray(new CompletableFuture<?>[0]))
+          .thenApply(v -> results.stream()
+              .map(CompletableFuture::join)
+              .collect(toMap(Customer::getCustomerId, Function.identity())));
+    });
   }
 
   private DataLoader<Integer, List<CustomerNetwork>> createCustomerNetworkDataLoader() {
     return DataLoader.newMappedDataLoader((Set<Integer> customerIds) ->
         CompletableFuture.supplyAsync(() -> customerIds.parallelStream()
                 .map(customerId ->
-                    new SimpleImmutableEntry<>(customerId, customerNetworkClient.getNetworkByCustomerId(customerId)))
+                    new SimpleImmutableEntry<>(customerId,
+                        customerNetworkClient.getNetworkByCustomerId(customerId)))
                 .collect(toConcurrentMap(SimpleImmutableEntry::getKey, SimpleImmutableEntry::getValue))
             , executorService));
   }

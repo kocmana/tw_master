@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DataloaderConstants {
+public final class DataloaderConstants {
 
   public static final String CUSTOMER_INFORMATION_DATALOADER = "CUSTOMER_INFORMATION_DATALOADER";
   public static final String CUSTOMER_NETWORK_DATALOADER = "CUSTOMER_NETWORK_DATALOADER";

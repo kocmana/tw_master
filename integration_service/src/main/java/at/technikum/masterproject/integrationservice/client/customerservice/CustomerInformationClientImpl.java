@@ -34,6 +34,7 @@ public class CustomerInformationClientImpl implements CustomerInformationClient 
 
   @Override
   public Customer getCustomerById(int customerId) {
+    log.info("Getting customer with id {}", customerId);
     return restTemplate.getForObject(
         CUSTOMER_BY_CUSTOMER_ID_ENDPOINT,
         Customer.class,

@@ -6,6 +6,7 @@ import static at.technikum.masterproject.integrationservice.logging.LoggingConst
 import at.technikum.masterproject.integrationservice.logging.model.DownstreamRequest;
 import at.technikum.masterproject.integrationservice.logging.model.LoggingInstrumentationState;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.jboss.logging.MDC;
@@ -25,22 +26,27 @@ public class RestTemplateRequestIdInterceptor implements ClientHttpRequestInterc
                                       ClientHttpRequestExecution execution)
       throws IOException {
 
+    long startTime = Instant.now().toEpochMilli();
     ClientHttpResponse response = execution.execute(request, body);
+    long endTime = Instant.now().toEpochMilli();
+    long duration = endTime - startTime;
 
-    DownstreamRequest downstreamLogEntry = createDownstreamRequestEntry(request, response);
+    DownstreamRequest downstreamLogEntry = createDownstreamRequestEntry(request, response, duration);
     String executionId = (String) MDC.get(CORRELATION_ID);
     loggingInstrumentationState.addDownstreamCallToRequestLog(executionId, downstreamLogEntry);
 
     return response;
   }
 
-  private DownstreamRequest createDownstreamRequestEntry(HttpRequest request, ClientHttpResponse response) {
+  private DownstreamRequest createDownstreamRequestEntry(HttpRequest request, ClientHttpResponse response,
+                                                         long duration) {
     try {
       return DownstreamRequest.builder()
           .id(extractDownstreamRequestIdFromResponseHeaders(response))
           .endpoint(request.getURI())
           .method(request.getMethod())
           .returnCode(response.getStatusCode())
+          .duration(duration)
           .build();
     } catch (IOException e) {
       throw new IllegalStateException("IO Exception occurred during logging of request.", e);

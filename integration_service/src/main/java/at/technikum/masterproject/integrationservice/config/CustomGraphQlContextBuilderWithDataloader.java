@@ -11,11 +11,13 @@ import javax.websocket.Session;
 import javax.websocket.server.HandshakeRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.NotImplementedException;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CustomGraphQlContextBuilder implements GraphQLServletContextBuilder {
+@ConditionalOnProperty(prefix = "services", name = "resolver-mode", havingValue = "DATALOADER")
+public class CustomGraphQlContextBuilderWithDataloader implements GraphQLServletContextBuilder {
 
   private final DataLoaderRegistryFactory dataLoaderRegistryFactory;
   private final LoggingInstrumentationState loggingInstrumentationState;

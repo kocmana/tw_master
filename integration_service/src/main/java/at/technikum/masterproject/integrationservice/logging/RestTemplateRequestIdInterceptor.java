@@ -6,7 +6,6 @@ import static at.technikum.masterproject.integrationservice.logging.LoggingConst
 import at.technikum.masterproject.integrationservice.logging.model.DownstreamRequest;
 import at.technikum.masterproject.integrationservice.logging.model.LoggingInstrumentationState;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.jboss.logging.MDC;
@@ -23,7 +22,7 @@ public class RestTemplateRequestIdInterceptor implements ClientHttpRequestInterc
 
   @Override
   public ClientHttpResponse intercept(HttpRequest request, byte[] body,
-      ClientHttpRequestExecution execution)
+                                      ClientHttpRequestExecution execution)
       throws IOException {
 
     ClientHttpResponse response = execution.execute(request, body);
@@ -48,12 +47,12 @@ public class RestTemplateRequestIdInterceptor implements ClientHttpRequestInterc
     }
   }
 
-  private String extractDownstreamRequestIdFromResponseHeaders(ClientHttpResponse response){
+  private String extractDownstreamRequestIdFromResponseHeaders(ClientHttpResponse response) {
     HttpHeaders headers = response.getHeaders();
     return Optional.ofNullable(headers.get(REQUEST_ID_KEY))
         .filter(list -> list.size() == 1)
-        .orElse(Collections.singletonList("No request ID found."))
-        .get(0);
+        .map(list -> list.get(0))
+        .orElse("No request ID found.");
   }
 
 }

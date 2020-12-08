@@ -17,7 +17,7 @@ public class DownstreamRequest {
   private final HttpStatus returnCode;
   private final String id;
 
-  public final String toString(){
+  public final String toString() {
     return String.format(TO_STRING_TEMPLATE,
         method.toString(),
         endpoint.toString(),

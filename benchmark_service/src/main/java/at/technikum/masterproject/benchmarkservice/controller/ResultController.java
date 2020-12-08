@@ -1,7 +1,12 @@
 package at.technikum.masterproject.benchmarkservice.controller;
 
+import static java.util.Objects.nonNull;
+
 import at.technikum.masterproject.benchmarkservice.model.dto.BenchmarkResult;
 import at.technikum.masterproject.benchmarkservice.service.ResultService;
+import java.util.Collection;
+import java.util.stream.Collectors;
+import javax.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,15 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.validation.constraints.NotBlank;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 @Controller
 @RequestMapping("/results")
-public class
-ResultController {
+public class ResultController {
 
   private final ResultService resultService;
 
@@ -28,13 +27,12 @@ ResultController {
 
   @GetMapping
   public String home(Model model,
-      @RequestParam @NotBlank String uuid,
-      @RequestParam(required = false) Integer bucketSize) {
+                     @RequestParam @NotBlank String uuid,
+                     @RequestParam(required = false) Integer bucketSize) {
 
-    bucketSize = Objects.nonNull(bucketSize) ? bucketSize : 1000;
+    bucketSize = nonNull(bucketSize) ? bucketSize : 1000;
 
-    BenchmarkResult statistics = resultService
-        .retrieveBenchmarkResults(uuid, bucketSize);
+    BenchmarkResult statistics = resultService.retrieveBenchmarkResults(uuid, bucketSize);
 
     model.addAttribute("benchmarkStatistics", statistics);
     model.addAttribute("graphLabels", generateStringList(statistics.getResponseTimeDistribution().keySet()));

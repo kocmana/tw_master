@@ -1,7 +1,11 @@
 package at.technikum.masterproject.integrationservice.resolver.dataloader.configuration;
 
+import static at.technikum.masterproject.integrationservice.resolver.dataloader.configuration.DataloaderConstants.PURCHASE_BY_CUSTOMER_DATALOADER;
+import static at.technikum.masterproject.integrationservice.resolver.dataloader.configuration.DataloaderConstants.PURCHASE_BY_ID_DATALOADER;
+
 import at.technikum.masterproject.integrationservice.client.ecommerceservice.PurchaseClient;
 import at.technikum.masterproject.integrationservice.model.ecommerce.Purchase;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.dataloader.DataLoader;
 import org.dataloader.DataLoaderRegistry;
@@ -9,11 +13,6 @@ import org.dataloader.MappedBatchLoader;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
-
-import static at.technikum.masterproject.integrationservice.resolver.dataloader.configuration.DataloaderConstants.PURCHASE_BY_CUSTOMER_DATALOADER;
-import static at.technikum.masterproject.integrationservice.resolver.dataloader.configuration.DataloaderConstants.PURCHASE_BY_ID_DATALOADER;
 
 @Configuration
 @ConditionalOnProperty(prefix = "services", name = "resolver-mode", havingValue = "DATALOADER")
@@ -35,13 +34,13 @@ public class EcommerceDataLoaderConfiguration {
 
   private DataLoader<Long, Purchase> createPurchaseByIdDataLoader() {
     MappedBatchLoader<Long, Purchase> batchLoadFunction = dataLoaderExecutor.generateBatchLoadFunction(
-            purchaseClient::getPurchase, Purchase::getId);
+        purchaseClient::getPurchase, Purchase::getId);
     return DataLoader.newMappedDataLoader(batchLoadFunction);
   }
 
   private DataLoader<Integer, List<Purchase>> createPurchaseByCustomerDataLoader() {
     MappedBatchLoader<Integer, List<Purchase>> batchLoadFunction =
-            dataLoaderExecutor.generateBatchLoadFunction(purchaseClient::getPurchasesForCustomer);
+        dataLoaderExecutor.generateBatchLoadFunction(purchaseClient::getPurchasesForCustomer);
     return DataLoader.newMappedDataLoader(batchLoadFunction);
   }
 

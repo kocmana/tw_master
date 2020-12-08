@@ -1,6 +1,5 @@
 package at.technikum.masterproject.integrationservice.logging;
 
-
 import static at.technikum.masterproject.integrationservice.logging.LoggingConstants.CORRELATION_ID;
 
 import java.util.concurrent.Executor;

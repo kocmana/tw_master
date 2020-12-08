@@ -16,12 +16,12 @@ public class DataLoaderRegistryFactory {
 
   @Autowired
   public DataLoaderRegistryFactory(
-          @Qualifier("customerServiceDataLoaderRegistry") DataLoaderRegistry customerDataLoaderRegistry,
-          @Qualifier("productServiceDataLoaderRegistry") DataLoaderRegistry productDataLoaderRegistry,
-          @Qualifier("eCommerceServiceDataLoaderRegistry") DataLoaderRegistry eCommerceDataLoaderRegistry
-  ){
+      @Qualifier("customerServiceDataLoaderRegistry") DataLoaderRegistry customerDataLoaderRegistry,
+      @Qualifier("productServiceDataLoaderRegistry") DataLoaderRegistry productDataLoaderRegistry,
+      @Qualifier("eCommerceServiceDataLoaderRegistry") DataLoaderRegistry ecommerceDataLoaderRegistry
+  ) {
     DataLoaderRegistry combinedDataloaderRegistry = customerDataLoaderRegistry.combine(productDataLoaderRegistry);
-    combinedDataloaderRegistry = combinedDataloaderRegistry.combine(eCommerceDataLoaderRegistry);
+    combinedDataloaderRegistry = combinedDataloaderRegistry.combine(ecommerceDataLoaderRegistry);
     registry = combinedDataloaderRegistry;
   }
 

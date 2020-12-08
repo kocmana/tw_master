@@ -20,19 +20,20 @@ import org.springframework.stereotype.Service;
 public class DataLoaderExecutor {
   private static final Executor EXECUTOR = new RequestLoggingPropagationExecutor(Executors.newCachedThreadPool());
 
-  public <K, V> MappedBatchLoader<K, V> generateBatchLoadFunction(Function<K, V> resultSupplier, Function<V, K> idGenerator) {
+  public <K, V> MappedBatchLoader<K, V> generateBatchLoadFunction(Function<K, V> resultSupplier,
+                                                                  Function<V, K> idGenerator) {
     return (Set<K> idSet) -> {
       log.debug("Fetching information for the following ids: {}", idSet.toString());
 
       List<CompletableFuture<V>> futures = idSet.stream()
-              .map(id -> CompletableFuture
-                      .supplyAsync(() -> resultSupplier.apply(id), EXECUTOR))
-              .collect(Collectors.toUnmodifiableList());
+          .map(id -> CompletableFuture
+              .supplyAsync(() -> resultSupplier.apply(id), EXECUTOR))
+          .collect(Collectors.toUnmodifiableList());
 
       return CompletableFuture.allOf(futures.toArray(new CompletableFuture<?>[0]))
-              .thenApply(v -> futures.stream()
-                      .map(CompletableFuture::join)
-                      .collect(toMap(idGenerator, Function.identity())));
+          .thenApply(v -> futures.stream()
+              .map(CompletableFuture::join)
+              .collect(toMap(idGenerator, Function.identity())));
     };
   }
 
@@ -41,15 +42,15 @@ public class DataLoaderExecutor {
       log.debug("Fetching information for the following ids: {}", idSet.toString());
 
       List<CompletableFuture<AbstractMap.SimpleImmutableEntry<K, V>>> futures = idSet.stream()
-              .map(id -> CompletableFuture
-                      .supplyAsync(() -> new AbstractMap.SimpleImmutableEntry<K, V>(id, resultSupplier.apply(id)),
-                              EXECUTOR))
-              .collect(Collectors.toUnmodifiableList());
+          .map(id -> CompletableFuture
+              .supplyAsync(() -> new AbstractMap.SimpleImmutableEntry<K, V>(id, resultSupplier.apply(id)),
+                  EXECUTOR))
+          .collect(Collectors.toUnmodifiableList());
 
       return CompletableFuture.allOf(futures.toArray(new CompletableFuture<?>[0]))
-              .thenApply(v -> futures.stream()
-                      .map(CompletableFuture::join)
-                      .collect(toMap(AbstractMap.SimpleImmutableEntry::getKey, AbstractMap.SimpleImmutableEntry::getValue)));
+          .thenApply(v -> futures.stream()
+              .map(CompletableFuture::join)
+              .collect(toMap(AbstractMap.SimpleImmutableEntry::getKey, AbstractMap.SimpleImmutableEntry::getValue)));
     };
   }
 

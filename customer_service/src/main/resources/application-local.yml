@@ -32,7 +32,7 @@ service:
   delay:
     enable-endpoint-delays: true
     enable-service-delays: true
-    service-delay-mean: 2000
+    service-delay-mean: 5000
     service-delay-standard-deviation: 0
     log-delays: true
 

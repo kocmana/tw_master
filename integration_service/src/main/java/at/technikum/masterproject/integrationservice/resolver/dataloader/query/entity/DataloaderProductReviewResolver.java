@@ -22,14 +22,14 @@ import org.springframework.stereotype.Component;
 public class DataloaderProductReviewResolver implements GraphQLResolver<ProductReview> {
 
   public CompletableFuture<Product> getProduct(ProductReview productReview, DataFetchingEnvironment environment) {
-    log.info("Retrieving product for review {}, resolving using dataloader", productReview.getId());
+    log.debug("Retrieving product for review {}, resolving using dataloader", productReview.getId());
     DataLoader<Integer, Product> dataloader = environment.getDataLoader(PRODUCT_INFORMATION_DATALOADER);
     return dataloader.load(productReview.getProductId());
 
   }
 
   public CompletableFuture<Customer> getCustomer(ProductReview productReview, DataFetchingEnvironment environment) {
-    log.info("Retrieving customer for review {}, resolving using dataloader", productReview.getId());
+    log.debug("Retrieving customer for review {}, resolving using dataloader", productReview.getId());
     DataLoader<Integer, Customer> dataloader = environment.getDataLoader(CUSTOMER_INFORMATION_DATALOADER);
     return dataloader.load(productReview.getCustomerId());
   }

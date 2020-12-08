@@ -28,18 +28,18 @@ public class DataloaderProductQueryResolver implements GraphQLQueryResolver {
   private final ResolverExecutor resolverExecutor;
 
   public CompletableFuture<List<Product>> products() {
-    log.info("Retrieving all products query, resolving asynchronously");
+    log.debug("Retrieving all products query, resolving asynchronously");
     return resolverExecutor.resolve(productInformationClient::getAllProducts);
   }
 
   public CompletableFuture<Product> product(int id, DataFetchingEnvironment environment) {
-    log.info("Retrieved product query for id {}, resolving with dataloader", id);
+    log.debug("Retrieved product query for id {}, resolving with dataloader", id);
     DataLoader<Integer, Product> dataloader = environment.getDataLoader(PRODUCT_INFORMATION_DATALOADER);
     return dataloader.load(id);
   }
 
   public CompletableFuture<List<ProductReview>> reviews() {
-    log.info("Retrieving all product reviews query, resolving asynchronously");
+    log.debug("Retrieving all product reviews query, resolving asynchronously");
     return resolverExecutor.resolve(productReviewClient::getAllProductReviews);
   }
 

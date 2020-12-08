@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 public class DataloaderPurchaseResolver implements GraphQLResolver<Purchase> {
 
   public CompletableFuture<Customer> getCustomer(Purchase purchase, DataFetchingEnvironment environment) {
-    log.info("Retrieving customer for purchase {}, resolving with dataloader", purchase.getId());
+    log.debug("Retrieving customer for purchase {}, resolving with dataloader", purchase.getId());
     DataLoader<Integer, Customer> dataloader = environment.getDataLoader(CUSTOMER_INFORMATION_DATALOADER);
     return dataloader.load(purchase.getCustomerId());
   }

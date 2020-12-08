@@ -1,5 +1,6 @@
 package at.technikum.masterproject.integrationservice.config;
 
+import at.technikum.masterproject.integrationservice.logging.model.LoggingInstrumentationState;
 import at.technikum.masterproject.integrationservice.resolver.dataloader.DataLoaderRegistryFactory;
 import graphql.kickstart.execution.context.GraphQLContext;
 import graphql.kickstart.servlet.context.DefaultGraphQLServletContext;
@@ -17,15 +18,18 @@ import org.springframework.stereotype.Component;
 public class CustomGraphQlContextBuilder implements GraphQLServletContextBuilder {
 
   private final DataLoaderRegistryFactory dataLoaderRegistryFactory;
+  private final LoggingInstrumentationState loggingInstrumentationState;
 
   @Override
   public GraphQLContext build(HttpServletRequest request, HttpServletResponse response) {
 
-    return DefaultGraphQLServletContext.createServletContext()
+    DefaultGraphQLServletContext context = DefaultGraphQLServletContext.createServletContext()
         .with(request)
         .with(response)
         .with(dataLoaderRegistryFactory.create())
         .build();
+
+    return new LoggingGraphQlContext(loggingInstrumentationState, context);
   }
 
   @Override

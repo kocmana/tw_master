@@ -27,18 +27,18 @@ public class DataloaderCustomerQueryResolver implements GraphQLQueryResolver {
   private final ResolverExecutor resolverExecutor;
 
   public CompletableFuture<List<Customer>> customers() {
-    log.info("Retrieved get all customers query, resolving asynchronously");
+    log.debug("Retrieved get all customers query, resolving asynchronously");
     return resolverExecutor.resolve(customerInformationClient::getAllCustomer);
   }
 
   public CompletableFuture<Customer> customer(int customerId, DataFetchingEnvironment environment) {
-    log.info("Retrieved customer query for customerId {}, resolving with dataloader", customerId);
+    log.debug("Retrieved customer query for customerId {}, resolving with dataloader", customerId);
     DataLoader<Integer, Customer> dataloader = environment.getDataLoader(CUSTOMER_INFORMATION_DATALOADER);
     return dataloader.load(customerId);
   }
 
   public CompletableFuture<List<CustomerNetwork>> customerNetwork(int customerId, DataFetchingEnvironment environment) {
-    log.info("Retrieved customer network query for customerId {}, resolving with dataloader", customerId);
+    log.debug("Retrieved customer network query for customerId {}, resolving with dataloader", customerId);
     DataLoader<Integer, List<CustomerNetwork>> dataloader = environment.getDataLoader(CUSTOMER_NETWORK_DATALOADER);
     return dataloader.load(customerId);
   }

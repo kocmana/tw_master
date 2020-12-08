@@ -1,12 +1,13 @@
 package at.technikum.masterproject.integrationservice.logging;
 
 
+import static at.technikum.masterproject.integrationservice.logging.LoggingConstants.CORRELATION_ID;
+
+import java.util.concurrent.Executor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.MDC;
-
-import java.util.concurrent.Executor;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -16,14 +17,16 @@ public class RequestLoggingPropagationExecutor implements Executor {
 
   @Override
   public void execute(@NotNull Runnable command) {
-    String correlationId = MDC.get("correlation_id");
-    try {
-      delegate.execute(() -> {
-        MDC.put("correlation_id", correlationId);
+    String correlationId = MDC.get(CORRELATION_ID);
+    delegate.execute(() -> {
+      try {
+
+        MDC.put(CORRELATION_ID, correlationId);
         command.run();
-      });
-    } finally {
-      //MDC.remove("correlation_id");
-    }
+      } finally {
+        MDC.remove(CORRELATION_ID);
+      }
+    });
   }
+
 }

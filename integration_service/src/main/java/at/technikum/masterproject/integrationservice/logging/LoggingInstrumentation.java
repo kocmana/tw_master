@@ -1,53 +1,43 @@
 package at.technikum.masterproject.integrationservice.logging;
 
+import at.technikum.masterproject.integrationservice.config.LoggingGraphQlContext;
+import at.technikum.masterproject.integrationservice.logging.model.LoggingInstrumentationState;
 import graphql.ExecutionResult;
-import graphql.execution.ExecutionId;
 import graphql.execution.instrumentation.InstrumentationContext;
-import graphql.execution.instrumentation.InstrumentationState;
 import graphql.execution.instrumentation.SimpleInstrumentation;
 import graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters;
+import java.util.concurrent.CompletableFuture;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-
-import java.util.concurrent.CompletableFuture;
 
 
 @Slf4j
 public class LoggingInstrumentation extends SimpleInstrumentation {
 
-  private LoggingInstrumentationState state;
-
-  private static final String REQUEST_ID_KEY = "x-request-id";
-
-  private static final String BASIC_LOG_ENTRY_PATTERN = "{}: Query:\n{}\nStatus: finished after {}ms,\nRequests:\n{}";
-  private static final String DOWNSTREAM_LOG_ENTRY_PATTERN = "\t%s - ID: %s\n";
-
-  @Autowired
-  public void setState(LoggingInstrumentationState state) {
-    this.state = state;
-  }
-
-  @Override
-  @Bean
-  public InstrumentationState createState() {
-    return state;
-  }
+  private LoggingInstrumentationState loggingState;
 
   @Override
   public InstrumentationContext<ExecutionResult> beginExecution(InstrumentationExecutionParameters parameters) {
-    ExecutionId executionId = parameters.getExecutionInput().getExecutionId();
-    MDC.put("correlation_id", executionId.toString());
+    String executionId = parameters.getExecutionInput().getExecutionId().toString();
+    LoggingGraphQlContext state = parameters.getContext();
+    loggingState = state.getLoggingState();
+    MDC.put(LoggingConstants.CORRELATION_ID, executionId);
+    loggingState.addRequest(executionId);
+    loggingState.getRequestStatistics(executionId).startRequest();
+
     return super.beginExecution(parameters);
   }
 
   @Override
   public CompletableFuture<ExecutionResult> instrumentExecutionResult(
-          ExecutionResult executionResult,
-          InstrumentationExecutionParameters parameters) {
-    LoggingInstrumentationState state = parameters.getInstrumentationState();
-    MDC.clear();
+      ExecutionResult executionResult,
+      InstrumentationExecutionParameters parameters) {
+    String executionId = parameters.getExecutionInput().getExecutionId().toString();
+    LoggingGraphQlContext state = parameters.getContext();
+    loggingState = state.getLoggingState();
+    loggingState.getRequestStatistics(executionId).stopRequest();
+    log.info(loggingState.getRequestStatistics(executionId).toString());
+    MDC.remove(executionId);
     return super.instrumentExecutionResult(executionResult, parameters);
   }
 

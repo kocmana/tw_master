@@ -77,7 +77,9 @@
 
 ##### Approaches on Managing Complexity of Consumer Requests
 * Background: Limited visibility of actual request complexity to consumers
-* Solution: Introduction of maximum request recursion depth
+* Solution: Introduction of maximum query depth and maximum query complexity 
+    * ([documentation](https://www.howtographql.com/advanced/4-security/))
+    * ([issues that usage of max complexity is unknown](https://github.com/graphql-java-kickstart/graphql-spring-boot/issues/278)) 
   * Built in functionality of most GraphQL frameworks
 * Solution: Introduction of maximum resolver time
   * All resolvers after a certain time limit will automatically fail by throwing an exception (using GraphQL Instrumentation), leading to a plannable max response time of `TimeLimit + Timeout`

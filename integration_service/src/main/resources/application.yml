@@ -10,6 +10,9 @@ server:
 graphql:
   tools:
     schema-location-pattern: "schemas/**/*.graphqls"
+  servlet:
+    maxQueryDepth: 20
+    #maxQueryComplexity: 10
 
 graphiql:
   enabled: false

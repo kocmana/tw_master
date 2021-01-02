@@ -15,7 +15,7 @@ voyager:
   enabled: true
 
 services:
-  resolver-mode: DATALOADER #DATALOADER, ASYNC or SERIAL
+  resolver-mode: SERIAL #DATALOADER, ASYNC or SERIAL
   productservice:
     authentication-type: BASIC_AUTH
     url: localhost

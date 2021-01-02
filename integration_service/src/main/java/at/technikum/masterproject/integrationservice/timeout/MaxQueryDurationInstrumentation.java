@@ -4,22 +4,28 @@ import graphql.ExecutionResult;
 import graphql.execution.instrumentation.InstrumentationContext;
 import graphql.execution.instrumentation.InstrumentationState;
 import graphql.execution.instrumentation.SimpleInstrumentation;
-import graphql.execution.instrumentation.SimpleInstrumentationContext;
 import graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters;
 import graphql.execution.instrumentation.parameters.InstrumentationFieldFetchParameters;
-import java.util.concurrent.CompletableFuture;
+import graphql.execution.instrumentation.parameters.InstrumentationFieldParameters;
+import graphql.schema.DataFetcher;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StopWatch;
 
 
 @Slf4j
 public class MaxQueryDurationInstrumentation extends SimpleInstrumentation {
 
-  private final long maxDuration = 5000L;
+  private long maxDuration;
 
   public MaxQueryDurationInstrumentation() {
-    log.info("Loaded max duration instrumentation.");
+    log.info("Loaded max query duration instrumentation.");
+  }
+
+  @Value("${graphql.servlet.maxQueryDuration:10_000}")
+  public void setMaxDuration(long maxDuration) {
+    this.maxDuration = maxDuration;
   }
 
   @Override
@@ -28,25 +34,19 @@ public class MaxQueryDurationInstrumentation extends SimpleInstrumentation {
   }
 
   @Override
-  public InstrumentationContext<Object> beginFieldFetch(
-      InstrumentationFieldFetchParameters parameters) {
-    MaxQueryInstrumentationState state = parameters.getInstrumentationState();
-    StopWatch stopWatch = state.getStopWatch();
+  public DataFetcher<?> instrumentDataFetcher(DataFetcher<?> dataFetcher,
+                                              InstrumentationFieldFetchParameters parameters) {
 
+    StopWatch stopWatch = getStopWatchFromState(parameters);
     stopWatch.stop();
 
-    log.info("Begin Field Fetch: Current duration: {}, max Duration: {}, Task name",
-        stopWatch.getTotalTimeMillis(), maxDuration, stopWatch.getLastTaskName());
     if (stopWatch.getTotalTimeMillis() > maxDuration) {
       stopWatch.start();
-      log.warn("Duration too long");
-      //throw new QueryTimeoutException("Query took too long");
-      return new SimpleInstrumentationContext<>();
+      return new TimeoutDataFetcher<>();
     }
 
     stopWatch.start();
-
-    return super.beginFieldFetch(parameters);
+    return super.instrumentDataFetcher(dataFetcher, parameters);
   }
 
   @SneakyThrows
@@ -54,26 +54,18 @@ public class MaxQueryDurationInstrumentation extends SimpleInstrumentation {
   public InstrumentationContext<ExecutionResult> beginExecution(
       InstrumentationExecutionParameters parameters) {
     getStopWatchFromState(parameters).start("query");
-    log.warn("Starting stop watch", getStopWatchFromState(parameters));
-    Thread.sleep(1000);
-    getStopWatchFromState(parameters).stop();
-    long duration = getStopWatchFromState(parameters).getTotalTimeMillis();
-    log.warn("Duration after sleep: {}", duration);
-    getStopWatchFromState(parameters).start();
     return super.beginExecution(parameters);
   }
 
-  private StopWatch getStopWatchFromState(InstrumentationExecutionParameters parameters) {
+  private StopWatch getStopWatchFromState(InstrumentationFieldParameters parameters) {
     MaxQueryInstrumentationState state = parameters.getInstrumentationState();
     return state.getStopWatch();
   }
 
-  @Override
-  public CompletableFuture<ExecutionResult> instrumentExecutionResult(
-      ExecutionResult executionResult,
-      InstrumentationExecutionParameters parameters) {
-    //getStopWatchFromState(parameters).stop();
-    return super.instrumentExecutionResult(executionResult, parameters);
+
+  private StopWatch getStopWatchFromState(InstrumentationExecutionParameters parameters) {
+    MaxQueryInstrumentationState state = parameters.getInstrumentationState();
+    return state.getStopWatch();
   }
 
 }

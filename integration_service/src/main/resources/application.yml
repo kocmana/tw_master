@@ -11,6 +11,7 @@ graphql:
   tools:
     schema-location-pattern: "schemas/**/*.graphqls"
   servlet:
+    maxQueryDuration: 12345
     maxQueryDepth: 20
     #maxQueryComplexity: 10
 

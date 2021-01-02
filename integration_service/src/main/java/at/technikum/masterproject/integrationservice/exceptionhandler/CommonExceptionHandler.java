@@ -1,5 +1,6 @@
 package at.technikum.masterproject.integrationservice.exceptionhandler;
 
+import at.technikum.masterproject.integrationservice.timeout.QueryTimeoutException;
 import graphql.kickstart.spring.error.ThrowableGraphQLError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -36,6 +37,13 @@ public class CommonExceptionHandler {
   @ExceptionHandler(HttpServerErrorException.class)
   public ThrowableGraphQLError handleServerErrorException(HttpServerErrorException exception) {
     return handleExceptionAndReturnGraphQlError(exception, "The server could not handle the request.");
+  }
+
+
+  @ExceptionHandler(QueryTimeoutException.class)
+  public ThrowableGraphQLError handleQueryTimeoutException(QueryTimeoutException exception) {
+    log.info("Request exceeded maximum duration.");
+    return new ThrowableGraphQLError(exception,  "The request exceeded the maximum allowed timeframe.");
   }
 
   @ExceptionHandler(Exception.class)

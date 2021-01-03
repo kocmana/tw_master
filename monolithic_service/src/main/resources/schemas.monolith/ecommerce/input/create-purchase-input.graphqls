@@ -1,0 +1,6 @@
+
+input CreatePurchaseInput {
+    customerId: ID!
+    items: [CreatePurchaseItemInput]!
+    paymentType: PaymentType!
+}

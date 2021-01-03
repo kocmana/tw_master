@@ -1,0 +1,5 @@
+input CreatePurchaseItemInput {
+    purchaseId: ID!
+    productId: ID!
+    amount: Int!
+}

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-class PurchaseService {
+public class PurchaseService {
 
   private final PurchaseRepository purchaseRepository;
   private final PurchaseItemRepository purchaseItemRepository;
@@ -23,16 +23,16 @@ class PurchaseService {
     this.priceService = priceService;
   }
 
-  List<Purchase> getPurchasesForCustomer(int customerId) {
+  public List<Purchase> getPurchasesForCustomer(int customerId) {
     return purchaseRepository.findPurchasesByCustomerId(customerId);
   }
 
-  Purchase getPurchaseById(int purchaseId) {
+  public Purchase getPurchaseById(int purchaseId) {
     return purchaseRepository.findById(purchaseId)
         .orElseThrow(() -> generatePurchaseNotFoundException(purchaseId));
   }
 
-  int savePurchase(Purchase purchase) {
+  public int savePurchase(Purchase purchase) {
     Purchase updatedPurchaseInformation = updatePurchaseItemInformation(purchase);
     purchaseItemRepository.saveAll(updatedPurchaseInformation.getItems());
     Purchase savedPurchase = purchaseRepository.save(updatedPurchaseInformation);

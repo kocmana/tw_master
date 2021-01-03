@@ -1,0 +1,5 @@
+type CustomerInteraction {
+    sourceCustomerId: ID!
+    targetCustomerId: ID!
+    interactionType: InteractionType!
+}

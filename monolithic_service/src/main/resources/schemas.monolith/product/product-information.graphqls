@@ -1,0 +1,11 @@
+# Basic information for a product
+type Product {
+    id: ID!
+    name: String
+    description: String
+    weight: Float
+    dimension: ProductDimension
+    reviews: [ProductReview!]
+    price: Price
+    prices: [Price!]
+}

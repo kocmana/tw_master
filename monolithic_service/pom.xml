@@ -17,6 +17,10 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- GraphQL -->
+    <graphql-kickstart-spring-boot.version>7.1.0</graphql-kickstart-spring-boot.version>
+    <graphql-kickstart-tools.version>6.2.0</graphql-kickstart-tools.version>
   </properties>
 
   <dependencies>
@@ -42,6 +46,30 @@
       <groupId>at.technikum.masterproject</groupId>
       <artifactId>product_service</artifactId>
       <version>1.0-SNAPSHOT</version>
+    </dependency>
+
+    <!-- GraphQL -->
+    <dependency>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>graphql-spring-boot-starter</artifactId>
+      <version>${graphql-kickstart-spring-boot.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>graphiql-spring-boot-starter</artifactId>
+      <version>${graphql-kickstart-spring-boot.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>voyager-spring-boot-starter</artifactId>
+      <version>${graphql-kickstart-spring-boot.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.graphql-java-kickstart</groupId>
+      <artifactId>graphql-java-tools</artifactId>
+      <version>${graphql-kickstart-tools.version}</version>
     </dependency>
   </dependencies>
 </project>

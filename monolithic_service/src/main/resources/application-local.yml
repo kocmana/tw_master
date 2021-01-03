@@ -38,3 +38,13 @@ service:
     service-delay-mean: 1000
     service-delay-standard-deviation: 100
     log-delays: true
+
+graphiql:
+  enabled: true
+  props:
+    variables:
+      editorTheme: idea
+  pageTitle: "Integration Service"
+
+voyager:
+  enabled: true

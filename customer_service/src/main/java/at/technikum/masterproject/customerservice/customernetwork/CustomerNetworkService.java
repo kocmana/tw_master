@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-class CustomerNetworkService {
+public class CustomerNetworkService {
 
   private final CustomerNetworkRepository customerNetworkRepository;
   private final CustomerInformationService customerInformationService;
@@ -30,11 +30,11 @@ class CustomerNetworkService {
     this.customerInformationService = customerInformationService;
   }
 
-  CustomerInteraction saveCustomerRelationship(CustomerInteraction customerInteraction) {
+  public CustomerInteraction saveCustomerRelationship(CustomerInteraction customerInteraction) {
     return customerNetworkRepository.save(customerInteraction);
   }
 
-  List<CustomerNetwork> getCustomerNetworksForCustomer(Integer customerId) {
+  public List<CustomerNetwork> getCustomerNetworksForCustomer(Integer customerId) {
     List<CustomerInteraction> network = customerNetworkRepository
         .findByIdSourceCustomerId(customerId);
     List<Integer> targetCustomerIds = extractTargetCustomerIds(network);

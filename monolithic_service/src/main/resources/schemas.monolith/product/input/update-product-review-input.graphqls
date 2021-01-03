@@ -1,0 +1,7 @@
+input UpdateProductReviewInput{
+    id: ID!
+    productId: ID!
+    customerId: ID!
+    stars: Int!
+    review: String
+}

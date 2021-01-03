@@ -3,7 +3,6 @@ spring:
     data: classpath*:sql/testdata-*.sql
     schema: classpath*:sql/schema.sql
 
-
 graphiql:
   enabled: true
   props:

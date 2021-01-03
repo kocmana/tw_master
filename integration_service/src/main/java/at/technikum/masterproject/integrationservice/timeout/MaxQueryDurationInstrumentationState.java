@@ -7,7 +7,7 @@ import org.springframework.util.StopWatch;
 
 @Getter
 @NoArgsConstructor
-public class MaxQueryInstrumentationState implements InstrumentationState {
+public class MaxQueryDurationInstrumentationState implements InstrumentationState {
 
   private final StopWatch stopWatch = new StopWatch();
 }

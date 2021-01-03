@@ -1,0 +1,6 @@
+input CreateProductInput {
+    name: String!
+    description: String!
+    weight: Float
+    dimension: ProductDimensionInput
+}

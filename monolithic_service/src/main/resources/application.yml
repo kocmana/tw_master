@@ -12,3 +12,17 @@ spring:
       ddl-auto: none
   resources:
     add-mappings: true
+
+graphql:
+  tools:
+    schema-location-pattern: "schemas.monolith/**/*.graphqls"
+  servlet:
+    maxQueryDuration: 12345
+    maxQueryDepth: 20
+    #maxQueryComplexity: 10
+
+graphiql:
+  enabled: false
+
+voyager:
+  enabled: false

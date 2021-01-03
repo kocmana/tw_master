@@ -16,7 +16,7 @@ public class CustomerInformationService {
     this.customerInformationRepository = customerInformationRepository;
   }
 
-  List<Customer> retrieveAllCustomers() {
+  public List<Customer> retrieveAllCustomers() {
     return customerInformationRepository.findAll();
   }
 
@@ -29,18 +29,18 @@ public class CustomerInformationService {
         .orElseThrow(() -> generateCustomerNotFoundException(customerId));
   }
 
-  Customer saveCustomer(Customer customer) {
+  public Customer saveCustomer(Customer customer) {
     return customerInformationRepository.save(customer);
   }
 
-  void updateCustomer(Customer customer) {
+  public void updateCustomer(Customer customer) {
     if (customerDoesNotExist(customer.getCustomerId())) {
       throw generateCustomerNotFoundException(customer.getCustomerId());
     }
     saveCustomer(customer);
   }
 
-  void deleteCustomer(int customerId) {
+  public void deleteCustomer(int customerId) {
     if (customerDoesNotExist(customerId)) {
       throw generateCustomerNotFoundException(customerId);
     }

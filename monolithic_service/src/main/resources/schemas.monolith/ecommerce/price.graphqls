@@ -1,0 +1,9 @@
+# Price information for products
+
+type Price {
+    productId: Int
+    value: Float
+    currency: String
+    validFrom: String
+    validTo: String
+}

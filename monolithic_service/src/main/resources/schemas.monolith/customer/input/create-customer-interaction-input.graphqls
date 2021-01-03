@@ -1,0 +1,5 @@
+input CreateCustomerInteraction {
+    sourceCustomerId: ID!
+    targetCustomerId: ID!
+    interactionType: InteractionType!
+}

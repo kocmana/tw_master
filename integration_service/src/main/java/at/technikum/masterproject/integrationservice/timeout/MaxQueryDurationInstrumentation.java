@@ -30,7 +30,7 @@ public class MaxQueryDurationInstrumentation extends SimpleInstrumentation {
 
   @Override
   public InstrumentationState createState() {
-    return new MaxQueryInstrumentationState();
+    return new MaxQueryDurationInstrumentationState();
   }
 
   @Override
@@ -58,13 +58,13 @@ public class MaxQueryDurationInstrumentation extends SimpleInstrumentation {
   }
 
   private StopWatch getStopWatchFromState(InstrumentationFieldParameters parameters) {
-    MaxQueryInstrumentationState state = parameters.getInstrumentationState();
+    MaxQueryDurationInstrumentationState state = parameters.getInstrumentationState();
     return state.getStopWatch();
   }
 
 
   private StopWatch getStopWatchFromState(InstrumentationExecutionParameters parameters) {
-    MaxQueryInstrumentationState state = parameters.getInstrumentationState();
+    MaxQueryDurationInstrumentationState state = parameters.getInstrumentationState();
     return state.getStopWatch();
   }
 

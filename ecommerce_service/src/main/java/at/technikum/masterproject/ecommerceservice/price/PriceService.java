@@ -26,7 +26,7 @@ public class PriceService {
     return new PriceNotFoundException(productId);
   }
 
-  List<Price> getPricesForProductAndTimeframe(Integer productId, LocalDateTime from, LocalDateTime to) {
+  public List<Price> getPricesForProductAndTimeframe(Integer productId, LocalDateTime from, LocalDateTime to) {
     checkIfDateArgumentsAreValid(from, to);
     return priceRepository.getPricesByProductIdValidInTimeframe(productId, from, to);
   }
@@ -37,7 +37,7 @@ public class PriceService {
     }
   }
 
-  Price savePriceForProduct(Price price) {
+  public Price savePriceForProduct(Price price) {
     checkIfDateArgumentsAreValid(price.getValidFrom(), price.getValidTo());
     checkIfParallelPricingExists(price);
 
@@ -54,7 +54,7 @@ public class PriceService {
     }
   }
 
-  List<Price> getAllPricesForProduct(Integer productId) {
+  public List<Price> getAllPricesForProduct(Integer productId) {
     return priceRepository.findAllByProductIdOrderByValidFrom(productId);
   }
 }

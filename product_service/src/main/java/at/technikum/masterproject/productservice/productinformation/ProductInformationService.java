@@ -18,11 +18,11 @@ public class ProductInformationService {
     this.productInformationRepository = productInformationRepository;
   }
 
-  List<Product> retrieveAllProducts() {
+  public List<Product> retrieveAllProducts() {
     return productInformationRepository.findAll();
   }
 
-  List<Product> retrieveAllProductsWithPagination(Pageable pageable) {
+  public List<Product> retrieveAllProductsWithPagination(Pageable pageable) {
     return productInformationRepository.findAll(pageable).toList();
   }
 
@@ -31,19 +31,19 @@ public class ProductInformationService {
         .orElseThrow(() -> generateNotFoundException(productId));
   }
 
-  Integer saveNewProduct(Product product) {
+  public Integer saveNewProduct(Product product) {
     Product savedProduct = productInformationRepository.save(product);
     return savedProduct.getId();
   }
 
-  void updateProduct(Product product) {
+  public void updateProduct(Product product) {
     if (productDoesNotExist(product.getId())) {
       throw generateNotFoundException(product.getId());
     }
     productInformationRepository.save(product);
   }
 
-  void deleteProductById(Integer id) {
+  public void deleteProductById(Integer id) {
     if (productDoesNotExist(id)) {
       throw generateNotFoundException(id);
     }

@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-class ProductReviewService {
+public class ProductReviewService {
 
   private final ProductReviewRepository productReviewRepository;
 
@@ -17,35 +17,35 @@ class ProductReviewService {
     this.productReviewRepository = productReviewRepository;
   }
 
-  List<ProductReview> getAllReviews(Pageable pageable) {
+  public List<ProductReview> getAllReviews(Pageable pageable) {
     return productReviewRepository.findAll(pageable).getContent();
   }
 
-  ProductReview getReviewById(int reviewId) {
+  public ProductReview getReviewById(int reviewId) {
     return productReviewRepository.findById(reviewId)
         .orElseThrow(() -> generateReviewNotFoundException(reviewId));
   }
 
-  List<ProductReview> getReviewsForProduct(int productId) {
+  public List<ProductReview> getReviewsForProduct(int productId) {
     return productReviewRepository.findByProductId(productId);
   }
 
-  List<ProductReview> getReviewsForCustomer(int customerId) {
+  public List<ProductReview> getReviewsForCustomer(int customerId) {
     return productReviewRepository.findByCustomerId(customerId);
   }
 
-  int saveReview(ProductReview productReview) {
+  public int saveReview(ProductReview productReview) {
     ProductReview savedReview = productReviewRepository.save(productReview);
     return savedReview.getId();
   }
 
-  void updateReview(ProductReview productReview) {
+  public void updateReview(ProductReview productReview) {
     ProductReview oldProductReview = getReviewById(productReview.getId());
     productReview.setProduct(oldProductReview.getProduct());
     productReviewRepository.save(productReview);
   }
 
-  void deleteReviewById(Integer id) {
+  public void deleteReviewById(Integer id) {
     if (!productReviewRepository.existsById(id)) {
       throw generateReviewNotFoundException(id);
     }

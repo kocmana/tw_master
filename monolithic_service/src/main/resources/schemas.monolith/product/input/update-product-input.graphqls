@@ -1,0 +1,7 @@
+input UpdateProductInput {
+    id: ID!
+    name: String!
+    description: String!
+    weight: Float
+    dimension: ProductDimensionInput
+}

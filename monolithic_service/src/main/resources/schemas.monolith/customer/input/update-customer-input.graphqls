@@ -1,0 +1,13 @@
+input UpdateCustomerInput {
+    id: ID!
+    gender: Gender
+    firstName: String!
+    lastName: String!
+    street: String
+    houseNumber: String
+    top: String
+    postalCode: String
+    country: String!
+    telephoneNumber: String
+    emailAddress: String!
+}

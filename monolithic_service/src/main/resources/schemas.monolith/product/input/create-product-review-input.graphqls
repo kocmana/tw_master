@@ -1,0 +1,6 @@
+input CreateProductReviewInput{
+    productId: ID!
+    customerId: ID!
+    stars: Int!
+    review: String
+}

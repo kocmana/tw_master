@@ -1,0 +1,9 @@
+# The customer network represents a collection of all stored interactions with the customer as source
+type CustomerNetwork {
+    interactionType: InteractionType!
+    targetCustomer: [Customer!]
+}
+
+enum InteractionType{
+    RECRUITED, GAVE_PRESENT, ALSO_OWNS
+}

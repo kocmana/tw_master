@@ -27,7 +27,7 @@ Results should focus on these three core aspects:
 ## Stack
 ### Main Technologies Used
 * Java 11 as latest LTS Version
-* Spring Boot 2.3.3
+* Spring Boot 2.4.0
 * Graph QL ([via GraphQL Java Kickstart Spring Boot](https://www.graphql-java-kickstart.com/spring-boot/))
 * Maven 
 

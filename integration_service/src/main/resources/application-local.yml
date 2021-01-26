@@ -3,7 +3,6 @@ spring:
     data: classpath*:sql/testdata-*.sql
     schema: classpath*:sql/schema.sql
 
-
 graphiql:
   enabled: true
   props:
@@ -15,7 +14,7 @@ voyager:
   enabled: true
 
 services:
-  resolver-mode: SERIAL #DATALOADER, ASYNC or SERIAL
+  resolver-mode: DATALOADER #DATALOADER, ASYNC or SERIAL
   productservice:
     authentication-type: BASIC_AUTH
     url: localhost

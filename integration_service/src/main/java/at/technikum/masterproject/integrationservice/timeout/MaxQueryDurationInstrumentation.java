@@ -6,12 +6,10 @@ import graphql.execution.instrumentation.InstrumentationState;
 import graphql.execution.instrumentation.SimpleInstrumentation;
 import graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters;
 import graphql.execution.instrumentation.parameters.InstrumentationFieldFetchParameters;
-import graphql.execution.instrumentation.parameters.InstrumentationFieldParameters;
 import graphql.schema.DataFetcher;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.StopWatch;
 
 
 @Slf4j
@@ -37,15 +35,13 @@ public class MaxQueryDurationInstrumentation extends SimpleInstrumentation {
   public DataFetcher<?> instrumentDataFetcher(DataFetcher<?> dataFetcher,
                                               InstrumentationFieldFetchParameters parameters) {
 
-    StopWatch stopWatch = getStopWatchFromState(parameters);
-    stopWatch.stop();
+    MaxQueryInstrumentationState state = parameters.getInstrumentationState();
 
-    if (stopWatch.getTotalTimeMillis() > maxDuration) {
-      stopWatch.start();
+    if (state.getTime() > maxDuration) {
+      state.startStopWatch();
       return new TimeoutDataFetcher<>();
     }
-
-    stopWatch.start();
+    state.startStopWatch();
     return super.instrumentDataFetcher(dataFetcher, parameters);
   }
 
@@ -53,19 +49,9 @@ public class MaxQueryDurationInstrumentation extends SimpleInstrumentation {
   @Override
   public InstrumentationContext<ExecutionResult> beginExecution(
       InstrumentationExecutionParameters parameters) {
-    getStopWatchFromState(parameters).start("query");
+    MaxQueryInstrumentationState state = parameters.getInstrumentationState();
+    state.startStopWatch();
     return super.beginExecution(parameters);
-  }
-
-  private StopWatch getStopWatchFromState(InstrumentationFieldParameters parameters) {
-    MaxQueryInstrumentationState state = parameters.getInstrumentationState();
-    return state.getStopWatch();
-  }
-
-
-  private StopWatch getStopWatchFromState(InstrumentationExecutionParameters parameters) {
-    MaxQueryInstrumentationState state = parameters.getInstrumentationState();
-    return state.getStopWatch();
   }
 
 }

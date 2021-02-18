@@ -1,18 +1,23 @@
 package at.technikum.masterproject.customerservice.customerinformation.model.mapper;
 
-import at.technikum.masterproject.customerservice.customerinformation.model.Customer;
+import at.technikum.masterproject.customerservice.customerinformation.model.domain.Customer;
 import at.technikum.masterproject.customerservice.customerinformation.model.dto.CustomerRegistrationRequest;
 import at.technikum.masterproject.customerservice.customerinformation.model.dto.CustomerResponse;
 import at.technikum.masterproject.customerservice.customerinformation.model.dto.CustomerUpdateRequest;
+import at.technikum.masterproject.customerservice.customerinformation.model.entity.CustomerEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface CustomerMapper {
 
-  CustomerResponse customerToCustomerResponse(Customer customer);
+  CustomerResponse toCustomerResponse(Customer customer);
 
-  Customer customerRegistrationRequestToCustomer(CustomerRegistrationRequest customerRegistrationRequest);
+  Customer toCustomer(CustomerRegistrationRequest customerRegistrationRequest);
 
-  Customer customerUpdateRequestToCustomer(CustomerUpdateRequest customerUpdateRequest);
+  Customer toCustomer(CustomerUpdateRequest customerUpdateRequest);
+
+  CustomerEntity toCustomerEntity(Customer customer);
+
+  Customer toCustomer(CustomerEntity customerEntity);
 
 }

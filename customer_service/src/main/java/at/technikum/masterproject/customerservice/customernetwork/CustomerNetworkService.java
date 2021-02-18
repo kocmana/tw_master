@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.toConcurrentMap;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 import at.technikum.masterproject.customerservice.customerinformation.CustomerInformationService;
-import at.technikum.masterproject.customerservice.customerinformation.model.Customer;
+import at.technikum.masterproject.customerservice.customerinformation.model.domain.Customer;
 import at.technikum.masterproject.customerservice.customernetwork.model.CustomerInteraction;
 import at.technikum.masterproject.customerservice.customernetwork.model.CustomerInteraction.CustomerRelationshipId;
 import at.technikum.masterproject.customerservice.customernetwork.model.CustomerNetwork;

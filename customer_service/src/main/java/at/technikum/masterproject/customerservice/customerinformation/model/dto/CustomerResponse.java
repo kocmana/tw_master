@@ -1,31 +1,29 @@
 package at.technikum.masterproject.customerservice.customerinformation.model.dto;
 
-import at.technikum.masterproject.customerservice.customerinformation.model.Gender;
+import at.technikum.masterproject.customerservice.customerinformation.model.domain.Gender;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Value;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Value
+@Builder
 public class CustomerResponse {
 
-  private Integer customerId;
-  private Gender gender;
+  Integer customerId;
+  Gender gender;
   @NotBlank
-  private String firstName;
+  String firstName;
   @NotBlank
-  private String lastName;
-  private String street;
-  private String houseNumber;
-  private String top;
-  private String postalCode;
+  String lastName;
+  String street;
+  String houseNumber;
+  String top;
+  String postalCode;
   @NotBlank
-  private String country;
-  private String telephoneNumber;
+  String country;
+  String telephoneNumber;
   @NotBlank
   @Email
-  private String emailAddress;
+  String emailAddress;
 }

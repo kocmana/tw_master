@@ -1,28 +1,23 @@
-package at.technikum.masterproject.customerservice.customerinformation.model;
+package at.technikum.masterproject.customerservice.customerinformation.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
 @Entity
 @Table(name = "customer")
-@Getter
-@NoArgsConstructor
-public class Customer {
+@Data
+public class CustomerEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "customer_id")
   private Integer customerId;
-  @Enumerated(EnumType.STRING)
-  private Gender gender;
+  private String gender;
   @Column(name = "first_name")
   private String firstName;
   @Column(name = "last_name")

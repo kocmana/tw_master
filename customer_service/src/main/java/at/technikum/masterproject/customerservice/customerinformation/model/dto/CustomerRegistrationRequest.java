@@ -1,11 +1,13 @@
 package at.technikum.masterproject.customerservice.customerinformation.model.dto;
 
-import at.technikum.masterproject.customerservice.customerinformation.model.Gender;
+import at.technikum.masterproject.customerservice.customerinformation.model.domain.Gender;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import lombok.Builder;
 import lombok.Value;
 
 @Value
+@Builder
 public class CustomerRegistrationRequest {
 
   Gender gender;

@@ -1,13 +1,12 @@
-package at.technikum.masterproject.customerservice.customernetwork.model;
+package at.technikum.masterproject.customerservice.customernetwork.model.domain;
 
 import at.technikum.masterproject.customerservice.customerinformation.model.domain.Customer;
 import java.util.List;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
-
 @Data
-@AllArgsConstructor
+@Builder
 public class CustomerNetwork {
 
   private InteractionType interactionType;

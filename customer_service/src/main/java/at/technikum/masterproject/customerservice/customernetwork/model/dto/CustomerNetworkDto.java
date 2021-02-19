@@ -1,18 +1,15 @@
 package at.technikum.masterproject.customerservice.customernetwork.model.dto;
 
+import at.technikum.masterproject.customerservice.customerinformation.model.domain.Customer;
 import at.technikum.masterproject.customerservice.customernetwork.model.domain.InteractionType;
-import javax.validation.constraints.NotNull;
+import java.util.List;
 import lombok.Builder;
 import lombok.Value;
 
 @Value
 @Builder
-public class CustomerInteractionDto {
+public class CustomerNetworkDto {
 
-  @NotNull
-  Integer sourceCustomerId;
-  @NotNull
   InteractionType interactionType;
-  @NotNull
-  Integer targetCustomerId;
+  List<Customer> targetCustomer;
 }

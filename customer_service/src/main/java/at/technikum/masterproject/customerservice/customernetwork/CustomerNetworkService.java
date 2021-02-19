@@ -6,13 +6,15 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 
 import at.technikum.masterproject.customerservice.customerinformation.CustomerInformationService;
 import at.technikum.masterproject.customerservice.customerinformation.model.domain.Customer;
-import at.technikum.masterproject.customerservice.customernetwork.model.CustomerInteraction;
-import at.technikum.masterproject.customerservice.customernetwork.model.CustomerInteraction.CustomerRelationshipId;
-import at.technikum.masterproject.customerservice.customernetwork.model.CustomerNetwork;
-import at.technikum.masterproject.customerservice.customernetwork.model.InteractionType;
+import at.technikum.masterproject.customerservice.customernetwork.model.domain.CustomerInteraction;
+import at.technikum.masterproject.customerservice.customernetwork.model.domain.CustomerNetwork;
+import at.technikum.masterproject.customerservice.customernetwork.model.domain.InteractionType;
+import at.technikum.masterproject.customerservice.customernetwork.model.entity.CustomerInteractionEntity;
+import at.technikum.masterproject.customerservice.customernetwork.model.mapper.CustomerRelationshipMapper;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,34 +23,42 @@ class CustomerNetworkService {
 
   private final CustomerNetworkRepository customerNetworkRepository;
   private final CustomerInformationService customerInformationService;
+  private final CustomerRelationshipMapper customerRelationshipMapper;
 
   @Autowired
   public CustomerNetworkService(
       CustomerNetworkRepository customerNetworkRepository,
-      CustomerInformationService customerInformationService) {
+      CustomerInformationService customerInformationService,
+      CustomerRelationshipMapper customerRelationshipMapper) {
     this.customerNetworkRepository = customerNetworkRepository;
     this.customerInformationService = customerInformationService;
+    this.customerRelationshipMapper = customerRelationshipMapper;
   }
 
   CustomerInteraction saveCustomerRelationship(CustomerInteraction customerInteraction) {
-    return customerNetworkRepository.save(customerInteraction);
+    CustomerInteractionEntity customerInteractionEntity = customerRelationshipMapper
+        .toCustomerInteractionEntity(customerInteraction);
+    customerInteractionEntity = customerNetworkRepository.save(customerInteractionEntity);
+    return customerRelationshipMapper.toCustomerInteraction(customerInteractionEntity);
   }
 
   List<CustomerNetwork> getCustomerNetworksForCustomer(Integer customerId) {
     List<CustomerInteraction> network = customerNetworkRepository
-        .findByIdSourceCustomerId(customerId);
+        .findByIdSourceCustomerId(customerId).stream()
+        .map(customerRelationshipMapper::toCustomerInteraction)
+        .collect(Collectors.toList());
+
     List<Integer> targetCustomerIds = extractTargetCustomerIds(network);
-    Map<Integer, Customer> targetCustomers = retrieveCustomerInformationForTargetCustomers(targetCustomerIds);
-    Map<InteractionType, List<CustomerRelationshipId>> customersPerRelationshipType =
+    Map<Integer, Customer> targetCustomersByCustomerId = retrieveCustomerInformationForTargetCustomers(targetCustomerIds);
+    Map<InteractionType, List<CustomerInteraction>> customersByInteractionType =
         groupCustomersPerRelationshipType(network);
 
-    return transformToCustomerNetworks(customersPerRelationshipType, targetCustomers);
+    return transformToCustomerNetworks(customersByInteractionType, targetCustomersByCustomerId);
   }
 
   private List<Integer> extractTargetCustomerIds(List<CustomerInteraction> network) {
     return network.stream()
-        .map(CustomerInteraction::getId)
-        .map(CustomerRelationshipId::getTargetCustomerId)
+        .map(CustomerInteraction::getTargetCustomerId)
         .collect(toUnmodifiableList());
   }
 
@@ -57,21 +67,24 @@ class CustomerNetworkService {
         .collect(toConcurrentMap(Customer::getCustomerId, Function.identity()));
   }
 
-  private Map<InteractionType, List<CustomerRelationshipId>> groupCustomersPerRelationshipType(
+  private Map<InteractionType, List<CustomerInteraction>> groupCustomersPerRelationshipType(
       List<CustomerInteraction> network) {
-    return network
-        .stream().map(CustomerInteraction::getId)
-        .collect(groupingBy(CustomerRelationshipId::getInteractionType));
+    return network.stream()
+        .collect(groupingBy(CustomerInteraction::getInteractionType));
   }
 
   private List<CustomerNetwork> transformToCustomerNetworks(
-      Map<InteractionType, List<CustomerRelationshipId>> customersPerRelationshipType,
+      Map<InteractionType, List<CustomerInteraction>> customersPerRelationshipType,
       Map<Integer, Customer> targetCustomers) {
     return customersPerRelationshipType.entrySet().stream()
-        .map(entry -> new CustomerNetwork(entry.getKey(), entry.getValue().stream()
-            .map(CustomerRelationshipId::getTargetCustomerId)
-            .map(targetCustomers::get)
-            .collect(toUnmodifiableList())))
+        .map(entry -> CustomerNetwork.builder()
+            .interactionType(entry.getKey())
+            .targetCustomer(entry.getValue().stream()
+                .map(CustomerInteraction::getTargetCustomerId)
+                .map(targetCustomers::get)
+                .collect(toUnmodifiableList()))
+            .build())
         .collect(toUnmodifiableList());
   }
+
 }

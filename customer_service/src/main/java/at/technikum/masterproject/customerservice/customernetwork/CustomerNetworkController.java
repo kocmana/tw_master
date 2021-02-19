@@ -1,10 +1,12 @@
 package at.technikum.masterproject.customerservice.customernetwork;
 
-import at.technikum.masterproject.customerservice.customernetwork.model.CustomerInteraction;
-import at.technikum.masterproject.customerservice.customernetwork.model.CustomerNetwork;
+import at.technikum.masterproject.customerservice.customernetwork.model.domain.CustomerInteraction;
+import at.technikum.masterproject.customerservice.customernetwork.model.domain.CustomerNetwork;
 import at.technikum.masterproject.customerservice.customernetwork.model.dto.CustomerInteractionDto;
+import at.technikum.masterproject.customerservice.customernetwork.model.dto.CustomerNetworkDto;
 import at.technikum.masterproject.customerservice.customernetwork.model.mapper.CustomerRelationshipMapper;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,19 +33,22 @@ public class CustomerNetworkController {
   }
 
   @GetMapping("/{customerId}")
-  public ResponseEntity<List<CustomerNetwork>> getCustomerNetworkForCustomer(@PathVariable int customerId) {
+  public ResponseEntity<List<CustomerNetworkDto>> getCustomerNetworkForCustomer(@PathVariable int customerId) {
     List<CustomerNetwork> customerNetworks = customerNetworkService.getCustomerNetworksForCustomer(customerId);
-    return ResponseEntity.ok(customerNetworks);
+    List<CustomerNetworkDto> customerNetworkDtos = customerNetworks.stream()
+        .map(customerRelationshipMapper::toCustomerNetworkDto)
+        .collect(Collectors.toUnmodifiableList());
+    return ResponseEntity.ok(customerNetworkDtos);
   }
 
   @PostMapping
   public ResponseEntity<CustomerInteractionDto> postNewCustomerRelationship(
       @RequestBody @Valid CustomerInteractionDto relationshipDto) {
     CustomerInteraction relationship = customerRelationshipMapper
-        .customerInteractionDtoToCustomerInteraction(relationshipDto);
+        .toCustomerInteraction(relationshipDto);
     relationship = customerNetworkService.saveCustomerRelationship(relationship);
     relationshipDto = customerRelationshipMapper
-        .customerInteractionToCustomerInteractionDto(relationship);
+        .toCustomerInteractionDto(relationship);
     return ResponseEntity.ok(relationshipDto);
   }
 

@@ -16,10 +16,10 @@ CREATE TABLE IF NOT EXISTS customer
 
 CREATE TABLE IF NOT EXISTS customer_interaction
 (
-    source_customer   INTEGER     NOT NULL,
-    relationship_type VARCHAR(20) NOT NULL,
-    target_customer   INTEGER     NOT NULL,
-    PRIMARY KEY (source_customer, relationship_type, target_customer),
-    FOREIGN KEY (source_customer) REFERENCES customer ON DELETE CASCADE,
-    FOREIGN KEY (target_customer) REFERENCES customer ON DELETE CASCADE
+    source_customer_id   INTEGER     NOT NULL,
+    interaction_type VARCHAR(20) NOT NULL,
+    target_customer_id   INTEGER     NOT NULL,
+    PRIMARY KEY (source_customer_id, interaction_type, target_customer_id),
+    FOREIGN KEY (source_customer_id) REFERENCES customer ON DELETE CASCADE,
+    FOREIGN KEY (target_customer_id) REFERENCES customer ON DELETE CASCADE
 );

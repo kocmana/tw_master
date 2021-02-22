@@ -9,12 +9,9 @@ import at.technikum.masterproject.customerservice.customerinformation.model.doma
 import at.technikum.masterproject.customerservice.customernetwork.model.domain.CustomerInteraction;
 import at.technikum.masterproject.customerservice.customernetwork.model.domain.CustomerNetwork;
 import at.technikum.masterproject.customerservice.customernetwork.model.domain.InteractionType;
-import at.technikum.masterproject.customerservice.customernetwork.model.entity.CustomerInteractionEntity;
-import at.technikum.masterproject.customerservice.customernetwork.model.mapper.CustomerRelationshipMapper;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,33 +20,26 @@ class CustomerNetworkService {
 
   private final CustomerNetworkRepository customerNetworkRepository;
   private final CustomerInformationService customerInformationService;
-  private final CustomerRelationshipMapper customerRelationshipMapper;
 
   @Autowired
   public CustomerNetworkService(
       CustomerNetworkRepository customerNetworkRepository,
-      CustomerInformationService customerInformationService,
-      CustomerRelationshipMapper customerRelationshipMapper) {
+      CustomerInformationService customerInformationService) {
     this.customerNetworkRepository = customerNetworkRepository;
     this.customerInformationService = customerInformationService;
-    this.customerRelationshipMapper = customerRelationshipMapper;
   }
 
   CustomerInteraction saveCustomerRelationship(CustomerInteraction customerInteraction) {
-    CustomerInteractionEntity customerInteractionEntity = customerRelationshipMapper
-        .toCustomerInteractionEntity(customerInteraction);
-    customerInteractionEntity = customerNetworkRepository.save(customerInteractionEntity);
-    return customerRelationshipMapper.toCustomerInteraction(customerInteractionEntity);
+    return customerNetworkRepository.save(customerInteraction);
   }
 
   List<CustomerNetwork> getCustomerNetworksForCustomer(Integer customerId) {
     List<CustomerInteraction> network = customerNetworkRepository
-        .findByIdSourceCustomerId(customerId).stream()
-        .map(customerRelationshipMapper::toCustomerInteraction)
-        .collect(Collectors.toList());
+        .findBySourceCustomerId(customerId);
 
     List<Integer> targetCustomerIds = extractTargetCustomerIds(network);
-    Map<Integer, Customer> targetCustomersByCustomerId = retrieveCustomerInformationForTargetCustomers(targetCustomerIds);
+    Map<Integer, Customer> targetCustomersByCustomerId = retrieveCustomerInformationForTargetCustomers(
+        targetCustomerIds);
     Map<InteractionType, List<CustomerInteraction>> customersByInteractionType =
         groupCustomersPerRelationshipType(network);
 

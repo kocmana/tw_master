@@ -1,9 +1,9 @@
 package at.technikum.masterproject.ecommerceservice.purchase;
 
 import at.technikum.masterproject.ecommerceservice.price.PriceService;
-import at.technikum.masterproject.ecommerceservice.price.model.Price;
-import at.technikum.masterproject.ecommerceservice.purchase.model.Purchase;
+import at.technikum.masterproject.ecommerceservice.price.model.domain.Price;
 import at.technikum.masterproject.ecommerceservice.purchase.model.PurchaseNotFoundException;
+import at.technikum.masterproject.ecommerceservice.purchase.model.domain.Purchase;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package at.technikum.masterproject.ecommerceservice.price;
 
-import at.technikum.masterproject.ecommerceservice.price.model.Price;
-import at.technikum.masterproject.ecommerceservice.price.model.PriceId;
+import at.technikum.masterproject.ecommerceservice.price.model.domain.Price;
+import at.technikum.masterproject.ecommerceservice.price.model.domain.PriceId;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

@@ -2,7 +2,7 @@ package at.technikum.masterproject.ecommerceservice.price;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
-import at.technikum.masterproject.ecommerceservice.price.model.Price;
+import at.technikum.masterproject.ecommerceservice.price.model.domain.Price;
 import at.technikum.masterproject.ecommerceservice.price.model.dto.PriceDto;
 import at.technikum.masterproject.ecommerceservice.price.model.mapper.PriceMapper;
 import java.time.LocalDateTime;

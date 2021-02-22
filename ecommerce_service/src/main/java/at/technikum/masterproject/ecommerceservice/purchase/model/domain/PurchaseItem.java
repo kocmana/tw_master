@@ -1,4 +1,4 @@
-package at.technikum.masterproject.ecommerceservice.purchase.model;
+package at.technikum.masterproject.ecommerceservice.purchase.model.domain;
 
 import java.io.Serializable;
 import javax.persistence.CascadeType;

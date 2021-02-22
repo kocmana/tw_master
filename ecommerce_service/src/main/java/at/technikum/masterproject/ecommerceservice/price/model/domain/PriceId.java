@@ -1,4 +1,4 @@
-package at.technikum.masterproject.ecommerceservice.price.model;
+package at.technikum.masterproject.ecommerceservice.price.model.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

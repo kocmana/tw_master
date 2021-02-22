@@ -4,20 +4,17 @@ import at.technikum.masterproject.customerservice.customerinformation.model.doma
 import at.technikum.masterproject.customerservice.customerinformation.model.dto.CustomerRegistrationRequest;
 import at.technikum.masterproject.customerservice.customerinformation.model.dto.CustomerResponse;
 import at.technikum.masterproject.customerservice.customerinformation.model.dto.CustomerUpdateRequest;
-import at.technikum.masterproject.customerservice.customerinformation.model.entity.CustomerEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CustomerMapper {
 
   CustomerResponse toCustomerResponse(Customer customer);
 
+  @Mapping(target = "customerId", ignore = true)
   Customer toCustomer(CustomerRegistrationRequest customerRegistrationRequest);
 
   Customer toCustomer(CustomerUpdateRequest customerUpdateRequest);
-
-  CustomerEntity toCustomerEntity(Customer customer);
-
-  Customer toCustomer(CustomerEntity customerEntity);
 
 }

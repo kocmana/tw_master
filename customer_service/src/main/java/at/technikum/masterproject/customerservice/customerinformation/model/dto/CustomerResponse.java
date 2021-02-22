@@ -1,6 +1,5 @@
 package at.technikum.masterproject.customerservice.customerinformation.model.dto;
 
-import at.technikum.masterproject.customerservice.customerinformation.model.domain.Gender;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import lombok.Builder;
@@ -11,7 +10,7 @@ import lombok.Value;
 public class CustomerResponse {
 
   Integer customerId;
-  Gender gender;
+  GenderDto gender;
   @NotBlank
   String firstName;
   @NotBlank

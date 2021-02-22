@@ -30,8 +30,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     httpSecurity
         .antMatcher("/**")
-        .csrf()
-        .disable()
+        .csrf().disable()
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and().addFilter(filter)

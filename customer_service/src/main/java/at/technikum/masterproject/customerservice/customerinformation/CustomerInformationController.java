@@ -28,8 +28,7 @@ class CustomerInformationController {
   private final CustomerMapper customerMapper;
 
   @Autowired
-  CustomerInformationController(CustomerInformationService customerInformationService,
-                                CustomerMapper customerMapper) {
+  CustomerInformationController(CustomerInformationService customerInformationService, CustomerMapper customerMapper) {
     this.customerInformationService = customerInformationService;
     this.customerMapper = customerMapper;
   }

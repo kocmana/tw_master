@@ -1,6 +1,6 @@
 package at.technikum.masterproject.ecommerceservice.purchase.model.dto;
 
-import at.technikum.masterproject.ecommerceservice.purchase.model.PaymentType;
+import at.technikum.masterproject.ecommerceservice.purchase.model.domain.PaymentType;
 import java.util.List;
 import lombok.Value;
 

@@ -1,7 +1,7 @@
 package at.technikum.masterproject.ecommerceservice.purchase.model.mapper;
 
-import at.technikum.masterproject.ecommerceservice.purchase.model.Purchase;
-import at.technikum.masterproject.ecommerceservice.purchase.model.PurchaseItem;
+import at.technikum.masterproject.ecommerceservice.purchase.model.domain.Purchase;
+import at.technikum.masterproject.ecommerceservice.purchase.model.domain.PurchaseItem;
 import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseCreationRequest;
 import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseItemCreationRequest;
 import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseItemResponse;

@@ -2,7 +2,7 @@ package at.technikum.masterproject.ecommerceservice.purchase;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
-import at.technikum.masterproject.ecommerceservice.purchase.model.Purchase;
+import at.technikum.masterproject.ecommerceservice.purchase.model.domain.Purchase;
 import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseCreationRequest;
 import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseResponse;
 import at.technikum.masterproject.ecommerceservice.purchase.model.mapper.PurchaseMapper;

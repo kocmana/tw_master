@@ -21,10 +21,10 @@ public class ValidationErrorResponse extends ErrorResponse {
 
   private ValidationErrorResponse(MethodArgumentNotValidException exception) {
     super(VALIDATION_ERROR_MESSAGE);
-    this.validationErrorDetails = extractFieldErrors(exception.getAllErrors());
+    this.validationErrorDetails = parseFieldErrors(exception.getAllErrors());
   }
 
-  private List<String> extractFieldErrors(List<ObjectError> objectErrorList) {
+  private List<String> parseFieldErrors(List<ObjectError> objectErrorList) {
     return objectErrorList.stream()
         .filter(element -> element instanceof FieldError)
         .map(FieldError.class::cast)

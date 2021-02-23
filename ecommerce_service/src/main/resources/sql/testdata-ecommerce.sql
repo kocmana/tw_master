@@ -1,5 +1,5 @@
 INSERT INTO price (product_id, valid_from, valid_to, currency, value)
-VALUES (1, '2020-01-01T00:00:00', '2020-12-31T23:59:59', 'EUR', 19.99);
+VALUES (1, '2020-01-01T00:00:00', '2022-12-31T23:59:59', 'EUR', 19.99);
 INSERT INTO price (product_id, valid_from, valid_to, currency, value)
 VALUES (1, '2019-01-01T00:00:00', '2019-12-31T23:59:59', 'EUR', 25.99);
 INSERT INTO price (product_id, valid_from, valid_to, currency, value)

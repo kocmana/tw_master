@@ -49,7 +49,7 @@ public class PriceService {
         price.getValidTo()).isEmpty();
     if (parallelPricingExists) {
       throw new IllegalArgumentException(
-          String.format("Conflicting timeframes exists for product with ID %d between %tF and %tF",
+          String.format("Conflicting timeframes exist for product with ID %d between %tF and %tF",
               price.getProductId(), price.getValidFrom(), price.getValidTo()));
     }
   }

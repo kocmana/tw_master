@@ -1,7 +1,6 @@
 package at.technikum.masterproject.ecommerceservice.purchase.model.domain;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,8 +19,8 @@ public class PurchaseItem implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
-  @ManyToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "purchase_id")
+  @ManyToOne
+  @JoinColumn(name="purchase_id", nullable=false)
   private Purchase purchase;
   @Column(name = "product_id")
   private Integer productId;

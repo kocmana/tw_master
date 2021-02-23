@@ -7,11 +7,13 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "price")
 @IdClass(PriceId.class)
 @Data
+@NoArgsConstructor
 public class Price {
 
   @Id

@@ -1,24 +1,22 @@
 package at.technikum.masterproject.ecommerceservice.price.model.dto;
 
 import javax.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Value;
 import org.hibernate.validator.constraints.Length;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@Value
+@Builder
 public class PriceDto {
 
   @NotNull
-  private Integer productId;
+  Integer productId;
   @NotNull
-  private Float value;
+  Float value;
   @NotNull @Length(min = 1, max = 20)
-  private String currency;
+  String currency;
   @NotNull
-  private String validFrom;
+  String validFrom;
   @NotNull
-  private String validTo;
+  String validTo;
 }

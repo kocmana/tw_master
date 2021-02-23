@@ -12,14 +12,12 @@ import org.springframework.stereotype.Service;
 class PurchaseService {
 
   private final PurchaseRepository purchaseRepository;
-  private final PurchaseItemRepository purchaseItemRepository;
   private final PriceService priceService;
 
   @Autowired
-  PurchaseService(PurchaseRepository purchaseRepository, PurchaseItemRepository purchaseItemRepository,
+  PurchaseService(PurchaseRepository purchaseRepository,
       PriceService priceService) {
     this.purchaseRepository = purchaseRepository;
-    this.purchaseItemRepository = purchaseItemRepository;
     this.priceService = priceService;
   }
 
@@ -34,7 +32,6 @@ class PurchaseService {
 
   int savePurchase(Purchase purchase) {
     Purchase updatedPurchaseInformation = updatePurchaseItemInformation(purchase);
-    purchaseItemRepository.saveAll(updatedPurchaseInformation.getItems());
     Purchase savedPurchase = purchaseRepository.save(updatedPurchaseInformation);
     return savedPurchase.getId();
   }
@@ -42,7 +39,6 @@ class PurchaseService {
   //not pure!
   private Purchase updatePurchaseItemInformation(Purchase purchase) {
     purchase.getItems().forEach(item -> {
-      item.setPurchase(purchase);
       Price priceOfItem = priceService.getCurrentPriceForProduct(item.getProductId());
       item.setPricePerUnit(priceOfItem.getValue());
       item.setCurrency(priceOfItem.getCurrency());

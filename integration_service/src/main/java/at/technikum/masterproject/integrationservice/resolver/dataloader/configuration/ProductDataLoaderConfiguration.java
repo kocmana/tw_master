@@ -49,7 +49,6 @@ public class ProductDataLoaderConfiguration {
     return DataLoader.newMappedDataLoader(batchLoadFunction);
   }
 
-
   private DataLoader<Integer, Product> createProductInformationDataLoader() {
     MappedBatchLoader<Integer, Product> batchLoadFunction = dataLoaderExecutor.generateBatchLoadFunction(
         productInformationClient::getProductById, Product::getId);

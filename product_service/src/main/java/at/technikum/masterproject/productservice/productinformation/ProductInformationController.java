@@ -3,7 +3,7 @@ package at.technikum.masterproject.productservice.productinformation;
 import static org.springframework.http.ResponseEntity.ok;
 
 import at.technikum.masterproject.productservice.model.ElementCreationResponse;
-import at.technikum.masterproject.productservice.productinformation.model.Product;
+import at.technikum.masterproject.productservice.productinformation.model.domain.Product;
 import at.technikum.masterproject.productservice.productinformation.model.dto.ProductCreationRequest;
 import at.technikum.masterproject.productservice.productinformation.model.dto.ProductResponse;
 import at.technikum.masterproject.productservice.productinformation.model.dto.ProductUpdateRequest;

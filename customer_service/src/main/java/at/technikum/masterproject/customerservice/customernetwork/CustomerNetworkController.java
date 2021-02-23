@@ -1,5 +1,6 @@
 package at.technikum.masterproject.customerservice.customernetwork;
 
+import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelaySimulation;
 import at.technikum.masterproject.customerservice.customernetwork.model.domain.CustomerInteraction;
 import at.technikum.masterproject.customerservice.customernetwork.model.domain.CustomerNetwork;
 import at.technikum.masterproject.customerservice.customernetwork.model.dto.CustomerInteractionDto;
@@ -32,6 +33,7 @@ public class CustomerNetworkController {
     this.customerRelationshipMapper = customerRelationshipMapper;
   }
 
+  @NormallyDistributedEndpointDelaySimulation(mean = 100, standardDeviation = 25)
   @GetMapping("/{customerId}")
   public ResponseEntity<List<CustomerNetworkDto>> getCustomerNetworkForCustomer(@PathVariable int customerId) {
     List<CustomerNetwork> customerNetworks = customerNetworkService.getCustomerNetworksForCustomer(customerId);

@@ -1,4 +1,4 @@
-package at.technikum.masterproject.productservice.productinformation.model;
+package at.technikum.masterproject.productservice.productinformation.model.domain;
 
 import javax.persistence.Embeddable;
 import lombok.Getter;

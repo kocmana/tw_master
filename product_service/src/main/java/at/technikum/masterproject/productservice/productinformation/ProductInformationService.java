@@ -1,7 +1,7 @@
 package at.technikum.masterproject.productservice.productinformation;
 
-import at.technikum.masterproject.productservice.productinformation.model.Product;
 import at.technikum.masterproject.productservice.productinformation.model.ProductInformationNotFoundException;
+import at.technikum.masterproject.productservice.productinformation.model.domain.Product;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

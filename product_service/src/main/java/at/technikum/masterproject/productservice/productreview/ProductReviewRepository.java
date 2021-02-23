@@ -1,6 +1,6 @@
 package at.technikum.masterproject.productservice.productreview;
 
-import at.technikum.masterproject.productservice.productreview.model.ProductReview;
+import at.technikum.masterproject.productservice.productreview.model.domain.ProductReview;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

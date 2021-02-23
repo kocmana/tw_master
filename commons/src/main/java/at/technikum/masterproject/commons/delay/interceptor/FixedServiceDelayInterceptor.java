@@ -5,11 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 @Slf4j
-public class FixedServiceDelayInterceptor extends HandlerInterceptorAdapter {
+public class FixedServiceDelayInterceptor implements HandlerInterceptor {
 
   @Override
   @FixedEndpointDelaySimulation(delayInMs = 100)

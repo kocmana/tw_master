@@ -3,17 +3,17 @@ package at.technikum.masterproject.commons.responses;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 import java.util.List;
-import lombok.Value;
+import lombok.Getter;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-@Value
+@Getter
 public class ValidationErrorResponse extends ErrorResponse {
 
   private static final String VALIDATION_ERROR_MESSAGE = "Validation failed for the request.";
 
-  List<String> validationErrorDetails;
+  private final List<String> validationErrorDetails;
 
   public static ValidationErrorResponse forException(MethodArgumentNotValidException exception) {
     return new ValidationErrorResponse(exception);

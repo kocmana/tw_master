@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 @Slf4j
-public class NormallyDistributedServiceDelayInterceptor extends HandlerInterceptorAdapter {
+public class NormallyDistributedServiceDelayInterceptor implements HandlerInterceptor {
 
   private final NormallyDistributedDelay delay;
   private final DelayProperties delayProperties;

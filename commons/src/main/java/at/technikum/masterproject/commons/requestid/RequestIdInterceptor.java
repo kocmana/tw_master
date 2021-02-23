@@ -4,12 +4,9 @@ import java.util.function.Supplier;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.MDC;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-public class RequestIdInterceptor<T> extends HandlerInterceptorAdapter {
-
-  private static final String REQUEST_ID_KEY = "request-id";
-  private static final String HEADER_NAME = "X-Request-ID";
+public class RequestIdInterceptor<T> implements HandlerInterceptor {
 
   private final Supplier<T> idGenerator;
 
@@ -30,20 +27,20 @@ public class RequestIdInterceptor<T> extends HandlerInterceptorAdapter {
   @Override
   public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
       Object handler, Exception ex) {
-    request.removeAttribute(REQUEST_ID_KEY);
-    MDC.remove(REQUEST_ID_KEY);
+    request.removeAttribute(RequestId.REQUEST_ID_KEY);
+    MDC.remove(RequestId.REQUEST_ID_HEADER_NAME);
   }
 
   private void setIdInMdcContext(T requestId) {
-    MDC.put(REQUEST_ID_KEY, requestId.toString());
+    MDC.put(RequestId.REQUEST_ID_KEY, requestId.toString());
   }
 
   private void setIdAsRequestAttribute(HttpServletRequest request, T requestId) {
-    request.setAttribute(REQUEST_ID_KEY, requestId.toString());
+    request.setAttribute(RequestId.REQUEST_ID_KEY, requestId.toString());
   }
 
   private void setIdAsResponseHeader(HttpServletResponse response, T requestId) {
-    response.addHeader(HEADER_NAME, requestId.toString());
+    response.addHeader(RequestId.REQUEST_ID_HEADER_NAME, requestId.toString());
   }
 
 }

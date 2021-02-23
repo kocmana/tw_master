@@ -1,7 +1,7 @@
 package at.technikum.masterproject.productservice.productreview;
 
-import at.technikum.masterproject.productservice.productreview.model.ProductReview;
 import at.technikum.masterproject.productservice.productreview.model.ProductReviewNotFoundException;
+import at.technikum.masterproject.productservice.productreview.model.domain.ProductReview;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,6 @@
-package at.technikum.masterproject.productservice.productreview.model;
+package at.technikum.masterproject.productservice.productreview.model.domain;
 
-import at.technikum.masterproject.productservice.productinformation.model.Product;
+import at.technikum.masterproject.productservice.productinformation.model.domain.Product;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

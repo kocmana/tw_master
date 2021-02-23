@@ -4,9 +4,9 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 
 import at.technikum.masterproject.productservice.model.ElementCreationResponse;
 import at.technikum.masterproject.productservice.productinformation.ProductInformationService;
-import at.technikum.masterproject.productservice.productinformation.model.Product;
 import at.technikum.masterproject.productservice.productinformation.model.ProductInformationNotFoundException;
-import at.technikum.masterproject.productservice.productreview.model.ProductReview;
+import at.technikum.masterproject.productservice.productinformation.model.domain.Product;
+import at.technikum.masterproject.productservice.productreview.model.domain.ProductReview;
 import at.technikum.masterproject.productservice.productreview.model.dto.ProductReviewCreationRequest;
 import at.technikum.masterproject.productservice.productreview.model.dto.ProductReviewResponse;
 import at.technikum.masterproject.productservice.productreview.model.dto.ProductReviewUpdateRequest;

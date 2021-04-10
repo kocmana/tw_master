@@ -1,0 +1,13 @@
+query nPlusOneQueryDepth1 {
+    customers {
+        customerId
+        firstName
+        lastName
+        reviews
+        {
+            productId
+            stars
+            review
+        }
+    }
+}

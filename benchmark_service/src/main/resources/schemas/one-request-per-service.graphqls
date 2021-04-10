@@ -1,0 +1,15 @@
+query oneRequestPerService {
+    customers {
+        customerId
+        firstName
+        lastName
+    }
+    products {
+        id
+        name
+    }
+    purchase(id: 1) {
+        id
+        customerId
+    }
+}

@@ -45,18 +45,20 @@ public class ProductReviewController {
   }
 
   @GetMapping
+  @NormallyDistributedEndpointDelaySimulation(mean = 400, standardDeviation = 100)
   public ResponseEntity<List<ProductReviewResponse>> getAllReviews(Pageable pageable) {
     List<ProductReview> productReviews = productReviewService.getAllReviews(pageable);
     return toProductReviewResponse(productReviews);
   }
 
   @DeleteMapping("/{id}")
+  @NormallyDistributedEndpointDelaySimulation(mean = 600, standardDeviation = 100)
   public void deleteReview(@PathVariable @NotNull Integer id) {
     productReviewService.deleteReviewById(id);
   }
 
   @GetMapping("/product/{productId}")
-  @NormallyDistributedEndpointDelaySimulation(mean = 200, standardDeviation = 100)
+  @NormallyDistributedEndpointDelaySimulation(mean = 350, standardDeviation = 100)
   public ResponseEntity<List<ProductReviewResponse>> getReviewsForProduct(
       @PathVariable @Valid @NotNull int productId) {
     if (productInformationService.productDoesNotExist(productId)) {
@@ -68,7 +70,7 @@ public class ProductReviewController {
   }
 
   @GetMapping("/customer/{customerId}")
-  @NormallyDistributedEndpointDelaySimulation(mean = 150, standardDeviation = 100)
+  @NormallyDistributedEndpointDelaySimulation(mean = 350, standardDeviation = 100)
   public ResponseEntity<List<ProductReviewResponse>> getReviewsForCustomer(
       @PathVariable @Valid @NotNull int customerId) {
     List<ProductReview> productReviews = productReviewService.getReviewsForCustomer(customerId);

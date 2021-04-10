@@ -41,7 +41,7 @@ public class ProductInformationController {
   }
 
   @GetMapping
-  @NormallyDistributedEndpointDelaySimulation(mean = 200, standardDeviation = 100)
+  @NormallyDistributedEndpointDelaySimulation(mean = 400, standardDeviation = 100)
   public ResponseEntity<List<ProductResponse>> getAllProducts(Pageable pageable) {
     List<Product> products = productInformationService.retrieveAllProductsWithPagination(pageable);
     List<ProductResponse> productResponses = products.stream()
@@ -51,20 +51,20 @@ public class ProductInformationController {
   }
 
   @GetMapping(value = "/{id}")
-  @NormallyDistributedEndpointDelaySimulation(mean = 150, standardDeviation = 100)
+  @NormallyDistributedEndpointDelaySimulation(mean = 350, standardDeviation = 100)
   public ResponseEntity<ProductResponse> getProductById(@PathVariable int id) {
     Product product = productInformationService.retrieveProductById(id);
     return ok(productMapper.productToProductResponse(product));
   }
 
   @DeleteMapping(value = "/{id}")
-  @NormallyDistributedEndpointDelaySimulation(mean = 400, standardDeviation = 100)
+  @NormallyDistributedEndpointDelaySimulation(mean = 600, standardDeviation = 100)
   public void deleteProductById(@PathVariable @NotNull Integer id) {
     productInformationService.deleteProductById(id);
   }
 
   @PostMapping
-  @NormallyDistributedEndpointDelaySimulation(mean = 400, standardDeviation = 100)
+  @NormallyDistributedEndpointDelaySimulation(mean = 600, standardDeviation = 100)
   public ResponseEntity<ElementCreationResponse> saveProduct(@RequestBody @Valid ProductCreationRequest product) {
     Product productToSave = productMapper.productCreationRequestToProduct(product);
     Integer idOfNewProduct = productInformationService.saveNewProduct(productToSave);
@@ -72,7 +72,7 @@ public class ProductInformationController {
   }
 
   @PutMapping
-  @NormallyDistributedEndpointDelaySimulation(mean = 400, standardDeviation = 100)
+  @NormallyDistributedEndpointDelaySimulation(mean = 600, standardDeviation = 100)
   public void updateProductInformation(@RequestBody @Valid ProductUpdateRequest product) {
     Product productToUpdate = productMapper.productUpdateRequestToProduct(product);
     productInformationService.updateProduct(productToUpdate);

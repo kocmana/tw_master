@@ -20,6 +20,9 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <maven.compiler.release>11</maven.compiler.release>
+
+    <graphql-client.version>0.3.0</graphql-client.version>
+    <apache-math.version>3.6.1</apache-math.version>
   </properties>
 
   <dependencies>
@@ -44,11 +47,16 @@
     <dependency>
       <groupId>com.graphql-java-kickstart</groupId>
       <artifactId>graphql-webclient-spring-boot-starter</artifactId>
-      <version>0.3.0</version>
+      <version>${graphql-client.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-math3</artifactId>
+      <version>${apache-math.version}</version>
     </dependency>
   </dependencies>
 

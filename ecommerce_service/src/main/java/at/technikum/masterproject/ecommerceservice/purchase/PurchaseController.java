@@ -2,6 +2,7 @@ package at.technikum.masterproject.ecommerceservice.purchase;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
+import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelaySimulation;
 import at.technikum.masterproject.ecommerceservice.purchase.model.domain.Purchase;
 import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseCreationRequest;
 import at.technikum.masterproject.ecommerceservice.purchase.model.dto.PurchaseResponse;
@@ -33,12 +34,14 @@ public class PurchaseController {
   }
 
   @GetMapping("/{id}")
+  @NormallyDistributedEndpointDelaySimulation(mean = 30, standardDeviation = 10)
   public ResponseEntity<PurchaseResponse> retrievePurchaseById(@PathVariable int id) {
     Purchase purchase = purchaseService.getPurchaseById(id);
     return ResponseEntity.ok(purchaseMapper.purchaseToPurchaseResponse(purchase));
   }
 
   @GetMapping("/customer/{customerId}")
+  @NormallyDistributedEndpointDelaySimulation(mean = 20, standardDeviation = 10)
   public ResponseEntity<List<PurchaseResponse>> retrievePurchasesByCustomerId(
       @PathVariable @Valid @NotNull Integer customerId) {
     List<PurchaseResponse> purchaseResponses = purchaseService.getPurchasesForCustomer(customerId)
@@ -49,6 +52,7 @@ public class PurchaseController {
   }
 
   @PostMapping
+  @NormallyDistributedEndpointDelaySimulation(mean = 50, standardDeviation = 10)
   public ResponseEntity<Integer> savePurchase(@RequestBody @Valid PurchaseCreationRequest purchase) {
     int newPurchaseId = purchaseService
         .savePurchase(purchaseMapper.purchaseCreationRequestDtoToPurchase(purchase));

@@ -2,6 +2,7 @@ package at.technikum.masterproject.ecommerceservice.price;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
+import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelaySimulation;
 import at.technikum.masterproject.ecommerceservice.price.model.domain.Price;
 import at.technikum.masterproject.ecommerceservice.price.model.dto.PriceDto;
 import at.technikum.masterproject.ecommerceservice.price.model.mapper.PriceMapper;
@@ -33,6 +34,7 @@ public class PriceController {
   }
 
   @GetMapping("/product/{productId}")
+  @NormallyDistributedEndpointDelaySimulation(mean = 30, standardDeviation = 10)
   public ResponseEntity<PriceDto> getCurrentPriceForProduct(
       @PathVariable @Valid @NotNull Integer productId) {
     Price price = priceService.getCurrentPriceForProduct(productId);
@@ -41,6 +43,7 @@ public class PriceController {
   }
 
   @GetMapping("/product/{productId}/all")
+  @NormallyDistributedEndpointDelaySimulation(mean = 60, standardDeviation = 30)
   public ResponseEntity<List<PriceDto>> getAllPricesForProduct(
       @PathVariable @Valid @NotNull Integer productId) {
     List<Price> prices = priceService.getAllPricesForProduct(productId);
@@ -48,6 +51,7 @@ public class PriceController {
   }
 
   @GetMapping(value = "/product/{productId}", params = {"from", "to"})
+  @NormallyDistributedEndpointDelaySimulation(mean = 60, standardDeviation = 30)
   public ResponseEntity<List<PriceDto>> getPricesForProductAndTimeframe(
       @PathVariable @Valid @NotNull Integer productId,
       @RequestParam @Valid @NotNull LocalDateTime from,
@@ -58,6 +62,7 @@ public class PriceController {
   }
 
   @PostMapping
+  @NormallyDistributedEndpointDelaySimulation(mean = 50, standardDeviation = 25)
   public ResponseEntity<PriceDto> savePrice(@RequestBody @Valid PriceDto priceDto) {
     Price price = priceMapper.priceDtoToPrice(priceDto);
     Price savedPrice = priceService.savePriceForProduct(price);

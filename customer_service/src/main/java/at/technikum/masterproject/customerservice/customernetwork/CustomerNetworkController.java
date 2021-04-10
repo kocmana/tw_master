@@ -33,8 +33,8 @@ public class CustomerNetworkController {
     this.customerRelationshipMapper = customerRelationshipMapper;
   }
 
-  @NormallyDistributedEndpointDelaySimulation(mean = 100, standardDeviation = 25)
   @GetMapping("/{customerId}")
+  @NormallyDistributedEndpointDelaySimulation(mean = 500, standardDeviation = 250)
   public ResponseEntity<List<CustomerNetworkDto>> getCustomerNetworkForCustomer(@PathVariable int customerId) {
     List<CustomerNetwork> customerNetworks = customerNetworkService.getCustomerNetworksForCustomer(customerId);
     List<CustomerNetworkDto> customerNetworkDtos = customerNetworks.stream()
@@ -44,6 +44,7 @@ public class CustomerNetworkController {
   }
 
   @PostMapping
+  @NormallyDistributedEndpointDelaySimulation(mean = 20, standardDeviation = 15)
   public ResponseEntity<CustomerInteractionDto> postNewCustomerRelationship(
       @RequestBody @Valid CustomerInteractionDto relationshipDto) {
     CustomerInteraction relationship = customerRelationshipMapper.toCustomerInteraction(relationshipDto);

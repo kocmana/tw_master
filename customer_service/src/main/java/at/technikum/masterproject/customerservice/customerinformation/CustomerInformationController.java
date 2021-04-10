@@ -2,6 +2,7 @@ package at.technikum.masterproject.customerservice.customerinformation;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
+import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelaySimulation;
 import at.technikum.masterproject.customerservice.customerinformation.model.domain.Customer;
 import at.technikum.masterproject.customerservice.customerinformation.model.dto.CustomerRegistrationRequest;
 import at.technikum.masterproject.customerservice.customerinformation.model.dto.CustomerResponse;
@@ -34,6 +35,7 @@ class CustomerInformationController {
   }
 
   @GetMapping
+  @NormallyDistributedEndpointDelaySimulation(mean = 30, standardDeviation = 5)
   public ResponseEntity<List<CustomerResponse>> getAllCustomers() {
     List<Customer> allCustomers = customerInformationService.retrieveAllCustomers();
     List<CustomerResponse> customerResponses = allCustomers.stream()
@@ -43,6 +45,7 @@ class CustomerInformationController {
   }
 
   @GetMapping(path = "/{customerId}")
+  @NormallyDistributedEndpointDelaySimulation(mean = 10, standardDeviation = 5)
   public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable int customerId) {
     Customer customer = customerInformationService.retrieveCustomerById(customerId);
     CustomerResponse customerResponse = customerMapper.toCustomerResponse(customer);
@@ -50,6 +53,7 @@ class CustomerInformationController {
   }
 
   @PostMapping
+  @NormallyDistributedEndpointDelaySimulation(mean = 20, standardDeviation = 10)
   public ResponseEntity<CustomerResponse> saveCustomer(
       @RequestBody @Valid CustomerRegistrationRequest customerRegistrationRequest) {
     Customer customer = customerMapper.toCustomer(customerRegistrationRequest);
@@ -59,12 +63,14 @@ class CustomerInformationController {
   }
 
   @PutMapping
+  @NormallyDistributedEndpointDelaySimulation(mean = 20, standardDeviation = 10)
   public void updateCustomer(@RequestBody @Valid CustomerUpdateRequest customerUpdateRequest) {
     Customer customer = customerMapper.toCustomer(customerUpdateRequest);
     customerInformationService.updateCustomer(customer);
   }
 
   @DeleteMapping(path = "/{customerId}")
+  @NormallyDistributedEndpointDelaySimulation(mean = 15, standardDeviation = 10)
   public void deleteCustomer(@PathVariable int customerId) {
     customerInformationService.deleteCustomer(customerId);
   }

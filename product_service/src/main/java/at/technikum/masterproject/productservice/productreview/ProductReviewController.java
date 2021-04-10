@@ -2,6 +2,7 @@ package at.technikum.masterproject.productservice.productreview;
 
 import static java.util.stream.Collectors.toUnmodifiableList;
 
+import at.technikum.masterproject.commons.delay.annotation.NormallyDistributedEndpointDelaySimulation;
 import at.technikum.masterproject.productservice.model.ElementCreationResponse;
 import at.technikum.masterproject.productservice.productinformation.ProductInformationService;
 import at.technikum.masterproject.productservice.productinformation.model.ProductInformationNotFoundException;
@@ -55,6 +56,7 @@ public class ProductReviewController {
   }
 
   @GetMapping("/product/{productId}")
+  @NormallyDistributedEndpointDelaySimulation(mean = 200, standardDeviation = 100)
   public ResponseEntity<List<ProductReviewResponse>> getReviewsForProduct(
       @PathVariable @Valid @NotNull int productId) {
     if (productInformationService.productDoesNotExist(productId)) {
@@ -66,6 +68,7 @@ public class ProductReviewController {
   }
 
   @GetMapping("/customer/{customerId}")
+  @NormallyDistributedEndpointDelaySimulation(mean = 150, standardDeviation = 100)
   public ResponseEntity<List<ProductReviewResponse>> getReviewsForCustomer(
       @PathVariable @Valid @NotNull int customerId) {
     List<ProductReview> productReviews = productReviewService.getReviewsForCustomer(customerId);
@@ -73,6 +76,7 @@ public class ProductReviewController {
   }
 
   @PostMapping("/product/{productId}")
+  @NormallyDistributedEndpointDelaySimulation(mean = 400, standardDeviation = 100)
   public ResponseEntity<ElementCreationResponse> postReview(
       @PathVariable @Valid @NotNull Integer productId,
       @RequestBody @Valid ProductReviewCreationRequest productReviewCreationRequest) {
@@ -85,6 +89,7 @@ public class ProductReviewController {
   }
 
   @PutMapping
+  @NormallyDistributedEndpointDelaySimulation(mean = 400, standardDeviation = 100)
   public void updateReview(
       @RequestBody @Valid ProductReviewUpdateRequest productReviewUpdateRequest) {
     ProductReview productReview = productReviewMapper

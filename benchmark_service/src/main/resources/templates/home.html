@@ -1,133 +1,140 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"/>
-  <meta content="no-cache" http-equiv="Pragma"/>
-  <meta content="0" http-equiv="Expires"/>
-  <title>Benchmark Results</title>
+    <meta charset="UTF-8">
+    <meta content="no-cache, no-store, must-revalidate" http-equiv="Cache-Control"/>
+    <meta content="no-cache" http-equiv="Pragma"/>
+    <meta content="0" http-equiv="Expires"/>
+    <title>Benchmark Results</title>
 
-  <!--Bootstrap-->
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
-        crossorigin="anonymous">
+    <!--Bootstrap-->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+          crossorigin="anonymous">
 </head>
 
 <body>
 <div class="container">
-  <h1>Benchmark Results</h1>
-  <div class="card-deck">
-    <div class="card bg-light mb-3">
-      <div class="card-header">Schema</div>
-      <div class="card-body">
-        <h5 class="card-text" th:text="${benchmarkStatistics.schema}">schema.graphqls</h5>
-      </div>
+    <h1>Benchmark Results</h1>
+    <div class="card-deck">
+        <div class="card bg-light mb-3">
+            <div class="card-header">Schema</div>
+            <div class="card-body">
+                <h5 class="card-text" th:text="${benchmarkStatistics.schema}">schema.graphqls</h5>
+            </div>
+        </div>
+        <div class="card bg-light mb-3">
+            <div class="card-header">Number of Calls</div>
+            <div class="card-body">
+                <h5 class="card-text" th:text="${benchmarkStatistics.numberOfCalls}">0</h5>
+            </div>
+        </div>
+        <div class="card mb-3" th:classappend="${benchmarkStatistics.finished} ? bg-success : bg-warning">
+            <div class="card-header">Status</div>
+            <div class="card-body">
+                <h5 class="card-text" th:text="${benchmarkStatistics.finished} ? Finished : Running">Running</h5>
+            </div>
+        </div>
     </div>
-    <div class="card bg-light mb-3">
-      <div class="card-header">Number of Calls</div>
-      <div class="card-body">
-        <h5 class="card-text" th:text="${benchmarkStatistics.numberOfCalls}">0</h5>
-      </div>
-    </div>
-    <div class="card mb-3" th:classappend="${benchmarkStatistics.finished} ? bg-success : bg-warning">
-      <div class="card-header">Status</div>
-      <div class="card-body">
-        <h5 class="card-text" th:text="${benchmarkStatistics.finished} ? Finished : Running">Running</h5>
-      </div>
-    </div>
-  </div>
 </div>
 
 <div class="container">
-  <h2>Overall Statistics</h2>
+    <h2>Overall Statistics</h2>
 
-  <div class="card-deck">
-    <div class="card text-white bg-secondary mb-3">
-      <div class="card-header">Total Time</div>
-      <div class="card-body">
-        <h5 class="card-text" th:text="${benchmarkStatistics.total}+ms">0 ms</h5>
-      </div>
+    <div class="card-deck">
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-header">Total Time</div>
+            <div class="card-body">
+                <h5 class="card-text" th:text="${#numbers.formatDecimal(benchmarkStatistics.total,1,2,'POINT')}+ms">0 ms</h5>
+            </div>
+        </div>
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-header">Average</div>
+            <div class="card-body">
+                <h5 class="card-text" th:text="${#numbers.formatDecimal(benchmarkStatistics.average,1,2,'POINT')}+ms">0 ms</h5>
+            </div>
+        </div>
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-header">Standard Deviation</div>
+            <div class="card-body">
+                <h5 class="card-text" th:text="${#numbers.formatDecimal(benchmarkStatistics.standardDeviation,1,2,'POINT')}+ms">0
+                    ms</h5>
+            </div>
+        </div>
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-header">Min</div>
+            <div class="card-body">
+                <h5 class="card-text" th:text="${#numbers.formatDecimal(benchmarkStatistics.min,1,2,'POINT')}+ms">0 ms</h5>
+            </div>
+        </div>
+        <div class="card text-white bg-secondary mb-3">
+            <div class="card-header">Max</div>
+            <div class="card-body">
+                <h5 class="card-text" th:text="${#numbers.formatDecimal(benchmarkStatistics.max,1,2,'POINT')}+ms">0 ms</h5>
+            </div>
+        </div>
     </div>
-      <div class="card text-white bg-secondary mb-3">
-        <div class="card-header">Average Response Time</div>
-        <div class="card-body">
-          <h5 class="card-text" th:text="${benchmarkStatistics.average}+ms">0 ms</h5>
-        </div>
-      </div>
-      <div class="card text-white bg-secondary mb-3">
-        <div class="card-header">Min</div>
-        <div class="card-body">
-          <h5 class="card-text" th:text="${benchmarkStatistics.min}+ms">0 ms</h5>
-        </div>
-      </div>
-      <div class="card text-white bg-secondary mb-3">
-        <div class="card-header">Max</div>
-        <div class="card-body">
-          <h5 class="card-text" th:text="${benchmarkStatistics.max}+ms">0 ms</h5>
-        </div>
-      </div>
-  </div>
 
-  <div class="row">
-    <div class="col">
-      <div class="card mb-3">
-        <div class="card-header">Response Time Distribution</div>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-header">Response Time Distribution</div>
 
-        <div class="card-body">
-          <canvas id="callStatistics"></canvas>
-          <script>
-            var labels = [[${graphLabels}]]
-            var bucketSizes = [[${graphValues}]]
-            var chartData = {
-              labels: labels,
-              datasets: [{
-                data: bucketSizes,
-                backgroundColor: ["rgba(255, 99, 132, 0.2)","rgba(255, 159, 64, 0.2)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],
-                borderColor:["rgb(255, 99, 132)","rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)","rgb(201, 203, 207)"],
-                borderWidth:1
-              }]
-            };
-          </script>
+                <div class="card-body">
+                    <canvas id="callStatistics"></canvas>
+                    <script>
+                        var labels = [[${graphLabels}]]
+                        var bucketSizes = [[${graphValues}]]
+                        var chartData = {
+                            labels: labels,
+                            datasets: [{
+                                data: bucketSizes,
+                                backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
+                                borderColor: ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"],
+                                borderWidth: 1
+                            }]
+                        };
+                    </script>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th>Bucket</th>
+                            <th>Number Of Responses</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="instance : ${benchmarkStatistics.responseTimeDistribution}">
+                            <td th:text="${instance.key}">key</td>
+                            <td th:text="${instance.value}">value</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr>
-              <th>Bucket</th>
-              <th>Number Of Responses</th>
-            </tr>
-          </thead>
-          <tbody>
-          <tr th:each="instance : ${benchmarkStatistics.responseTimeDistribution}">
-            <td th:text="${instance.key}">key</td>
-            <td th:text="${instance.value}">value</td>
-          </tr>
-          </tbody>
-        </table>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <div class="container">
-  <h2>Separate Call Statistics</h2>
+    <h2>Separate Call Statistics</h2>
 
-  <table class="table table-striped table-sm">
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Response Time in Ms</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="queryStatistic: ${benchmarkStatistics.singleCallResults}">
-      <td th:text="${queryStatistic.id}"></td>
-      <td th:text="${queryStatistic.responseTimeInMillis}"></td>
-    </tr>
-    </tbody>
-  </table>
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Response Time in Ms</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="queryStatistic: ${benchmarkStatistics.singleCallResults}">
+            <td th:text="${queryStatistic.id}"></td>
+            <td th:text="${queryStatistic.responseTimeInMillis}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <!-- Chart JS -->

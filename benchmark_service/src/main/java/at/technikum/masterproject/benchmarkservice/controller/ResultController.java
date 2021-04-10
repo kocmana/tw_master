@@ -30,7 +30,9 @@ public class ResultController {
                      @RequestParam @NotBlank String uuid,
                      @RequestParam(required = false) Integer bucketSize) {
 
-    bucketSize = nonNull(bucketSize) ? bucketSize : 1000;
+    bucketSize = nonNull(bucketSize)
+        ? bucketSize
+        : 100;
 
     BenchmarkResult statistics = resultService.retrieveBenchmarkResults(uuid, bucketSize);
 

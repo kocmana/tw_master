@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
+import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,7 @@ public class ResultService {
         .finished(benchmark.isFinished())
         .numberOfCalls(statistics.getCount())
         .average(statistics.getAverage())
+        .standardDeviation(calculateStandardDeviation(results))
         .min(statistics.getMin())
         .max(statistics.getMax())
         .total(statistics.getSum())
@@ -48,6 +50,16 @@ public class ResultService {
             calculateResponseTimeDistribution(results, bucketSize, statistics.getMin(), statistics.getMax()))
         .singleCallResults(results)
         .build();
+  }
+
+  private Double calculateStandardDeviation(List<QueryStatistic> result) {
+    double[] responseTimes = result.stream()
+        .map(QueryStatistic::getResponseTimeInMillis)
+        .mapToDouble(Double::valueOf)
+        .toArray();
+
+    StandardDeviation standardDeviation = new StandardDeviation(true);
+    return standardDeviation.evaluate(responseTimes);
   }
 
   private Map<Long, Long> calculateResponseTimeDistribution(List<QueryStatistic> results, long bucketSize,

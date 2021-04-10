@@ -14,6 +14,7 @@ public class BenchmarkResult {
   boolean finished;
   long numberOfCalls;
   double average;
+  double standardDeviation;
   double min;
   double max;
   double total;

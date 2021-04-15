@@ -2,6 +2,8 @@ spring:
   datasource:
     data: classpath*:sql/testdata-*.sql
     schema: classpath*:sql/schema.sql
+  jpa:
+    open-in-view: true
 
 graphiql:
   enabled: true
@@ -14,7 +16,7 @@ voyager:
   enabled: true
 
 services:
-  resolver-mode: ASYNC #DATALOADER, ASYNC or SERIAL
+  resolver-mode: DATALOADER #DATALOADER, ASYNC or SERIAL
   productservice:
     authentication-type: BASIC_AUTH
     url: localhost

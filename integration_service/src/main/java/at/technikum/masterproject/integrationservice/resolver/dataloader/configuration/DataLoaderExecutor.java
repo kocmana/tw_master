@@ -26,8 +26,7 @@ public class DataLoaderExecutor {
       log.debug("Fetching information for the following ids: {}", idSet.toString());
 
       List<CompletableFuture<V>> futures = idSet.stream()
-          .map(id -> CompletableFuture
-              .supplyAsync(() -> resultSupplier.apply(id), EXECUTOR))
+          .map(id -> CompletableFuture.supplyAsync(() -> resultSupplier.apply(id), EXECUTOR))
           .collect(Collectors.toUnmodifiableList());
 
       return CompletableFuture.allOf(futures.toArray(new CompletableFuture<?>[0]))

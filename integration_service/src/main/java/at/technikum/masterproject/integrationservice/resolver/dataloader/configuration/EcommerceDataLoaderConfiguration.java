@@ -8,6 +8,7 @@ import at.technikum.masterproject.integrationservice.model.ecommerce.Purchase;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.dataloader.DataLoader;
+import org.dataloader.DataLoaderOptions;
 import org.dataloader.DataLoaderRegistry;
 import org.dataloader.MappedBatchLoader;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.Configuration;
 public class EcommerceDataLoaderConfiguration {
 
   private final DataLoaderExecutor dataLoaderExecutor;
+  private final DataLoaderOptions dataLoaderOptions;
 
   private final PurchaseClient purchaseClient;
 
@@ -35,13 +37,13 @@ public class EcommerceDataLoaderConfiguration {
   private DataLoader<Long, Purchase> createPurchaseByIdDataLoader() {
     MappedBatchLoader<Long, Purchase> batchLoadFunction = dataLoaderExecutor.generateBatchLoadFunction(
         purchaseClient::getPurchase, Purchase::getId);
-    return DataLoader.newMappedDataLoader(batchLoadFunction);
+    return DataLoader.newMappedDataLoader(batchLoadFunction, dataLoaderOptions);
   }
 
   private DataLoader<Integer, List<Purchase>> createPurchaseByCustomerDataLoader() {
     MappedBatchLoader<Integer, List<Purchase>> batchLoadFunction =
         dataLoaderExecutor.generateBatchLoadFunction(purchaseClient::getPurchasesForCustomer);
-    return DataLoader.newMappedDataLoader(batchLoadFunction);
+    return DataLoader.newMappedDataLoader(batchLoadFunction, dataLoaderOptions);
   }
 
 }

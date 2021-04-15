@@ -11,6 +11,7 @@ import at.technikum.masterproject.integrationservice.model.product.ProductReview
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.dataloader.DataLoader;
+import org.dataloader.DataLoaderOptions;
 import org.dataloader.DataLoaderRegistry;
 import org.dataloader.MappedBatchLoader;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -23,6 +24,7 @@ import org.springframework.context.annotation.Configuration;
 public class ProductDataLoaderConfiguration {
 
   private final DataLoaderExecutor dataLoaderExecutor;
+  private final DataLoaderOptions dataLoaderOptions;
 
   private final ProductInformationClient productInformationClient;
   private final ProductReviewClient productReviewClient;
@@ -40,7 +42,7 @@ public class ProductDataLoaderConfiguration {
   private DataLoader<Integer, List<ProductReview>> createProductReviewByProductDataLoader() {
     MappedBatchLoader<Integer, List<ProductReview>> batchLoadFunction = dataLoaderExecutor.generateBatchLoadFunction(
         productReviewClient::getAllProductReviewsForProduct);
-    return DataLoader.newMappedDataLoader(batchLoadFunction);
+    return DataLoader.newMappedDataLoader(batchLoadFunction, dataLoaderOptions);
   }
 
   private DataLoader<Integer, List<ProductReview>> createProductReviewByCustomerDataLoader() {
@@ -52,7 +54,7 @@ public class ProductDataLoaderConfiguration {
   private DataLoader<Integer, Product> createProductInformationDataLoader() {
     MappedBatchLoader<Integer, Product> batchLoadFunction = dataLoaderExecutor.generateBatchLoadFunction(
         productInformationClient::getProductById, Product::getId);
-    return DataLoader.newMappedDataLoader(batchLoadFunction);
+    return DataLoader.newMappedDataLoader(batchLoadFunction, dataLoaderOptions);
   }
 
 }

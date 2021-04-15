@@ -10,6 +10,7 @@ import at.technikum.masterproject.integrationservice.model.customer.CustomerNetw
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.dataloader.DataLoader;
+import org.dataloader.DataLoaderOptions;
 import org.dataloader.DataLoaderRegistry;
 import org.dataloader.MappedBatchLoader;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
 public class CustomerDataLoaderConfiguration {
 
   private final DataLoaderExecutor dataLoaderExecutor;
+  private final DataLoaderOptions dataLoaderOptions;
   private final CustomerInformationClient customerInformationClient;
   private final CustomerNetworkClient customerNetworkClient;
 
@@ -36,12 +38,12 @@ public class CustomerDataLoaderConfiguration {
   private DataLoader<Integer, Customer> createCustomerInformationDataLoader() {
     MappedBatchLoader<Integer, Customer> batchLoadFunction = dataLoaderExecutor.generateBatchLoadFunction(
         customerInformationClient::getCustomerById, Customer::getCustomerId);
-    return DataLoader.newMappedDataLoader(batchLoadFunction);
+    return DataLoader.newMappedDataLoader(batchLoadFunction, dataLoaderOptions);
   }
 
   private DataLoader<Integer, List<CustomerNetwork>> createCustomerNetworkDataLoader() {
     MappedBatchLoader<Integer, List<CustomerNetwork>> batchLoadFunction = dataLoaderExecutor.generateBatchLoadFunction(
         customerNetworkClient::getNetworkByCustomerId);
-    return DataLoader.newMappedDataLoader(batchLoadFunction);
+    return DataLoader.newMappedDataLoader(batchLoadFunction, dataLoaderOptions);
   }
 }

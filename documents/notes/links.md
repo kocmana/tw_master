@@ -44,6 +44,7 @@
 * [Blog Post: GraphQL DataLoader in Spring Boot — singleton or request scoped?](https://blog.softwaremill.com/graphql-dataloader-in-spring-boot-singleton-or-request-scoped-16699436f680)
 * [Blog Post: Batching vs Merging](https://medium.com/@dcdigital72/graphql-one-query-to-rule-them-all-batching-vs-merging-d216e6acb218)
 * [Blog Post: Solving the N+1 Problem for GraphQL through Batching](https://engineering.shopify.com/blogs/engineering/solving-the-n-1-problem-for-graphql-through-batching)
+* [Issue: Usage of graphql.servlet.max-query-complexity](https://github.com/graphql-java-kickstart/graphql-spring-boot/issues/278)
 
 ### Request Logging
 * [GraphQL Java Instrumentation](https://www.graphql-java.com/documentation/master/instrumentation/)

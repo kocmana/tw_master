@@ -6,14 +6,16 @@ server:
   port: 8080
   http2:
     enabled: true
+  tomcat:
+    connection-timeout: 5s
 
 graphql:
   tools:
     schema-location-pattern: "schemas/**/*.graphqls"
   servlet:
-    maxQueryDuration: 9999999
-    maxQueryDepth: 20
-    #maxQueryComplexity: 10
+    maxQueryDuration: 3000
+    maxQueryDepth: 200
+    maxQueryComplexity: 10
 
 graphiql:
   enabled: false

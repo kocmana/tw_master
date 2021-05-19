@@ -37,11 +37,10 @@ public class MaxQueryDurationInstrumentation extends SimpleInstrumentation {
 
     MaxQueryInstrumentationState state = parameters.getInstrumentationState();
 
+    log.info("Max Duration: {}, current Time: {}", maxDuration, state.getTime());
     if (state.getTime() > maxDuration) {
-      state.startStopWatch();
       return new TimeoutDataFetcher<>();
     }
-    state.startStopWatch();
     return super.instrumentDataFetcher(dataFetcher, parameters);
   }
 
@@ -49,8 +48,6 @@ public class MaxQueryDurationInstrumentation extends SimpleInstrumentation {
   @Override
   public InstrumentationContext<ExecutionResult> beginExecution(
       InstrumentationExecutionParameters parameters) {
-    MaxQueryInstrumentationState state = parameters.getInstrumentationState();
-    state.startStopWatch();
     return super.beginExecution(parameters);
   }
 

@@ -15,8 +15,11 @@
     <groupId>at.technikum</groupId>
     <artifactId>masterproject</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <name>GraphQL Master Project</name>
     <description>Master Project on using GraphQL as Integration Layer</description>
     <url>https://github.com/kocmana/tw_master/</url>
+
     <packaging>pom</packaging>
 
     <modules>

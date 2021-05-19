@@ -12,7 +12,8 @@
   <groupId>at.technikum.masterproject</groupId>
   <artifactId>customer_service</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>customer_service</name>
+
+  <name>Customer Service</name>
   <description>A mock customer service for simulation of service integration</description>
   <url>https://github.com/kocmana/tw_master/tree/master/customer_service</url>
 
@@ -23,7 +24,7 @@
   <dependencies>
     <!-- Common Service Library -->
     <dependency>
-      <groupId>at.technikum.masterproject.commons</groupId>
+      <groupId>at.technikum.masterproject</groupId>
       <artifactId>commons</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>

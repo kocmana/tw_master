@@ -11,7 +11,8 @@
   <artifactId>benchmark_service</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>benchmark_service</name>
+  <name>Benchmark Service</name>
+  <description>Limited Benchmark Services for measuring response times</description>
   <url>https://github.com/kocmana/tw_master/tree/master/benchmark_service</url>
 
   <properties>

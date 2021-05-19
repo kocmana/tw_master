@@ -11,7 +11,8 @@
   <groupId>at.technikum.masterproject</groupId>
   <artifactId>integration_service</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>integration_service</name>
+
+  <name>API Gateway</name>
   <description>The integration service used for the simulation of various approaches</description>
   <url>https://github.com/kocmana/tw_master</url>
 
@@ -56,7 +57,7 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>at.technikum.masterproject.commons</groupId>
+      <groupId>at.technikum.masterproject</groupId>
       <artifactId>commons</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>

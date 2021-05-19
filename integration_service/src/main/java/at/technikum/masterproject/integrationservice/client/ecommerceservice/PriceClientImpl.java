@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -27,7 +26,7 @@ public class PriceClientImpl implements PriceClient {
   private final RestTemplate restTemplate;
 
   @Autowired
-  public PriceClientImpl(@Qualifier("ecommerceServiceRestTemplate")RestTemplate restTemplate) {
+  public PriceClientImpl(@EcommerceService RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
   }
 

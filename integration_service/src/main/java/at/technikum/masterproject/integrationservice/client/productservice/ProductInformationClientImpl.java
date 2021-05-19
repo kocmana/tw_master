@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +29,7 @@ public class ProductInformationClientImpl implements ProductInformationClient {
   private final RestTemplate restTemplate;
 
   @Autowired
-  public ProductInformationClientImpl(
-      @Qualifier("productServiceRestTemplate") RestTemplate restTemplate) {
+  public ProductInformationClientImpl(@ProductService RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
   }
 

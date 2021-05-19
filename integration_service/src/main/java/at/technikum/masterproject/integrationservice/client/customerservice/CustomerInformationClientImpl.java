@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +26,7 @@ public class CustomerInformationClientImpl implements CustomerInformationClient 
 
   private final RestTemplate restTemplate;
 
-  public CustomerInformationClientImpl(
-      @Qualifier("customerServiceRestTemplate") RestTemplate restTemplate) {
+  public CustomerInformationClientImpl(@CustomerService RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
   }
 

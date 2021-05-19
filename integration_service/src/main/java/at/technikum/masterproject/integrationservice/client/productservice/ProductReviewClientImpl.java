@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -31,8 +30,7 @@ public class ProductReviewClientImpl implements ProductReviewClient {
   private final RestTemplate restTemplate;
 
   @Autowired
-  public ProductReviewClientImpl(
-      @Qualifier("productServiceRestTemplate") RestTemplate restTemplate) {
+  public ProductReviewClientImpl(@ProductService RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
   }
 

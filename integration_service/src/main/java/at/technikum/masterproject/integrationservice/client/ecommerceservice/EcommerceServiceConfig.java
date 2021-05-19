@@ -13,7 +13,8 @@ public class EcommerceServiceConfig {
   private final EcommerceServiceProperties ecommerceServiceProperties;
   private final RestTemplateFactory restTemplateFactory;
 
-  @Bean("ecommerceServiceRestTemplate")
+  @Bean
+  @EcommerceService
   RestTemplate ecommerceServiceWebclient() {
     return restTemplateFactory.createFrom(ecommerceServiceProperties);
   }

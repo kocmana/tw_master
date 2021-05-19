@@ -14,7 +14,8 @@ public class ProductServiceConfig {
   private final ProductServiceProperties productServiceProperties;
   private final RestTemplateFactory restTemplateFactory;
 
-  @Bean("productServiceRestTemplate")
+  @Bean
+  @ProductService
   RestTemplate productServiceWebclient(RestTemplateBuilder restTemplateBuilder) {
     return restTemplateFactory.createFrom(productServiceProperties);
   }
